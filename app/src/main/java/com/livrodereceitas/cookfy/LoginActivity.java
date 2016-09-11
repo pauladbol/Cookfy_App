@@ -31,6 +31,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -192,7 +194,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+//        String emailValida = "^[_A-Za-z0-9-]+(\\\\.\"\n" +
+//                "\t\t\t+ \"[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\\\.[A-Za-z0-9]+)*\" + \"(\\\\.[A-Za-z]{2,})$";
+//
+//        Pattern patternEmail = Pattern.compile(emailValida);
+//        Matcher matcherEmail = patternEmail.matcher(patternEmail.toString());
+        return true; //matcherEmail.matches();
     }
 
     private boolean isPasswordValid(String password) {
