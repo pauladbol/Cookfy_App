@@ -21,4 +21,8 @@
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_cadastro">CadastroActivity</string>
+    <string name="description_cookfy">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Maecenas iaculis leo eget nisi varius, vel tristique odio aliquet.
+        Suspendisse iaculis ante mattis hendrerit commodo.
+        Praesent efficitur quam in mauris dictum pretium. </string>
 </resources>

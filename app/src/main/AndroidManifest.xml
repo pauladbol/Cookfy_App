@@ -23,14 +23,8 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
-        <activity
-            android:name=".Main2Activity"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".CadastroActivity"
-            android:label="@string/title_activity_cadastro"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".CadastroActivity" />
+        <activity android:name=".Main2Activity"></activity>
     </application>
 
 </manifest>
