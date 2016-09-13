@@ -28,13 +28,19 @@ public class MainActivity extends AppCompatActivity {
         cadastrar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intentCadastra = new Intent(MainActivity.this,Main2Activity.class);
+                Intent intentCadastra = new Intent(MainActivity.this,CadastroActivity.class);
                 startActivity(intentCadastra);
             }
         });
-    }
 
-    protected String clicou() {
-        return "ok";
+        Button home = (Button) findViewById(R.id.main2);
+
+        home.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intentHome = new Intent(MainActivity.this,Main2Activity.class);
+                startActivity(intentHome);
+            }
+        });
     }
 }

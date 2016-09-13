@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.livrodereceitas.cookfy.R;
 
+import org.w3c.dom.Text;
+
 public class ImagemPagerAdapter extends PagerAdapter {
     private Context ctx;
     private int[] imagens;
@@ -42,16 +44,16 @@ public class ImagemPagerAdapter extends PagerAdapter {
 
         container.addView(ll);
 
-        ImageView logo = new ImageView(ctx);
-        logo.setImageResource(R.drawable.logo);
-        ll.addView(logo);
+//        ImageView logo = new ImageView(ctx);
+//        logo.setImageResource(R.drawable.logo_mini);
+//        ll.addView(logo);
 
         ImageView iv = new ImageView(ctx);
         iv.setImageResource(imagens[position]);
         ll.addView(iv);
 
         TextView tv = new TextView(ctx);
-        tv.setText("Receita");
+        tv.setText(R.string.description_cookfy);
         ll.addView(tv);
 
         return(ll);
