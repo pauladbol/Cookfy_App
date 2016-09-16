@@ -29,6 +29,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -172,6 +173,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         if (password.length()<6) {
             //!TextUtils.isEmpty(password) && !isPasswordValid(password)
            // mPasswordView.setError(getString(R.string.error_invalid_password));
+            mPasswordView.setError("Senha invalida");
             focusView = mPasswordView;
             cancel = true;
             return logou = false;

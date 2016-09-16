@@ -47,12 +47,12 @@
             android:text="Cadastrar-se"
             android:id="@+id/cadastrar"
         />
-        <Button
+       <!-- <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Home Page"
             android:id="@+id/main2"
-            />
+            />-->
 
     </GridLayout>
 </ScrollView>

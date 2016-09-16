@@ -33,14 +33,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button home = (Button) findViewById(R.id.main2);
+       // Button home = (Button) findViewById(R.id.main2);
 
-        home.setOnClickListener(new View.OnClickListener(){
+        /*home.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 Intent intentHome = new Intent(MainActivity.this,Main2Activity.class);
                 startActivity(intentHome);
             }
-        });
+        });*/
     }
 }
