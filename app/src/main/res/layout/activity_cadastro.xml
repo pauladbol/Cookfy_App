@@ -37,17 +37,21 @@
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:id="@+id/cadastro_email"/>
-        <EditText android:hint="Senha"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:id="@+id/cadastro_senha"
-            android:imeActionLabel="@string/action_sign_in_short"
-            android:imeOptions="actionUnspecified"/>
-
+            android:layout_height="wrap_content">
+            <EditText android:hint="Senha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:id="@+id/cadastro_senha"
+                android:imeActionLabel="@string/action_sign_in_short"
+                android:imeOptions="actionUnspecified"/>
+        </android.support.design.widget.TextInputLayout>
         <Button android:text="Cadastrar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/cadastro_cadastrar"/>
+            android:id="@+id/cadastro_cadastrar"
+            android:layout_marginTop="16dp"/>
     </LinearLayout>
 </ScrollView>

@@ -38,22 +38,21 @@ public class CadastroActivity extends AppCompatActivity {
         validar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!validarEmail(email.getText().toString())) {
-                    email.setError("Email Invalido");
-                    email.requestFocus();
-                } else if (!validarNome(nome.getText().toString())) {
+                if (!validarNome(nome.getText().toString())) {
                     nome.setError("Nome Invalido");
                     nome.requestFocus();
-                } else if (!validarUsuario(usuario.getText().toString())) {
+                }else if (!validarUsuario(usuario.getText().toString())) {
                     usuario.setError("Usuario Invalido");
                     usuario.requestFocus();
-                }else if (!validarSenha(senha.getText().toString())){
+                }else if (!validarEmail(email.getText().toString())) {
+                        email.setError("Email Invalido");
+                        email.requestFocus();
+                } else if (!validarSenha(senha.getText().toString())){
                     senha.setError("Senha Invalido");
                     senha.requestFocus();
                 } else {
-                    Toast.makeText(CadastroActivity.this, "sucesso", Toast.LENGTH_LONG).show();
-                    Intent teste = new Intent(CadastroActivity.this, LoginActivity.class);
-                    startActivity(teste);
+                    Toast.makeText(CadastroActivity.this, "Cadastro efetuado com sucesso", Toast.LENGTH_LONG).show();
+                    finish();
                 }
 
             }
