@@ -9,6 +9,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <ProgressBar
+            android:id="@+id/login_progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone" />
         <ImageView
             android:id="@+id/logo"
             android:layout_width="match_parent"
@@ -19,19 +26,32 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:id="@+id/cadastro_nome"/>
+        <EditText android:hint="Usuário"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:id="@+id/cadastro_usuario"
+            />
         <EditText android:hint="Email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:id="@+id/cadastro_email"/>
-        <EditText android:hint="Senha"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:id="@+id/cadastro_senha"/>
+            android:layout_height="wrap_content">
+            <EditText android:hint="Senha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:id="@+id/cadastro_senha"
+                android:imeActionLabel="@string/action_sign_in_short"
+                android:imeOptions="actionUnspecified"/>
+        </android.support.design.widget.TextInputLayout>
         <Button android:text="Cadastrar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/cadastro_cadastrar"/>
+            android:id="@+id/cadastro_cadastrar"
+            android:layout_marginTop="16dp"/>
     </LinearLayout>
 </ScrollView>

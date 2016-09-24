@@ -44,9 +44,9 @@ public class ImagemPagerAdapter extends PagerAdapter {
 
         container.addView(ll);
 
-//        ImageView logo = new ImageView(ctx);
-//        logo.setImageResource(R.drawable.logo_mini);
-//        ll.addView(logo);
+        ImageView logo = new ImageView(ctx);
+        logo.setImageResource(R.drawable.logo_mini);
+        ll.addView(logo);
 
         ImageView iv = new ImageView(ctx);
         iv.setImageResource(imagens[position]);
