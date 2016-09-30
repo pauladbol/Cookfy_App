@@ -9,15 +9,33 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CadastroActivity extends AppCompatActivity {
+    private static final String REGISTER_URL = "http://simplifiedcoding.16mb.com/UserRegistration/volleyRegister.php";
+    public static final String KEY_USERNAME = "username";
+    public static final String KEY_PASSWORD = "password";
+    public static final String KEY_EMAIL = "email";
 
+    private EditText usuario;
+    private EditText senha;
+    private EditText email;
+    private EditText nome;
+
+    private Button validar;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -29,11 +47,11 @@ public class CadastroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
 
-        final EditText email = (EditText) findViewById(R.id.cadastro_email);
-        final EditText senha = (EditText) findViewById(R.id.cadastro_senha);
-        final EditText usuario = (EditText) findViewById(R.id.cadastro_usuario);
-        final EditText nome = (EditText) findViewById(R.id.cadastro_nome);
-        Button validar = (Button) findViewById(R.id.cadastro_cadastrar);
+        email = (EditText) findViewById(R.id.cadastro_email);
+        senha = (EditText) findViewById(R.id.cadastro_senha);
+        usuario = (EditText) findViewById(R.id.cadastro_usuario);
+        nome = (EditText) findViewById(R.id.cadastro_nome);
+        validar = (Button) findViewById(R.id.cadastro_cadastrar);
 
         validar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +69,7 @@ public class CadastroActivity extends AppCompatActivity {
                     senha.setError("Senha Invalido");
                     senha.requestFocus();
                 } else {
+                    registerUser();
                     Toast.makeText(CadastroActivity.this, "Cadastro efetuado com sucesso", Toast.LENGTH_LONG).show();
                     finish();
                 }
@@ -90,5 +109,36 @@ public class CadastroActivity extends AppCompatActivity {
         return matcher.matches();
     }
 
+    private void registerUser(){
+        final String username = usuario.getText().toString().trim();
+        final String password = senha.getText().toString().trim();
+        final String emaill = email.getText().toString().trim();
 
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, REGISTER_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(CadastroActivity.this,response,Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(CadastroActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put(KEY_USERNAME,username);
+                params.put(KEY_PASSWORD,password);
+                params.put(KEY_EMAIL, emaill);
+                return params;
+            }
+
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
 }
