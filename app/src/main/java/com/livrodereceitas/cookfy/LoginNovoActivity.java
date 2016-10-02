@@ -72,7 +72,9 @@ public class LoginNovoActivity extends AppCompatActivity {
                     senha.setError("Senha Invalido");
                     senha.requestFocus();
                 } else {
+
                     autenticaUsuario();
+
                 }
 
             }

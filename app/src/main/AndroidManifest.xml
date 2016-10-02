@@ -34,7 +34,6 @@
 
 
         <activity android:name=".LoginNovoActivity" />
-        <activity android:name=".CadastrarReceitaActivity" />
         <activity android:name=".teste3Activityes" />
         <activity android:name=".ListaReceitasActivity"></activity>
         <activity android:name=".DetalheActivity"></activity>
