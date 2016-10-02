@@ -66,7 +66,7 @@ public class LoginNovoActivity extends AppCompatActivity {
                     senha.requestFocus();
                 } else {
                     Toast.makeText(LoginNovoActivity.this, "Bem vindo", Toast.LENGTH_LONG).show();
-                    Intent intentLogar = new Intent(LoginNovoActivity.this, CadastrarReceitaActivity.class);
+                    Intent intentLogar = new Intent(LoginNovoActivity.this, ListaReceitasActivity.class);
                     startActivity(intentLogar);
                     finish();
                 }

@@ -11,6 +11,7 @@ public class Recipes {
         private String name;
 
     public Recipes(int i, String s) {
+
     }
         /*private String description;
 
