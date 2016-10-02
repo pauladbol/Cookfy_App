@@ -32,9 +32,11 @@
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
         -->
 
+
         <activity android:name=".LoginNovoActivity" />
         <activity android:name=".teste3Activityes" />
         <activity android:name=".ListaReceitasActivity"></activity>
+        <activity android:name=".DetalheActivity"></activity>
     </application>
 
 </manifest>

@@ -16,9 +16,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:textSize="20dp"
-        android:textColor="#454545"
+        android:textColor="@color/colorPrimaryDarker"
         android:gravity="center_horizontal"
         android:layout_alignParentBottom="true"
-        android:text="Seja bem-vindo!" />
+        android:text="Seja bem-vindo!"
+        />
 
 </RelativeLayout>

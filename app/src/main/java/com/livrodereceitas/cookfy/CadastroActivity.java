@@ -1,6 +1,7 @@
 package com.livrodereceitas.cookfy;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,12 +14,18 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -29,6 +36,7 @@ public class CadastroActivity extends AppCompatActivity {
     public static final String KEY_USERNAME = "username";
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_EMAIL = "email";
+    public static final String PREFS_NAME = "MyPrefsFile";
 
     private EditText usuario;
     private EditText senha;
@@ -36,6 +44,9 @@ public class CadastroActivity extends AppCompatActivity {
     private EditText nome;
 
     private Button validar;
+
+    private String id_user;
+    private String token;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -70,8 +81,6 @@ public class CadastroActivity extends AppCompatActivity {
                     senha.requestFocus();
                 } else {
                     registerUser();
-                    Toast.makeText(CadastroActivity.this, "Cadastro efetuado com sucesso", Toast.LENGTH_LONG).show();
-                    finish();
                 }
 
             }
@@ -113,14 +122,30 @@ public class CadastroActivity extends AppCompatActivity {
         final String username = usuario.getText().toString().trim();
         final String password = senha.getText().toString().trim();
         final String emaill = email.getText().toString().trim();
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                REGISTER_URL, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    id_user = response.getString("id");
+                    token = response.getString("token");
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, REGISTER_URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Toast.makeText(CadastroActivity.this,response,Toast.LENGTH_LONG).show();
-                    }
-                },
+                    salvarTokenID(token, id_user);
+
+                    Toast.makeText(CadastroActivity.this, "Bem vindo!", Toast.LENGTH_LONG).show();
+                    Intent intentLogar = new Intent(CadastroActivity.this, Main2Activity.class);
+                    startActivity(intentLogar);
+                    finish();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
+                    Intent intentLogar = new Intent(CadastroActivity.this, CadastroActivity.class);
+                    startActivity(intentLogar);
+                    finish();
+                }
+            }
+        },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
@@ -139,6 +164,35 @@ public class CadastroActivity extends AppCompatActivity {
         };
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
+        requestQueue.add(jsonObjReq);
     }
+
+    public String hashMd5(String s) {
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+            digest.update(s.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            // Create Hex String
+            StringBuffer hexString = new StringBuffer();
+            for (int i=0; i<messageDigest.length; i++)
+                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public void salvarTokenID(String token, String id) {
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("token", token);
+        editor.putString("id", id);
+
+        editor.commit();
+    }
+
 }

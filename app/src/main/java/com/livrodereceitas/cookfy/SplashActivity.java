@@ -3,6 +3,7 @@ package com.livrodereceitas.cookfy;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Button;
@@ -25,6 +26,8 @@ import java.util.Map;
 public class SplashActivity extends Activity {
     private static final String REGISTER_URL = "http://simplifiedcoding.16mb.com/UserRegistration/volleyRegister.php";
     public static final String KEY_TOKEN = "token";
+    public static final String PREFS_NAME = "MyPrefsFile";
+
 
     // Timer da splash screen
     private static int SPLASH_TIME_OUT = 3000;
@@ -42,7 +45,7 @@ public class SplashActivity extends Activity {
             public void run() {
                 verifyUser();
 
-                final boolean token = true;
+                final boolean token = false;
 
                 if (token) {
                     Intent i = new Intent(SplashActivity.this, Main2Activity.class);
@@ -64,7 +67,11 @@ public class SplashActivity extends Activity {
     }
 
     private void verifyUser(){
-        final String token = "token";
+        // Restore preferences
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        final String token = settings.getString("token", "");
+
+        //final String token = "token";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, REGISTER_URL,
                 new Response.Listener<String>() {
