@@ -81,7 +81,11 @@ public class CadastroActivity extends AppCompatActivity {
                     senha.setError("Senha Invalido");
                     senha.requestFocus();
                 } else {
-                    registerUser();
+                    Toast.makeText(CadastroActivity.this, "Bem vindo!", Toast.LENGTH_LONG).show();
+                    Intent intentLogar = new Intent(CadastroActivity.this, Main2Activity.class);
+                    startActivity(intentLogar);
+                    finish();
+                    //registerUser();
                 }
 
             }
