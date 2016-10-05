@@ -10,15 +10,20 @@ public class Recipes implements Serializable {
         private int id;
         private  int drawableId;
         private String name;
+        private String description;
 
-    public Recipes(int id, String nome, int imagem) {
+    public Recipes(int id, String nome, int imagem, String description) {
         this.id = id;
         this.name = nome;
         this.drawableId = imagem;
+        this.description = description;
     }
 
-    /*private String description;
+    public Recipes(){
+    }
 
+
+/*
         private String executionTime;
         private String difficulty;*/
 
@@ -49,13 +54,13 @@ public class Recipes implements Serializable {
     public int getDrawableId() {
         return drawableId;
     }
-    /*public String getDescription() {
+        public String getDescription() {
             return description;
         }
         public void setDescription(String description) {
             this.description = description;
         }
-        public String getExecutionTime() {
+        /*public String getExecutionTime() {
             return executionTime;
         }
         public void setExecutionTime(String executionTime) {
