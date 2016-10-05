@@ -42,6 +42,7 @@ public class LoginNovoActivity extends AppCompatActivity {
     private static final String REGISTER_URL = "http://simplifiedcoding.16mb.com/UserRegistration/volleyRegister.php";
     public static final String KEY_USERNAME = "user";
     public static final String KEY_PASSWORD = "hash";
+    public static final String KEY_ADAPTER = "adapter";
     public static final String PREFS_NAME = "MyPrefsFile";
 
     private EditText usuario;
@@ -72,11 +73,13 @@ public class LoginNovoActivity extends AppCompatActivity {
                     senha.requestFocus();
                 } else {
 
-                    //autenticaUsuario();
                     Toast.makeText(LoginNovoActivity.this, "Bem vindo!", Toast.LENGTH_LONG).show();
-                    Intent intentLogar = new Intent(LoginNovoActivity.this, ListaReceitasActivity.class);
+                    Intent intentLogar = new Intent(LoginNovoActivity.this, Main2Activity.class);
                     startActivity(intentLogar);
                     finish();
+                    //autenticaUsuario();
+
+
                 }
 
             }
@@ -84,6 +87,7 @@ public class LoginNovoActivity extends AppCompatActivity {
     }
 
     private void autenticaUsuario(){
+        final String adapter = "application";
         final String username = usuario.getText().toString().trim();
         final String password = senha.getText().toString().trim();
 
@@ -124,6 +128,7 @@ public class LoginNovoActivity extends AppCompatActivity {
                 Map<String,String> params = new HashMap<String, String>();
                 params.put(KEY_USERNAME,username);
                 params.put(KEY_PASSWORD,passwordHash);
+                params.put(KEY_ADAPTER,adapter);
                 return params;
             }
 

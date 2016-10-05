@@ -36,6 +36,7 @@ public class CadastroActivity extends AppCompatActivity {
     public static final String KEY_USERNAME = "username";
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_EMAIL = "email";
+    public static final String KEY_ADAPTER = "adapter";
     public static final String PREFS_NAME = "MyPrefsFile";
 
     private EditText usuario;
@@ -80,7 +81,11 @@ public class CadastroActivity extends AppCompatActivity {
                     senha.setError("Senha Invalido");
                     senha.requestFocus();
                 } else {
-                    registerUser();
+                    Toast.makeText(CadastroActivity.this, "Bem vindo!", Toast.LENGTH_LONG).show();
+                    Intent intentLogar = new Intent(CadastroActivity.this, Main2Activity.class);
+                    startActivity(intentLogar);
+                    finish();
+                    //registerUser();
                 }
 
             }
@@ -119,6 +124,7 @@ public class CadastroActivity extends AppCompatActivity {
     }
 
     private void registerUser(){
+        final String adapter = "application";
         final String username = usuario.getText().toString().trim();
         final String password = senha.getText().toString().trim();
         final String emaill = email.getText().toString().trim();
@@ -158,6 +164,7 @@ public class CadastroActivity extends AppCompatActivity {
                 params.put(KEY_USERNAME,username);
                 params.put(KEY_PASSWORD,password);
                 params.put(KEY_EMAIL, emaill);
+                params.put(KEY_ADAPTER,adapter);
                 return params;
             }
 
