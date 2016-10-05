@@ -72,8 +72,11 @@ public class LoginNovoActivity extends AppCompatActivity {
                     senha.requestFocus();
                 } else {
 
-                    autenticaUsuario();
-
+                    //autenticaUsuario();
+                    Toast.makeText(LoginNovoActivity.this, "Bem vindo!", Toast.LENGTH_LONG).show();
+                    Intent intentLogar = new Intent(LoginNovoActivity.this, ListaReceitasActivity.class);
+                    startActivity(intentLogar);
+                    finish();
                 }
 
             }
@@ -97,7 +100,7 @@ public class LoginNovoActivity extends AppCompatActivity {
                             salvarTokenID(token, id_user);
 
                             Toast.makeText(LoginNovoActivity.this, "Bem vindo!", Toast.LENGTH_LONG).show();
-                            Intent intentLogar = new Intent(LoginNovoActivity.this, Main2Activity.class);
+                            Intent intentLogar = new Intent(LoginNovoActivity.this, ListaReceitasActivity.class);
                             startActivity(intentLogar);
                             finish();
 

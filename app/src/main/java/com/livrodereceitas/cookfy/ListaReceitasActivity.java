@@ -2,6 +2,7 @@ package com.livrodereceitas.cookfy;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,7 +23,18 @@ public class ListaReceitasActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_receitas);
-        GridView gridView = (GridView) findViewById(R.id.gridview);
+        final GridView gridView = (GridView) findViewById(R.id.gridview);
         gridView.setAdapter(new Adaptador(this));
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Recipes receita = (Recipes) gridView.getItemAtPosition(position);
+                Toast.makeText(ListaReceitasActivity.this, "receita" + receita.getName(), Toast.LENGTH_SHORT).show();
+                Intent intentVaiPraDetalheReceita = new Intent(ListaReceitasActivity.this, DetalheActivity.class);
+                intentVaiPraDetalheReceita.putExtra("receita", receita);
+                startActivity(intentVaiPraDetalheReceita);
+            }
+        });
     }
 }

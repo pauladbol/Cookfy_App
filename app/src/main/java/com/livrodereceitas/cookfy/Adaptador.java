@@ -12,24 +12,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Adaptador extends BaseAdapter {
-    private final List<Item> receita = new ArrayList<Item>();
+    private final List<Recipes> receita = new ArrayList<Recipes>();
     private final LayoutInflater mInflater;
 
     public Adaptador(Context context) {
         mInflater = LayoutInflater.from(context);
 
-        receita.add(new Item("Almondegas",       R.drawable.img1));
-        receita.add(new Item("Lazanha",   R.drawable.img2));
-        receita.add(new Item("Bolo Chocolate", R.drawable.img3));
-        receita.add(new Item("Panquecas",      R.drawable.img4));
-        receita.add(new Item("Almondegas",       R.drawable.img1));
-        receita.add(new Item("Lazanha",   R.drawable.img2));
-        receita.add(new Item("Bolo Chocolate", R.drawable.img3));
-        receita.add(new Item("Panquecas",      R.drawable.img4));
-        receita.add(new Item("Almondegas",       R.drawable.img1));
-        receita.add(new Item("Lazanha",   R.drawable.img2));
-        receita.add(new Item("Bolo Chocolate", R.drawable.img3));
-        receita.add(new Item("Panquecas",      R.drawable.img4));
+        receita.add(new Recipes(1, "Almondegas", R.drawable.img1));
+        receita.add(new Recipes(2, "Lazanha", R.drawable.img2));
+        receita.add(new Recipes(3, "Bolo Chocolate", R.drawable.img3));
+        receita.add(new Recipes(4, "Panquecas", R.drawable.img4));
+        receita.add(new Recipes(5, "Almondegas", R.drawable.img1));
+        receita.add(new Recipes(6, "Lazanha", R.drawable.img2));
+        receita.add(new Recipes(7, "Bolo Chocolate", R.drawable.img3));
+        receita.add(new Recipes(9, "Panquecas", R.drawable.img4));
+        receita.add(new Recipes(10, "Almondegas", R.drawable.img1));
+        receita.add(new Recipes(11, "Lazanha", R.drawable.img2));
+        receita.add(new Recipes(12, "Bolo Chocolate", R.drawable.img3));
+        receita.add(new Recipes(13, "Panquecas", R.drawable.img4));
     }
 
     @Override
@@ -37,14 +37,17 @@ public class Adaptador extends BaseAdapter {
         return receita.size();
     }
 
+
+
+
     @Override
-    public Item getItem(int i) {
+    public Recipes getItem(int i) {
         return receita.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return receita.get(i).drawableId;
+        return receita.get(i).getDrawableId();
     }
 
     @Override
@@ -53,30 +56,26 @@ public class Adaptador extends BaseAdapter {
         ImageView picture;
         TextView name;
 
+
         if (v == null) {
             v = mInflater.inflate(R.layout.grid_item, viewGroup, false);
             v.setTag(R.id.picture, v.findViewById(R.id.picture));
             v.setTag(R.id.text, v.findViewById(R.id.text));
+
         }
 
         picture = (ImageView) v.getTag(R.id.picture);
         name = (TextView) v.getTag(R.id.text);
 
-        Item item = getItem(i);
 
-        picture.setImageResource(item.drawableId);
-        name.setText(item.name);
+        Recipes receita = getItem(i);
+
+        picture.setImageResource(receita.getDrawableId());
+        name.setText(receita.getName());
+
 
         return v;
     }
 
-    private static class Item {
-        public final String name;
-        public final int drawableId;
 
-        Item(String name, int drawableId) {
-            this.name = name;
-            this.drawableId = drawableId;
-        }
-    }
 }
