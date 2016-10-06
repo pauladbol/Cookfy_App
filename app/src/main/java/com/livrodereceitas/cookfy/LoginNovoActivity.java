@@ -39,7 +39,7 @@ import java.util.regex.Pattern;
 
 public class LoginNovoActivity extends AppCompatActivity {
 
-    private static final String REGISTER_URL = "http://simplifiedcoding.16mb.com/UserRegistration/volleyRegister.php";
+    private static final String REGISTER_URL = "localhost:8080/cookfy/login";
     public static final String KEY_USERNAME = "user";
     public static final String KEY_PASSWORD = "hash";
     public static final String KEY_ADAPTER = "adapter";
@@ -93,7 +93,7 @@ public class LoginNovoActivity extends AppCompatActivity {
 
         final String passwordHash = hashMd5(password);
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 REGISTER_URL, null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

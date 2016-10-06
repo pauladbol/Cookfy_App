@@ -32,7 +32,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CadastroActivity extends AppCompatActivity {
-    private static final String REGISTER_URL = "http://simplifiedcoding.16mb.com/UserRegistration/volleyRegister.php";
+    private static final String REGISTER_URL = "localhost:8080/cookfy/signup";
     public static final String KEY_USERNAME = "username";
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_EMAIL = "email";
@@ -128,7 +128,10 @@ public class CadastroActivity extends AppCompatActivity {
         final String username = usuario.getText().toString().trim();
         final String password = senha.getText().toString().trim();
         final String emaill = email.getText().toString().trim();
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+
+        final String passwordHash = hashMd5(password);
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 REGISTER_URL, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -162,7 +165,7 @@ public class CadastroActivity extends AppCompatActivity {
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
                 params.put(KEY_USERNAME,username);
-                params.put(KEY_PASSWORD,password);
+                params.put(KEY_PASSWORD,passwordHash);
                 params.put(KEY_EMAIL, emaill);
                 params.put(KEY_ADAPTER,adapter);
                 return params;
