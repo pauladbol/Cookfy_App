@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -48,6 +49,7 @@ public class Main2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
         ViewPager g = (ViewPager) findViewById(R.id.viewPager);
         g.setAdapter(new ImagemPagerAdapter(this, imagens));
+
 
        //g.setOnClickListener(View.OnClickListener g);
 

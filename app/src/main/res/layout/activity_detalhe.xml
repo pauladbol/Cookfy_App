@@ -34,10 +34,10 @@
             />
 
         <ImageView
-            android:id="@+id/img1"
+            android:id="@+id/test"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/img1"/>
+            />
 
         <TextView
             android:id="@+id/ingredientes"
@@ -47,7 +47,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="15dp"
-            android:textSize="15dp"
+            android:textSize="20dp"
             android:textColor="@color/colorPrimaryDarker"
             />
 
@@ -60,7 +60,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="15dp"
-            android:textSize="10dp"
+            android:textSize="15dp"
             android:textColor="@color/colorPrimaryDarker"
             />
         <TextView
@@ -71,7 +71,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="15dp"
-            android:textSize="15dp"
+            android:textSize="20dp"
             android:textColor="@color/colorPrimaryDarker"
             />
         <TextView
@@ -83,7 +83,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="15dp"
-            android:textSize="10dp"
+            android:textSize="15dp"
             android:textColor="@color/colorPrimaryDarker"
             />
     </LinearLayout>

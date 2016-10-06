@@ -16,21 +16,25 @@ public class DetalheHelper {
     private Recipes receita;
     public DetalheHelper(DetalheActivity activity){
         nomeReceita = (TextView) activity.findViewById(R.id.nome_receita);
-        fotoReceita = (ImageView) activity.findViewById(R.id.img1);
+        fotoReceita = (ImageView) activity.findViewById(R.id.test);
         ingredientesReceita= (TextView) activity.findViewById(R.id.descricao1);
         modoPreparoReceita= (TextView) activity.findViewById(R.id.descricao);
-        receita = new Recipes(1, nomeReceita.toString(), 1);
+        receita = new Recipes();
     }
 
     public Recipes pegaReceita(){;
 
-        receita.setName(nomeReceita.getText().toString());
-        //receita.setDrawableId(fotoReceita.getDrawable());
+      /*  receita.setName(nomeReceita.getText().toString());
+        receita.setDescription(modoPreparoReceita.getText().toString());
+
+        receita.setDrawableId(fotoReceita.getDrawable());*/
         return receita;
     }
 
     public void preencheDetalhe(Recipes receita) {
         nomeReceita.setText(receita.getName());
+        modoPreparoReceita.setText(receita.getDescription());
+        fotoReceita.setImageResource(receita.getDrawableId());
         this.receita = receita;
     }
 }
