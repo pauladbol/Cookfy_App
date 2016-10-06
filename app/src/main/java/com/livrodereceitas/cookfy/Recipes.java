@@ -8,9 +8,13 @@ import java.util.UUID;
  */
 public class Recipes implements Serializable {
         private int id;
-        private  int drawableId;
+        private int drawableId;
         private String name;
         private String description;
+        private String ingredientes;
+        private String executionTime;
+        private String difficulty;
+        private String recipeBooks;
 
     public Recipes(int id, String nome, int imagem, String description) {
         this.id = id;
@@ -73,4 +77,35 @@ public class Recipes implements Serializable {
             this.difficulty = difficulty;
         }*/
 
+    public String getIngredientes() {
+        return ingredientes;
+    }
+
+    public void setIngredientes(String ingredientes) {
+        this.ingredientes = ingredientes;
+    }
+
+    public String getExecutionTime() {
+        return executionTime;
+    }
+
+    public void setExecutionTime(String executionTime) {
+        this.executionTime = executionTime;
+    }
+
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public String getRecipeBooks() {
+        return recipeBooks;
+    }
+
+    public void setRecipeBooks(String recipeBooks) {
+        this.recipeBooks = recipeBooks;
+    }
 }

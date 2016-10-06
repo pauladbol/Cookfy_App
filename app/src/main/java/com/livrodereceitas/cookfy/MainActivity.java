@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         cadastrar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intentCadastra = new Intent(MainActivity.this,DetalheActivity.class);
+                Intent intentCadastra = new Intent(MainActivity.this,ListaReceitasActivity.class);
                 startActivity(intentCadastra);
             }
         });

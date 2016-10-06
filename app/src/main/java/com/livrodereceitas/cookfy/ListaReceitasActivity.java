@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 //AppCompatActivity
 public class ListaReceitasActivity extends Activity {
-    private static final String REGISTER_URL = "localhost:8080/cookfy/recipes/";
+    private static final String REGISTER_URL = "http://cookfy-andreiandrade.c9users.io/cookfyrest-1.0-SNAPSHOT/recipes/";
     public static final String KEY_USERNAME = "user";
     public static final String KEY_PASSWORD = "hash";
     public static final String KEY_ADAPTER = "adapter";
@@ -41,7 +41,7 @@ public class ListaReceitasActivity extends Activity {
     private String ingredientes;
     private String recipeBooks;
 
-    private String idReceita;
+    Recipes receita = new Recipes();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,11 @@ public class ListaReceitasActivity extends Activity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Recipes receita = (Recipes) gridView.getItemAtPosition(position);
+
+                receita = (Recipes) gridView.getItemAtPosition(position);
+
+                pegaReceita();
+
                 Toast.makeText(ListaReceitasActivity.this, "receita" + receita.getName(), Toast.LENGTH_SHORT).show();
                 Intent intentVaiPraDetalheReceita = new Intent(ListaReceitasActivity.this, DetalheActivity.class);
                 intentVaiPraDetalheReceita.putExtra("receita", receita);
@@ -62,8 +66,8 @@ public class ListaReceitasActivity extends Activity {
         });
     }
 
-    private void pegaReceitas(){
-        final String urlReceita = REGISTER_URL + idReceita;
+    private void pegaReceita(){
+        final String urlReceita = REGISTER_URL + receita.getId();
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
                 urlReceita, null, new Response.Listener<JSONObject>() {
@@ -71,18 +75,13 @@ public class ListaReceitasActivity extends Activity {
             public void onResponse(JSONObject response) {
                 try {
 
-                    id = response.getString("id");
-                    name = response.getString("name");
-                    description = response.getString("description");
-                    executionTime = response.getString("executionTime");
-                    difficulty = response.getString("difficulty");
-                    ingredientes = response.getString("ingredientes");
-                    recipeBooks = response.getString("recipeBooks");
+                    receita.setName(response.getString("name"));
+                    receita.setDescription(response.getString("description"));
 
-                    Toast.makeText(ListaReceitasActivity.this, "Bem vindo!", Toast.LENGTH_LONG).show();
-                    Intent intentLogar = new Intent(ListaReceitasActivity.this, DetalheActivity.class);
-                    startActivity(intentLogar);
-                    finish();
+                    Toast.makeText(ListaReceitasActivity.this, "1!", Toast.LENGTH_LONG).show();
+                    Intent intentDetalhe = new Intent(ListaReceitasActivity.this, DetalheActivity.class);
+                    startActivity(intentDetalhe);
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
