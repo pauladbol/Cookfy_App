@@ -74,7 +74,7 @@ public class LoginNovoActivity extends AppCompatActivity {
                 } else {
 
                     Toast.makeText(LoginNovoActivity.this, "Bem vindo!", Toast.LENGTH_LONG).show();
-                    Intent intentLogar = new Intent(LoginNovoActivity.this, ListaReceitasActivity.class);
+                    Intent intentLogar = new Intent(LoginNovoActivity.this, Main2Activity.class);
                     startActivity(intentLogar);
                     finish();
                     //autenticaUsuario();

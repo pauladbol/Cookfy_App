@@ -5,6 +5,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -50,6 +52,51 @@ public class Main2Activity extends AppCompatActivity {
         ViewPager g = (ViewPager) findViewById(R.id.viewPager);
         g.setAdapter(new ImagemPagerAdapter(this, imagens));
 
+
+// somewhere where you setup your viewPager add this
+        g.setOnTouchListener(
+                new View.OnTouchListener() {
+                    private boolean moved;
+
+                    @Override
+                    public boolean onTouch(View view, MotionEvent motionEvent) {
+                        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                            moved = false;
+                        }
+                        if (motionEvent.getAction() == MotionEvent.ACTION_MOVE) {
+                            moved = true;
+                        }
+                        if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                            if (!moved) {
+                                view.performClick();
+                            }
+                        }
+
+                        return false;
+                    }
+                }
+        );
+
+// then you can simply use the standard onClickListener ...
+        g.setOnClickListener(
+                new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view) {
+                        //Log.i(LOG, "Dayum!");
+                        Intent intentLogar = new Intent(Main2Activity.this, ListaReceitasActivity.class);
+                        startActivity(intentLogar);
+                    }
+                }
+        );
+//        final GestureDetector tapGestureDetector = new GestureDetector(this, new TapGestureListener());
+//
+//        g.setOnTouchListener(new View.OnTouchListener() {
+//            public boolean onTouch(View v, MotionEvent event) {
+//                tapGestureDetector.onTouchEvent(event);
+//                return false;
+//            }
+//        });
 
        //g.setOnClickListener(View.OnClickListener g);
 
@@ -132,3 +179,5 @@ public class Main2Activity extends AppCompatActivity {
         requestQueue.add(jsonObjReq);
     }
 }
+
+

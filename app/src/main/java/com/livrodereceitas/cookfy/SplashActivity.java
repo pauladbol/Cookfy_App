@@ -43,7 +43,7 @@ public class SplashActivity extends Activity {
              */
             @Override
             public void run() {
-                verifyUser();
+                //verifyUser();
 
                 final boolean token = false;
 
