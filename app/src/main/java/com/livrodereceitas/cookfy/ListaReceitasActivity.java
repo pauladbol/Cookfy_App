@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 //AppCompatActivity
 public class ListaReceitasActivity extends Activity {
-    private static final String REGISTER_URL = "http://cookfy-andreiandrade.c9users.io/cookfyrest-1.0-SNAPSHOT/recipes/";
+    private static final String REGISTER_URL = "https://cookfy.herokuapp.com/recipes";
     public static final String KEY_USERNAME = "user";
     public static final String KEY_PASSWORD = "hash";
     public static final String KEY_ADAPTER = "adapter";
@@ -56,9 +56,9 @@ public class ListaReceitasActivity extends Activity {
 
                 receita = (Recipes) gridView.getItemAtPosition(position);
 
-                pegaReceita();
+               // pegaReceita();
 
-                Toast.makeText(ListaReceitasActivity.this, "receita" + receita.getName(), Toast.LENGTH_SHORT).show();
+               // Toast.makeText(ListaReceitasActivity.this, "receita" + receita.getName(), Toast.LENGTH_SHORT).show();
                 Intent intentVaiPraDetalheReceita = new Intent(ListaReceitasActivity.this, DetalheActivity.class);
                 intentVaiPraDetalheReceita.putExtra("receita", receita);
                 startActivity(intentVaiPraDetalheReceita);

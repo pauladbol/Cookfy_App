@@ -34,6 +34,7 @@ public class DetalheHelper {
     public void preencheDetalhe(Recipes receita) {
         nomeReceita.setText(receita.getName());
         modoPreparoReceita.setText(receita.getDescription());
+        ingredientesReceita.setText(receita.getIngredientes());
         fotoReceita.setImageResource(receita.getDrawableId());
         this.receita = receita;
     }

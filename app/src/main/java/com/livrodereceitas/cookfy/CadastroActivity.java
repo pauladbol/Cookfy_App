@@ -81,8 +81,8 @@ public class CadastroActivity extends AppCompatActivity {
                     senha.setError("Senha Invalido");
                     senha.requestFocus();
                 } else {
-                    Toast.makeText(CadastroActivity.this, "Bem vindo!", Toast.LENGTH_LONG).show();
-                    Intent intentLogar = new Intent(CadastroActivity.this, Main2Activity.class);
+                    Toast.makeText(CadastroActivity.this, "Cadastro feito com sucesso", Toast.LENGTH_LONG).show();
+                    Intent intentLogar = new Intent(CadastroActivity.this, LoginNovoActivity.class);
                     startActivity(intentLogar);
                     finish();
                     //registerUser();

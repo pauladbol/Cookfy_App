@@ -16,11 +16,12 @@ public class Recipes implements Serializable {
         private String difficulty;
         private String recipeBooks;
 
-    public Recipes(int id, String nome, int imagem, String description) {
+    public Recipes(int id, String nome, int imagem, String ingredientes, String description) {
         this.id = id;
         this.name = nome;
         this.drawableId = imagem;
         this.description = description;
+        this.ingredientes = ingredientes;
     }
 
     public Recipes(){

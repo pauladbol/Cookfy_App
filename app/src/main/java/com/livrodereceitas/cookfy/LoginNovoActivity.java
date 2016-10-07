@@ -69,11 +69,12 @@ public class LoginNovoActivity extends AppCompatActivity {
                     usuario.setError("Usuario Invalido");
                     usuario.requestFocus();
                 } else if (!validarSenha(senha.getText().toString())) {
-                    senha.setError("Senha Invalido");
-                    senha.requestFocus();
+                    senha.setError("Senha Invalida");
+                    //senha.requestFocus();
+
                 } else {
 
-                    Toast.makeText(LoginNovoActivity.this, "Bem vindo!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginNovoActivity.this, "Bem vindo " + usuario.getText().toString() +"!", Toast.LENGTH_LONG).show();
                     Intent intentLogar = new Intent(LoginNovoActivity.this, Main2Activity.class);
                     startActivity(intentLogar);
                     finish();
@@ -110,7 +111,7 @@ public class LoginNovoActivity extends AppCompatActivity {
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
+                          //  Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
                             Intent intentLogar = new Intent(LoginNovoActivity.this, LoginNovoActivity.class);
                             startActivity(intentLogar);
                             finish();
@@ -120,7 +121,7 @@ public class LoginNovoActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(LoginNovoActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                   //     Toast.makeText(LoginNovoActivity.this,error.toString(),Toast.LENGTH_LONG).show();
                     }
                 }){
             @Override

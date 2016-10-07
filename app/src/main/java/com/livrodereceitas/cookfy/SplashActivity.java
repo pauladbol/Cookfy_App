@@ -77,13 +77,13 @@ public class SplashActivity extends Activity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(SplashActivity.this,response,Toast.LENGTH_LONG).show();
+                    //    Toast.makeText(SplashActivity.this,response,Toast.LENGTH_LONG).show();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(SplashActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                    //    Toast.makeText(SplashActivity.this,error.toString(),Toast.LENGTH_LONG).show();
                     }
                 }){
             @Override

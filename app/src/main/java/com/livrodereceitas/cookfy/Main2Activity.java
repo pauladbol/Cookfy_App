@@ -89,6 +89,7 @@ public class Main2Activity extends AppCompatActivity {
                     }
                 }
         );
+
 //        final GestureDetector tapGestureDetector = new GestureDetector(this, new TapGestureListener());
 //
 //        g.setOnTouchListener(new View.OnTouchListener() {
