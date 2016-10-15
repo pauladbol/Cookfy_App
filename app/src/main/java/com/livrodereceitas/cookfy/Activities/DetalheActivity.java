@@ -1,10 +1,12 @@
-package com.livrodereceitas.cookfy;
+package com.livrodereceitas.cookfy.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+
+import com.livrodereceitas.cookfy.Helpers.DetalheHelper;
+import com.livrodereceitas.cookfy.R;
+import com.livrodereceitas.cookfy.Classes.Recipes;
 
 public class  DetalheActivity extends AppCompatActivity {
     private DetalheHelper helper;

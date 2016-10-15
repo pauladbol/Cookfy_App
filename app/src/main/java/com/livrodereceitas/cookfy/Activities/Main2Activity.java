@@ -1,16 +1,12 @@
-package com.livrodereceitas.cookfy;
+package com.livrodereceitas.cookfy.Activities;
 
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Gallery;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -19,12 +15,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.livrodereceitas.cookfy.Adapters.ImagemPagerAdapter;
+import com.livrodereceitas.cookfy.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class Main2Activity extends AppCompatActivity {
 
@@ -77,62 +72,17 @@ public class Main2Activity extends AppCompatActivity {
                 }
         );
 
-// then you can simply use the standard onClickListener ...
         g.setOnClickListener(
                 new View.OnClickListener() {
 
                     @Override
                     public void onClick(View view) {
-                        //Log.i(LOG, "Dayum!");
                         Intent intentLogar = new Intent(Main2Activity.this, ListaReceitasActivity.class);
                         startActivity(intentLogar);
                     }
                 }
         );
 
-//        final GestureDetector tapGestureDetector = new GestureDetector(this, new TapGestureListener());
-//
-//        g.setOnTouchListener(new View.OnTouchListener() {
-//            public boolean onTouch(View v, MotionEvent event) {
-//                tapGestureDetector.onTouchEvent(event);
-//                return false;
-//            }
-//        });
-
-       //g.setOnClickListener(View.OnClickListener g);
-
-        //g.onTouchEvent(MotionEvent ev);
-//
-//        ClickableViewPager viewPager = (ClickableViewPager) findViewById(R.id.viewPager);
-//        viewPager.setAdapter(new ImagemPagerAdapter(this, imagens));
-//
-//        viewPager.setOnItemClickListener(new ClickableViewPager.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(int position) {
-//                Intent intentListaReceitas = new Intent(Main2Activity.this, ListaReceitasActivity.class);
-//                startActivity(intentListaReceitas);
-//            }
-//        });
-
-
-//
-//        g.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//                Toast t = Toast.makeText(getBaseContext(), "Imagem: " + position, Toast.LENGTH_SHORT);
-//                t.show();
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
 
     }
 

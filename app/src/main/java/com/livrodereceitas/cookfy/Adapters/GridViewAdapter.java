@@ -1,4 +1,4 @@
-package com.livrodereceitas.cookfy;
+package com.livrodereceitas.cookfy.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,14 +8,17 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.livrodereceitas.cookfy.R;
+import com.livrodereceitas.cookfy.Classes.Recipes;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Adaptador extends BaseAdapter {
+public class GridViewAdapter extends BaseAdapter {
     private final List<Recipes> receita = new ArrayList<Recipes>();
     private final LayoutInflater mInflater;
 
-    public Adaptador(Context context) {
+    public GridViewAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
 
         receita.add(new Recipes(1, "Almondegas", R.drawable.img1,"500 g de carne moída\n" +

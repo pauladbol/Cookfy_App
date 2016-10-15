@@ -1,9 +1,11 @@
-package com.livrodereceitas.cookfy;
+package com.livrodereceitas.cookfy.Helpers;
 
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.livrodereceitas.cookfy.Activities.DetalheActivity;
+import com.livrodereceitas.cookfy.R;
+import com.livrodereceitas.cookfy.Classes.Recipes;
 
 /**
  * Created by Asus on 05/10/2016.

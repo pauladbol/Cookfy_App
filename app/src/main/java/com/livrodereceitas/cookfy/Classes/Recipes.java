@@ -1,4 +1,4 @@
-package com.livrodereceitas.cookfy;
+package com.livrodereceitas.cookfy.Classes;
 
 import java.io.Serializable;
 import java.util.UUID;
