@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
 
 public class LoginNovoActivity extends AppCompatActivity {
 
-    private static final String REGISTER_URL = "localhost:8080/cookfy/login";
+    private static final String REGISTER_URL = "https://cookfy.herokuapp.com/login";
     public static final String KEY_USERNAME = "user";
     public static final String KEY_PASSWORD = "hash";
     public static final String KEY_ADAPTER = "adapter";
@@ -101,7 +101,7 @@ public class LoginNovoActivity extends AppCompatActivity {
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                          //  Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
                             Intent intentLogar = new Intent(LoginNovoActivity.this, LoginNovoActivity.class);
                             startActivity(intentLogar);
                             finish();
@@ -111,7 +111,7 @@ public class LoginNovoActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                   //     Toast.makeText(LoginNovoActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginNovoActivity.this,error.toString(),Toast.LENGTH_LONG).show();
                     }
                 }){
             @Override

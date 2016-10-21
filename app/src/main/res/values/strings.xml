@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Cookfy</string>
+    <string name="about">Sobre</string>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
@@ -25,4 +26,28 @@
         Maecenas iaculis leo eget nisi varius, vel tristique odio aliquet.
         Suspendisse iaculis ante mattis hendrerit commodo.
         Praesent efficitur quam in mauris dictum pretium. </string>
+    <string name="title_activity_main3">Main3Activity</string>
+
+    <string-array name="nav_drawer_items">
+        <item>Home</item>
+        <item>Cardápio</item>
+        <item>Notícias</item>
+        <item>Eventos</item>
+        <item>Locais</item>
+        <item>Anúncios</item>
+    </string-array>
+
+    <array name="nav_drawer_icons">
+        <item>@drawable/logo_icon</item>
+        <item>@drawable/logo_icon</item>
+        <item>@drawable/logo_icon</item>
+        <item>@drawable/logo_icon</item>
+        <item>@drawable/logo_icon</item>
+        <item>@drawable/logo_icon</item>
+    </array>
+    <string name="title_activity_main4">Main4Activity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

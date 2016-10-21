@@ -29,7 +29,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CadastroActivity extends AppCompatActivity {
-    private static final String REGISTER_URL = "localhost:8080/cookfy/signup";
+    private static final String REGISTER_URL = "https://cookfy.herokuapp/signup";
     public static final String KEY_USERNAME = "username";
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_EMAIL = "email";

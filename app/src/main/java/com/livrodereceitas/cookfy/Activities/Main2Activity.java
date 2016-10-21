@@ -1,12 +1,17 @@
 package com.livrodereceitas.cookfy.Activities;
 
 import android.content.Intent;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -17,13 +22,14 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.livrodereceitas.cookfy.Adapters.ImagemPagerAdapter;
 import com.livrodereceitas.cookfy.R;
+import com.livrodereceitas.cookfy.sobreFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Main2Activity extends AppCompatActivity {
 
-    private static final String REGISTER_URL = "http://simplifiedcoding.16mb.com/UserRegistration/volleyRegister.php";
+    private static final String REGISTER_URL = "https://cookfy.herokuapp.com/recipes/";
     public static final String KEY_USERNAME = "user";
     public static final String KEY_PASSWORD = "hash";
     public static final String KEY_ADAPTER = "adapter";
@@ -41,7 +47,6 @@ public class Main2Activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         ViewPager g = (ViewPager) findViewById(R.id.viewPager);
@@ -128,6 +133,56 @@ public class Main2Activity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonObjReq);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_about) {
+            sobreFragment fragment = new sobreFragment();
+            android.support.v4.app.FragmentTransaction fragmentTrasaction =
+                    getSupportFragmentManager().beginTransaction();
+            fragmentTrasaction.replace(R.id.fragment_container, fragment);
+            fragmentTrasaction.commit();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_camera) {
+            // abrindo um novo fragment
+            sobreFragment fragment = new sobreFragment();
+            android.support.v4.app.FragmentTransaction fragmentTrasaction =
+                    getSupportFragmentManager().beginTransaction();
+            fragmentTrasaction.replace(R.id.fragment_container, fragment);
+            fragmentTrasaction.commit();
+        } else if (id == R.id.nav_gallery)  {
+            // abrindo um nova activity
+            Intent intent = new Intent(this, ListaReceitasActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_slideshow) {
+
+        } else if (id == R.id.nav_manage) {
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
 
