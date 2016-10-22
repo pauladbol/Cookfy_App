@@ -43,7 +43,7 @@ public class SplashActivity extends Activity {
             public void run() {
                 //verifyUser();
 
-                final boolean token = true;
+                final boolean token = false;
 
                 if (token) {
                     Intent i = new Intent(SplashActivity.this, Main2Activity.class);

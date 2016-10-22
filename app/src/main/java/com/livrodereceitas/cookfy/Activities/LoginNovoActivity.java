@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.livrodereceitas.cookfy.GsonRequest;
 import com.livrodereceitas.cookfy.R;
 
 import org.json.JSONException;
@@ -51,7 +53,7 @@ public class LoginNovoActivity extends AppCompatActivity {
         usuario = (EditText) findViewById(R.id.login_usuario);
         senha = (EditText) findViewById(R.id.login_senha);
         logar = (Button) findViewById(R.id.login_logar);
-
+        Log.i("script", "login ");
         logar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +70,7 @@ public class LoginNovoActivity extends AppCompatActivity {
                     Intent intentLogar = new Intent(LoginNovoActivity.this, Main2Activity.class);
                     startActivity(intentLogar);
                     finish();
-                    //autenticaUsuario();
+                    autenticaUsuario();
 
 
                 }
@@ -83,12 +85,14 @@ public class LoginNovoActivity extends AppCompatActivity {
         final String password = senha.getText().toString().trim();
 
         final String passwordHash = hashMd5(password);
+        Log.i("script", "hash "+passwordHash);
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 REGISTER_URL, null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+                            Log.i("script", "id_user "+response.getString("id"));
                             id_user = response.getString("id");
                             token = response.getString("token");
 
