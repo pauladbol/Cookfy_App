@@ -32,6 +32,7 @@
         -->
 
         <activity android:name=".Activities.LoginNovoActivity" />
+        <activity android:name=".Activities.PesquisaIngredienteActivity" />
         <activity android:name=".Activities.ListaReceitasActivity" />
         <activity android:name=".Activities.DetalheActivity" />
         <activity

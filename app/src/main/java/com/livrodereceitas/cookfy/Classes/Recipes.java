@@ -12,9 +12,10 @@ public class Recipes implements Serializable {
         private String name;
         private String description;
         private String ingredientes;
-        private String executionTime;
+        private String prepTime;
         private String difficulty;
-        private String recipeBooks;
+        private String[] recipeBooks;
+
 
     public Recipes(int id, String nome, int imagem, String ingredientes, String description) {
         this.id = id;
@@ -87,11 +88,11 @@ public class Recipes implements Serializable {
     }
 
     public String getExecutionTime() {
-        return executionTime;
+        return prepTime;
     }
 
     public void setExecutionTime(String executionTime) {
-        this.executionTime = executionTime;
+        this.prepTime = executionTime;
     }
 
     public String getDifficulty() {
@@ -102,11 +103,11 @@ public class Recipes implements Serializable {
         this.difficulty = difficulty;
     }
 
-    public String getRecipeBooks() {
+    public String[] getRecipeBooks() {
         return recipeBooks;
     }
 
-    public void setRecipeBooks(String recipeBooks) {
+    public void setRecipeBooks(String[] recipeBooks) {
         this.recipeBooks = recipeBooks;
     }
 }
