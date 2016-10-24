@@ -66,10 +66,10 @@ public class LoginNovoActivity extends AppCompatActivity {
 
                 } else {
 
-                    Toast.makeText(LoginNovoActivity.this, "Bem vindo " + usuario.getText().toString() +"!", Toast.LENGTH_LONG).show();
-                    Intent intentLogar = new Intent(LoginNovoActivity.this, Main2Activity.class);
-                    startActivity(intentLogar);
-                    finish();
+                    //Toast.makeText(LoginNovoActivity.this, "Bem vindo " + usuario.getText().toString() +"!", Toast.LENGTH_LONG).show();
+                    //Intent intentLogar = new Intent(LoginNovoActivity.this, Main2Activity.class);
+                    //startActivity(intentLogar);
+                    //finish();
                     autenticaUsuario();
 
 
@@ -85,10 +85,12 @@ public class LoginNovoActivity extends AppCompatActivity {
         final String password = senha.getText().toString().trim();
 
         final String passwordHash = hashMd5(password);
+
+        final String urlLogin = REGISTER_URL + "?login=" + username + "&hash=" + passwordHash;
         Log.i("script", "hash "+passwordHash);
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                REGISTER_URL, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                urlLogin, null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
@@ -99,7 +101,7 @@ public class LoginNovoActivity extends AppCompatActivity {
                             salvarTokenID(token, id_user);
 
                             Toast.makeText(LoginNovoActivity.this, "Bem vindo!", Toast.LENGTH_LONG).show();
-                            Intent intentLogar = new Intent(LoginNovoActivity.this, ListaReceitasActivity.class);
+                            Intent intentLogar = new Intent(LoginNovoActivity.this, Main2Activity.class);
                             startActivity(intentLogar);
                             finish();
 
@@ -117,17 +119,18 @@ public class LoginNovoActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(LoginNovoActivity.this,error.toString(),Toast.LENGTH_LONG).show();
                     }
-                }){
-            @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
-                params.put(KEY_USERNAME,username);
-                params.put(KEY_PASSWORD,passwordHash);
-                params.put(KEY_ADAPTER,adapter);
-                return params;
-            }
-
-        };
+               });
+//        {
+//            @Override
+//            protected Map<String,String> getParams(){
+//                Map<String,String> params = new HashMap<String, String>();
+//                params.put(KEY_USERNAME,username);
+//                params.put(KEY_PASSWORD,passwordHash);
+//                params.put(KEY_ADAPTER,adapter);
+//                return params;
+//            }
+//
+//        };
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonObjReq);
@@ -172,6 +175,7 @@ public class LoginNovoActivity extends AppCompatActivity {
         editor.putString("token", token);
         editor.putString("id", id);
 
+        Log.i("script", "TOKEN");
         editor.commit();
     }
 

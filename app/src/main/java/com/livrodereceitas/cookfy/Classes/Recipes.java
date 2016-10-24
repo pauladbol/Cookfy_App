@@ -14,7 +14,7 @@ public class Recipes implements Serializable {
         private String ingredientes;
         private String executionTime;
         private String difficulty;
-        private String recipeBooks;
+        private String[] recipeBooks;
 
     public Recipes(int id, String nome, int imagem, String ingredientes, String description) {
         this.id = id;
@@ -102,11 +102,11 @@ public class Recipes implements Serializable {
         this.difficulty = difficulty;
     }
 
-    public String getRecipeBooks() {
+    public String[] getRecipeBooks() {
         return recipeBooks;
     }
 
-    public void setRecipeBooks(String recipeBooks) {
+    public void setRecipeBooks(String[] recipeBooks) {
         this.recipeBooks = recipeBooks;
     }
 }
