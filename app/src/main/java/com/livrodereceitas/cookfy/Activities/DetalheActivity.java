@@ -19,7 +19,7 @@ public class  DetalheActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Recipes receita = (Recipes) intent.getSerializableExtra("receita");
 
-        helper.preencheDetalhe(receita);
+        //helper.preencheDetalhe(receita);
 
 //        String[] ingredientes = {"Ingrediente1", "Ingrediente2", "Ingrediente3"};
 //        ListView lista_ingredientes = (ListView) findViewById(R.id.lista_ingredientes);
