@@ -59,83 +59,91 @@ public class ListaReceitasActivity extends Activity {
 
                 receita = (Recipes) gridView.getItemAtPosition(position);
 
-                pegaReceita();
+                pegaReceita(receita);
 
                // Toast.makeText(ListaReceitasActivity.this, "receita" + receita.getName(), Toast.LENGTH_SHORT).show();
-                Intent intentVaiPraDetalheReceita = new Intent(ListaReceitasActivity.this, DetalheActivity.class);
-                intentVaiPraDetalheReceita.putExtra("receita", receita);
-                startActivity(intentVaiPraDetalheReceita);
+                //Intent intentVaiPraDetalheReceita = new Intent(ListaReceitasActivity.this, DetalheActivity.class);
+                //intentVaiPraDetalheReceita.putExtra("receita", receita);
+                //startActivity(intentVaiPraDetalheReceita);
             }
         });
     }
 
-    private void pegaReceita(){
-        final String urlReceita = REGISTER_URL +"1" /*receita.getId()*/ ;
+    private void pegaReceita(final Recipes receitaDetalhe){
+        final String urlReceita = REGISTER_URL + receitaDetalhe.getId();
         Log.i("script", "1");
-        Map<String,String> params = new HashMap<String, String>();
-        params.put("recId","1");
+        //Map<String,String> params = new HashMap<String, String>();
+        //params.put("recId","1");
         Log.i("script", "2");
 
+        //final Recipes receitaDetalhe = new Recipes();
         // GsonRequest(String url, Class<T> clazz, Map<String, String> headers,
         //       Response.Listener<T> listener, Response.ErrorListener errorListener
 
-        GsonRequest gsonRequest = new GsonRequest(urlReceita, Recipes.class, params, new Response.Listener() {
-            @Override
-            public void onResponse(Object response) {
-
-                Log.i("script", "receitaid");
-                Toast.makeText(ListaReceitasActivity.this, "1!", Toast.LENGTH_LONG).show();
-                Intent intentDetalhe = new Intent(ListaReceitasActivity.this, DetalheActivity.class);
-                startActivity(intentDetalhe);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                Toast.makeText(getApplicationContext(),"Error: " + error.getMessage(),Toast.LENGTH_LONG).show();
-                Intent intentLogar = new Intent(ListaReceitasActivity.this, ListaReceitasActivity.class);
-                startActivity(intentLogar);
-                finish();
-            }
-        });
-
-
-
-//
-//        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-//                urlReceita, null, new Response.Listener<JSONObject>() {
+//        GsonRequest gsonRequest = new GsonRequest(urlReceita, Recipes.class, params, new Response.Listener<JSONObject>() {
 //            @Override
 //            public void onResponse(JSONObject response) {
+//                String nomeReceita = "";
 //                try {
-//
-//                    receita.setName(response.getString("name"));
-//                    receita.setDescription(response.getString("description"));
-//
-//                    Toast.makeText(ListaReceitasActivity.this, "1!", Toast.LENGTH_LONG).show();
-//                    Intent intentDetalhe = new Intent(ListaReceitasActivity.this, DetalheActivity.class);
-//                    startActivity(intentDetalhe);
-//
-//
+//                    nomeReceita = response.getString("name");
 //                } catch (JSONException e) {
 //                    e.printStackTrace();
-//                    Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
-//                    Intent intentLogar = new Intent(ListaReceitasActivity.this, ListaReceitasActivity.class);
-//                    startActivity(intentLogar);
-//                    finish();
 //                }
+//
+//                Log.i("script", "receita ");
+//                Toast.makeText(ListaReceitasActivity.this, "1!", Toast.LENGTH_LONG).show();
+//                Intent intentDetalhe = new Intent(ListaReceitasActivity.this, DetalheActivity.class);
+//                startActivity(intentDetalhe);
 //            }
-//        },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        Toast.makeText(ListaReceitasActivity.this,error.toString(),Toast.LENGTH_LONG).show();
-//                    }
-//                }){
-//
-//
-//        };
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                error.printStackTrace();
+//                Toast.makeText(getApplicationContext(),"Error: " + error.getMessage(),Toast.LENGTH_LONG).show();
+//                Intent intentLogar = new Intent(ListaReceitasActivity.this, ListaReceitasActivity.class);
+//                startActivity(intentLogar);
+//                finish();
+//            }
+//        });
+
+
+
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                urlReceita, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+
+                    receitaDetalhe.setName(response.getString("name"));
+                    receitaDetalhe.setDescription(response.getString("description"));
+                    Log.i("script", receitaDetalhe.getName());
+                    Toast.makeText(ListaReceitasActivity.this, "1!", Toast.LENGTH_LONG).show();
+                    Intent intentDetalhe = new Intent(ListaReceitasActivity.this, DetalheActivity.class);
+                    intentDetalhe.putExtra("receita", receitaDetalhe);
+                    startActivity(intentDetalhe);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
+                    Intent intentLogar = new Intent(ListaReceitasActivity.this, ListaReceitasActivity.class);
+                    startActivity(intentLogar);
+                    finish();
+                }
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(ListaReceitasActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+
+
+        };
         Log.i("script", "3");
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(gsonRequest);
+        requestQueue.add(jsonObjReq);
     }
 }

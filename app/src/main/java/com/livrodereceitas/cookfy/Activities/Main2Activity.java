@@ -1,7 +1,9 @@
 package com.livrodereceitas.cookfy.Activities;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -52,11 +54,12 @@ public class Main2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
         ViewPager g = (ViewPager) findViewById(R.id.viewPager);
         g.setAdapter(new ImagemPagerAdapter(this, imagens));
 
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -65,15 +68,11 @@ public class Main2Activity extends AppCompatActivity {
         toggle.syncState();
 
 
-
         //NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        //navigationView.setNavigationItemSelectedListener(this);
+        //navigationView.setNavigationItemSelectedListener(getApplicationContext());
 
 
 
-
-
-// somewhere where you setup your viewPager add this
         g.setOnTouchListener(
                 new View.OnTouchListener() {
                     private boolean moved;
@@ -104,6 +103,7 @@ public class Main2Activity extends AppCompatActivity {
                     public void onClick(View view) {
                         Intent intentLogar = new Intent(Main2Activity.this, ListaReceitasActivity.class);
                         startActivity(intentLogar);
+
                     }
                 }
         );
@@ -156,13 +156,24 @@ public class Main2Activity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_about) {
             sobreFragment fragment = new sobreFragment();
@@ -179,24 +190,20 @@ public class Main2Activity extends AppCompatActivity {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_perfil) {
             // abrindo um novo fragment
-            sobreFragment fragment = new sobreFragment();
-            android.support.v4.app.FragmentTransaction fragmentTrasaction =
-                    getSupportFragmentManager().beginTransaction();
-            fragmentTrasaction.replace(R.id.fragment_container, fragment);
-            fragmentTrasaction.commit();
-        } else if (id == R.id.nav_gallery)  {
+//            sobreFragment fragment = new sobreFragment();
+//            android.support.v4.app.FragmentTransaction fragmentTrasaction =
+//                    getSupportFragmentManager().beginTransaction();
+//            fragmentTrasaction.replace(R.id.fragment_container, fragment);
+//            fragmentTrasaction.commit();
+        } else if (id == R.id.nav_favoritos)  {
             // abrindo um nova activity
             Intent intent = new Intent(this, ListaReceitasActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_config) {
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_sair) {
 
         }
 
