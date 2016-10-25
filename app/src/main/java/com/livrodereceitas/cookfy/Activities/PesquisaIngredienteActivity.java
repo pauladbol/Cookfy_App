@@ -1,9 +1,11 @@
 package com.livrodereceitas.cookfy.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -19,7 +21,6 @@ import java.util.List;
 public class PesquisaIngredienteActivity extends AppCompatActivity implements View.OnClickListener {
     private List<IngredientePesquisa> listaIngredientesPesquisa = new ArrayList<IngredientePesquisa>();
     IngredientePesquisa ingredientePesquisa;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,13 +40,16 @@ public class PesquisaIngredienteActivity extends AppCompatActivity implements Vi
 
             }
         });
+        final BaseAdapter teste = new GridIngredienteAdapter(this, listaIngredientesPesquisa);
 
-        gridView.setAdapter(new GridIngredienteAdapter(this, listaIngredientesPesquisa));
+        gridView.setAdapter(teste);
+        //gridView.setAdapter(new GridIngredienteAdapter(this, listaIngredientesPesquisa));
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 ingredientePesquisa = (IngredientePesquisa) gridView.getItemAtPosition(position);
                 listaIngredientesPesquisa.remove(position);
+                teste.notifyDataSetChanged();
                 Toast.makeText(PesquisaIngredienteActivity.this, "ingrediente " + ingredientePesquisa.getNome() + " apagado", Toast.LENGTH_SHORT).show();
                 return true;
             }
@@ -60,6 +64,7 @@ public class PesquisaIngredienteActivity extends AppCompatActivity implements Vi
         ingredientePesquisa.setNome(ingrediente.getText().toString());
         listaIngredientesPesquisa.add(ingredientePesquisa);
         ingrediente.setText("");
+
 
     }
 }

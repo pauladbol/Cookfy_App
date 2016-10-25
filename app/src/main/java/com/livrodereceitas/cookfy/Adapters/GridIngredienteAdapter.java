@@ -22,6 +22,7 @@ public class GridIngredienteAdapter extends BaseAdapter {
     public GridIngredienteAdapter(Context context, List<IngredientePesquisa> ingredientePesquisas) {
         mInflater = LayoutInflater.from(context);
         ListaingredientesPesquisa = ingredientePesquisas;
+
     }
 
     @Override
@@ -50,6 +51,7 @@ public class GridIngredienteAdapter extends BaseAdapter {
         nome = (TextView) v.getTag(R.id.ingrediente);
         IngredientePesquisa ingredientePesquisa = (IngredientePesquisa) getItem(position);
         nome.setText(ingredientePesquisa.getNome());
+
         return v;
     }
 }
