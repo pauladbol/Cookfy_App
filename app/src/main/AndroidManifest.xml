@@ -23,8 +23,8 @@
         </activity>
         <activity android:name=".Activities.MainActivity" />
         <activity
-            android:theme="@style/AppTheme.NoActionBar"
-            android:name=".Activities.Main2Activity" />
+            android:name=".Activities.Main2Activity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.CadastroActivity" />
         <!--
      ATTENTION: This was auto-generated to add Google Play services to your project for
@@ -36,9 +36,9 @@
         <activity android:name=".Activities.ListaReceitasActivity" />
         <activity android:name=".Activities.DetalheActivity" />
         <activity
-            android:name=".Activities.Main3Activity"
-            android:label="@string/title_activity_main3"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".Activities.DrawerActivity"
+            android:label="@string/title_activity_drawer"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
