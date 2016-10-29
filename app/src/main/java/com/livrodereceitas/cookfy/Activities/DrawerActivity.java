@@ -2,6 +2,8 @@ package com.livrodereceitas.cookfy.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.view.MotionEvent;
 import android.view.View;
@@ -151,7 +153,7 @@ public class DrawerActivity extends AppCompatActivity
 
         if (id == R.id.nav_perfil) {
             // Handle the camera action
-            Intent intentPerfil = new Intent(DrawerActivity.this, DetalheActivity.class);
+            Intent intentPerfil = new Intent(DrawerActivity.this, PerfilActivity.class);
             startActivity(intentPerfil);
         } else if (id == R.id.nav_favoritos) {
             Intent intentFav = new Intent(DrawerActivity.this, ListaReceitasActivity.class);
