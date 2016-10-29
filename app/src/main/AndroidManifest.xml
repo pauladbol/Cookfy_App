@@ -38,7 +38,8 @@
         <activity
             android:name=".Activities.DrawerActivity"
             android:label="@string/title_activity_drawer"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Activities.PerfilActivity"></activity>
     </application>
 
 </manifest>
