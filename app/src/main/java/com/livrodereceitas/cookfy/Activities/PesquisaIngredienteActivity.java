@@ -21,6 +21,7 @@ import java.util.List;
 public class PesquisaIngredienteActivity extends AppCompatActivity implements View.OnClickListener {
     private List<IngredientePesquisa> listaIngredientesPesquisa = new ArrayList<IngredientePesquisa>();
     IngredientePesquisa ingredientePesquisa;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +41,7 @@ public class PesquisaIngredienteActivity extends AppCompatActivity implements Vi
 
             }
         });
-        final BaseAdapter teste = new GridIngredienteAdapter(this, listaIngredientesPesquisa);
+        final  BaseAdapter teste = new GridIngredienteAdapter(this, listaIngredientesPesquisa);
 
         gridView.setAdapter(teste);
         //gridView.setAdapter(new GridIngredienteAdapter(this, listaIngredientesPesquisa));
@@ -64,7 +65,6 @@ public class PesquisaIngredienteActivity extends AppCompatActivity implements Vi
         ingredientePesquisa.setNome(ingrediente.getText().toString());
         listaIngredientesPesquisa.add(ingredientePesquisa);
         ingrediente.setText("");
-
 
     }
 }

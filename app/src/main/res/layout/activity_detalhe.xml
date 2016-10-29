@@ -21,27 +21,16 @@
             <!--android:layout_height="wrap_content"-->
             <!--android:src="@drawable/logo_mini"/>-->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/nome_receita"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Receita 1"
-                android:textAlignment="center"
-                android:layout_marginLeft="100dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
-                android:textSize="40dp"
-                android:textColor="@color/colorPrimaryDarker"
-                />
+            android:orientation="horizontal"
+            android:layout_gravity="right"
+            >
             <CheckBox
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="70dp"
-                android:button="@android:drawable/btn_star"/>
+                android:button="@android:drawable/btn_star"
+                android:id="@+id/favorita"/>
         </LinearLayout>
 
 
@@ -51,7 +40,18 @@
             android:layout_height="wrap_content"
             android:src="@drawable/imagem"
             />
-
+        <TextView
+            android:id="@+id/nome_receita"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Receita 1"
+            android:textAlignment="center"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:textSize="40dp"
+            android:textColor="@color/colorPrimaryDarker"
+            />
         <TextView
             android:id="@+id/ingredientes"
             android:layout_width="match_parent"
