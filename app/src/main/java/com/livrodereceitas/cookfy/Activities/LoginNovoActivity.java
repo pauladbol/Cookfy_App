@@ -84,9 +84,9 @@ public class LoginNovoActivity extends AppCompatActivity {
         final String username = usuario.getText().toString().trim();
         final String password = senha.getText().toString().trim();
 
-        final String passwordHash = hashMd5(password);
+        final String passwordHash = hashSHA256(password);
 
-        final String urlLogin = REGISTER_URL + "?login=" + username + "&hash=" + passwordHash;
+        final String urlLogin = REGISTER_URL + "?username=" + username + "&hash=" + passwordHash;
         Log.i("script", "hash "+passwordHash);
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
@@ -150,10 +150,10 @@ public class LoginNovoActivity extends AppCompatActivity {
         return matcher.matches();
     }
 
-    public String hashMd5(String s) {
+    public String hashSHA256(String s) {
         try {
-            // Create MD5 Hash
-            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+            // Create SHA256 Hash
+            MessageDigest digest = java.security.MessageDigest.getInstance("SHA256");
             digest.update(s.getBytes());
             byte messageDigest[] = digest.digest();
 
