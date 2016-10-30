@@ -15,9 +15,17 @@
     <TextView
         android:id="@+id/ingrediente"
         android:textSize="20dp"
-        android:layout_width="110dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#55000000"
         android:text="teste"/>
+    <TextView
+        android:id="@+id/fechar"
+        android:textSize="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-5dp"
+        android:textColor="#55000000"
+        android:text=" x"/>
 
 </LinearLayout>

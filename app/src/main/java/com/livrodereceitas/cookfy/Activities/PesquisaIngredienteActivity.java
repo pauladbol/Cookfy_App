@@ -18,7 +18,7 @@ import com.livrodereceitas.cookfy.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PesquisaIngredienteActivity extends AppCompatActivity implements View.OnClickListener {
+public class PesquisaIngredienteActivity extends AppCompatActivity {
     private List<IngredientePesquisa> listaIngredientesPesquisa = new ArrayList<IngredientePesquisa>();
     IngredientePesquisa ingredientePesquisa;
 
@@ -30,8 +30,20 @@ public class PesquisaIngredienteActivity extends AppCompatActivity implements Vi
         Button adicionar = (Button) findViewById(R.id.ingredienteAdicionar);
         Button pesquisar = (Button) findViewById(R.id.ingredientePesquisar);
         final GridView gridView = (GridView) findViewById(R.id.gridIngredientes);
+        final BaseAdapter baseAdapter = new GridIngredienteAdapter(this, listaIngredientesPesquisa);
 
-        adicionar.setOnClickListener(this);
+        adicionar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ingredientePesquisa = new IngredientePesquisa();
+                EditText ingrediente = (EditText) findViewById(R.id.ingredienteNome);
+                ingredientePesquisa.setNome(ingrediente.getText().toString());
+                listaIngredientesPesquisa.add(ingredientePesquisa);
+                ingrediente.setText("");
+                baseAdapter.notifyDataSetChanged();
+
+            }
+        });
 
 
         pesquisar.setOnClickListener(new View.OnClickListener(){
@@ -41,30 +53,18 @@ public class PesquisaIngredienteActivity extends AppCompatActivity implements Vi
 
             }
         });
-        final  BaseAdapter teste = new GridIngredienteAdapter(this, listaIngredientesPesquisa);
 
-        gridView.setAdapter(teste);
-        //gridView.setAdapter(new GridIngredienteAdapter(this, listaIngredientesPesquisa));
+        gridView.setAdapter(baseAdapter);
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 ingredientePesquisa = (IngredientePesquisa) gridView.getItemAtPosition(position);
                 listaIngredientesPesquisa.remove(position);
-                teste.notifyDataSetChanged();
+                baseAdapter.notifyDataSetChanged();
                 Toast.makeText(PesquisaIngredienteActivity.this, "ingrediente " + ingredientePesquisa.getNome() + " apagado", Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        ingredientePesquisa = new IngredientePesquisa();
-        EditText ingrediente = (EditText) findViewById(R.id.ingredienteNome);
-        ingredientePesquisa.setNome(ingrediente.getText().toString());
-        listaIngredientesPesquisa.add(ingredientePesquisa);
-        ingrediente.setText("");
 
     }
 }
