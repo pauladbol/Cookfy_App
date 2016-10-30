@@ -41,12 +41,12 @@ public class SplashActivity extends Activity {
              */
             @Override
             public void run() {
-                //verifyUser();
+                verificarUsuario();
 
-                final boolean token = false;
+                final boolean token = verificarUsuario();
 
                 if (token) {
-                    Intent i = new Intent(SplashActivity.this, Main2Activity.class);
+                    Intent i = new Intent(SplashActivity.this, DrawerActivity.class);
                     startActivity(i);
                 } else {
                     Intent i = new Intent(SplashActivity.this, MainActivity.class);
@@ -64,36 +64,13 @@ public class SplashActivity extends Activity {
         }, SPLASH_TIME_OUT);
     }
 
-    private void verifyUser(){
-        // Restore preferences
+    private boolean verificarUsuario(){
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        final String token = settings.getString("token", "");
 
-        //final String token = "token";
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, REGISTER_URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                    //    Toast.makeText(SplashActivity.this,response,Toast.LENGTH_LONG).show();
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                    //    Toast.makeText(SplashActivity.this,error.toString(),Toast.LENGTH_LONG).show();
-                    }
-                }){
-            @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
-                params.put(KEY_TOKEN,token);
-                return params;
-            }
-
-        };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
+        if (settings.contains("token")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

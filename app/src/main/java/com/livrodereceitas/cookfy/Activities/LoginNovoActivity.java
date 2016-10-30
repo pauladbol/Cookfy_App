@@ -16,7 +16,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.livrodereceitas.cookfy.GsonRequest;
 import com.livrodereceitas.cookfy.R;
 
 import org.json.JSONException;
@@ -24,8 +23,6 @@ import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -87,7 +84,7 @@ public class LoginNovoActivity extends AppCompatActivity {
         final String passwordHash = hashSHA256(password);
 
         final String urlLogin = REGISTER_URL + "?username=" + username + "&hash=" + passwordHash;
-        Log.i("script", "hash "+passwordHash);
+        Log.i("script", "hash login "+passwordHash);
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
                 urlLogin, null, new Response.Listener<JSONObject>() {
@@ -175,7 +172,8 @@ public class LoginNovoActivity extends AppCompatActivity {
         editor.putString("token", token);
         editor.putString("id", id);
 
-        Log.i("script", "TOKEN");
+        Log.i("script", "TOKEN "+token);
+        Log.i("script", "id "+id);
         editor.commit();
     }
 

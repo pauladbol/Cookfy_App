@@ -1,4 +1,4 @@
-package com.livrodereceitas.cookfy;
+package com.livrodereceitas.cookfy.Custom;
 
 import android.content.Context;
 import android.util.AttributeSet;

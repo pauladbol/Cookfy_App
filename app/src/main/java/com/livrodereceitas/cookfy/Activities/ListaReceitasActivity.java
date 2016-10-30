@@ -16,17 +16,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.livrodereceitas.cookfy.Adapters.GridViewAdapter;
-import com.livrodereceitas.cookfy.GsonRequest;
 import com.livrodereceitas.cookfy.R;
 import com.livrodereceitas.cookfy.Classes.Recipes;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import com.livrodereceitas.cookfy.Classes.Recipes;
 
 //AppCompatActivity
 public class ListaReceitasActivity extends Activity {
