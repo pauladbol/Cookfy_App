@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -27,6 +28,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.livrodereceitas.cookfy.Adapters.ImagemPagerAdapter;
 import com.livrodereceitas.cookfy.Classes.Recipes;
+import com.livrodereceitas.cookfy.Classes.User;
 import com.livrodereceitas.cookfy.R;
 
 import org.json.JSONException;
@@ -38,8 +40,9 @@ import java.util.List;
 public class DrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String REGISTER_URL_CATEG = "https://cookfy.herokuapp.com/recipes/";
-    private static final String REGISTER_URL_FAV = "https://cookfy.herokuapp.com/favorites/";
+    private static final String URL_CATEG = "https://cookfy.herokuapp.com/recipes/";
+    private static final String URL_FAV = "https://cookfy.herokuapp.com/favorites/";
+    private static final String URL_PERFIL = "https://cookfy.herokuapp.com/users/";
     public static final String KEY_USERNAME = "user";
     public static final String PREFS_NAME = "MyPrefsFile";
 
@@ -64,15 +67,6 @@ public class DrawerActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -81,6 +75,12 @@ public class DrawerActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+//        TextView nome = (TextView) this.findViewById(R.id.drawer_nome);
+//        TextView email = (TextView) this.findViewById(R.id.drawer_email);
+//
+//        nome.setText(usuario.getNome());
+//        email.setText(usuario.getEmail());
 
         ViewPager g = (ViewPager) findViewById(R.id.viewPager);
         g.setAdapter(new ImagemPagerAdapter(this, imagens));
@@ -113,7 +113,7 @@ public class DrawerActivity extends AppCompatActivity
 
                     @Override
                     public void onClick(View view) {
-                        reqReceitas("categorias");
+                        //reqReceitas("categorias");
                         Intent intentLogar = new Intent(DrawerActivity.this, ListaReceitasActivity.class);
                         startActivity(intentLogar);
 
@@ -162,8 +162,8 @@ public class DrawerActivity extends AppCompatActivity
 
 
         if (id == R.id.nav_perfil) {
-            Intent intentPerfil = new Intent(DrawerActivity.this, PerfilActivity.class);
-            startActivity(intentPerfil);
+            reqPerfil();
+
         } else if (id == R.id.nav_favoritos) {
             reqReceitas("favoritos");
 
@@ -178,16 +178,14 @@ public class DrawerActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
-
-
         return true;
     }
 
     private void reqReceitas(String type){
         if (type.equals("favoritos")) {
-            urlReq = REGISTER_URL_FAV;
+            urlReq = URL_FAV;
         } else {
-            urlReq = REGISTER_URL_CATEG;
+            urlReq = URL_CATEG;
         }
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
@@ -226,6 +224,52 @@ public class DrawerActivity extends AppCompatActivity
 
 
         };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsonObjReq);
+    }
+
+    private void reqPerfil() {
+        final User usuarioPerfil = new User();
+
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+
+        final String urlPerfil = URL_PERFIL + settings.getString("id","");
+
+        Log.i("script", urlPerfil);
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                urlPerfil, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+
+                    usuarioPerfil.setNome(response.getString("name"));
+                    usuarioPerfil.setUsername(response.getString("username"));
+                    usuarioPerfil.setEmail(response.getString("email"));
+
+                    Intent intentPerfil = new Intent(DrawerActivity.this, PerfilActivity.class);
+                    intentPerfil.putExtra("usuario", usuarioPerfil);
+
+
+                    startActivity(intentPerfil);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
+                    Intent intentLogar = new Intent(DrawerActivity.this, DrawerActivity.class);
+                    startActivity(intentLogar);
+                    finish();
+                }
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(DrawerActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                });
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonObjReq);

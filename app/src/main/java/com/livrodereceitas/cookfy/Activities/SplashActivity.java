@@ -22,10 +22,7 @@ import java.util.Map;
  * Created by pauladbol on 2016-09-29.
  */
 public class SplashActivity extends Activity {
-    private static final String REGISTER_URL = "http://simplifiedcoding.16mb.com/UserRegistration/volleyRegister.php";
-    public static final String KEY_TOKEN = "token";
     public static final String PREFS_NAME = "MyPrefsFile";
-
 
     // Timer da splash screen
     private static int SPLASH_TIME_OUT = 3000;

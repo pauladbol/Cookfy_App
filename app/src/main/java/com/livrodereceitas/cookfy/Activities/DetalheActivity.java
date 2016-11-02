@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.livrodereceitas.cookfy.Helpers.DetalheHelper;
@@ -23,6 +24,11 @@ public class  DetalheActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Recipes receita = (Recipes) intent.getSerializableExtra("receita");
 
+        TextView nomeReceita = (TextView) this.findViewById(R.id.nome_receita);
+        TextView descricaoReceita = (TextView) this.findViewById(R.id.descricao);
+
+        nomeReceita.setText(receita.getName());
+        descricaoReceita.setText(receita.getDescription());
 
         favorito.setOnClickListener(new View.OnClickListener() {
             @Override

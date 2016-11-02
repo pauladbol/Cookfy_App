@@ -126,7 +126,7 @@ public class CadastroActivity extends AppCompatActivity {
     }
 
     private void registerUser(){
-        final HashMap<String, String> params = new HashMap<String, String>();
+        //final HashMap<String, String> params = new HashMap<String, String>();
 
         final JSONObject jsonobj = new JSONObject();
 
@@ -156,36 +156,17 @@ public class CadastroActivity extends AppCompatActivity {
 
         Log.i("script", jsonobj.toString());
 
-//        params.put(KEY_NAME,name);
-//        params.put(KEY_USERNAME,username);
-//        params.put(KEY_EMAIL, emaill);
-//        params.put(KEY_PASSWORD,passwordHash);
-//        params.put(KEY_ADAPTER,adapter);
-//        params.put(KEY_DATEC,date);
-//        params.put(KEY_DATEU,date);
-
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 REGISTER_URL, jsonobj, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                //try {
-//                    id_user = response.getString("id");
-//                    token = response.getString("token");
-//
-//                    salvarTokenID(token, id_user);
+
                     Log.i("script", "entrou no request!!");
                     Toast.makeText(CadastroActivity.this, "Bem vindo!", Toast.LENGTH_LONG).show();
                     Intent intentLogar = new Intent(CadastroActivity.this, LoginNovoActivity.class);
                     startActivity(intentLogar);
                     finish();
 
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                    Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
-//                    Intent intentLogar = new Intent(CadastroActivity.this, CadastroActivity.class);
-//                    startActivity(intentLogar);
-//                    finish();
-//                }
             }
         },
                 new Response.ErrorListener() {
@@ -194,17 +175,6 @@ public class CadastroActivity extends AppCompatActivity {
                         Toast.makeText(CadastroActivity.this,"!!"+error.toString(),Toast.LENGTH_LONG).show();
                     }
                 }){
-//            @Override
-//            protected Map<String,String> getParams(){
-//                params.put(KEY_NAME,name);
-//                params.put(KEY_USERNAME,username);
-//                params.put(KEY_EMAIL, emaill);
-//                params.put(KEY_PASSWORD,passwordHash);
-//                params.put(KEY_ADAPTER,adapter);
-//                params.put(KEY_DATEC,date);
-//                params.put(KEY_DATEU,date);
-//                return params;
-//            }
 
         };
 
