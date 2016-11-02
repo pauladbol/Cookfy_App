@@ -31,6 +31,7 @@ import com.livrodereceitas.cookfy.Classes.Recipes;
 import com.livrodereceitas.cookfy.Classes.User;
 import com.livrodereceitas.cookfy.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,7 +42,6 @@ public class DrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String URL_CATEG = "https://cookfy.herokuapp.com/recipes/";
-    private static final String URL_FAV = "https://cookfy.herokuapp.com/favorites/";
     private static final String URL_PERFIL = "https://cookfy.herokuapp.com/users/";
     public static final String KEY_USERNAME = "user";
     public static final String PREFS_NAME = "MyPrefsFile";
@@ -76,6 +76,7 @@ public class DrawerActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+//        User usuario = reqUser();
 //        TextView nome = (TextView) this.findViewById(R.id.drawer_nome);
 //        TextView email = (TextView) this.findViewById(R.id.drawer_email);
 //
@@ -165,7 +166,7 @@ public class DrawerActivity extends AppCompatActivity
             reqPerfil();
 
         } else if (id == R.id.nav_favoritos) {
-            reqReceitas("favoritos");
+            //reqReceitas("favoritos");
 
         } else if (id == R.id.nav_config) {
             Intent intentConfig = new Intent(DrawerActivity.this, ListaReceitasActivity.class);
@@ -182,8 +183,10 @@ public class DrawerActivity extends AppCompatActivity
     }
 
     private void reqReceitas(String type){
-        if (type.equals("favoritos")) {
-            urlReq = URL_FAV;
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+
+        if (type.equals("favoritos")) { ////    http://cookfy.herokuapp.com/users/{idUser}/reacts?react={FAVORITY|LOVE|LIKE}
+            urlReq = URL_PERFIL + settings.getString("id","")+ "reacts?react=FAVORITY";
         } else {
             urlReq = URL_CATEG;
         }
@@ -193,8 +196,16 @@ public class DrawerActivity extends AppCompatActivity
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    id = response.getString("id");
-                    name = response.getString("name");
+
+                    JSONArray favoritas = response.getJSONArray("myReacts");
+
+                    for (int i = 0; i < favoritas.length(); i++) {
+                        Recipes receita = new Recipes();
+
+                        receita.setName(response.getString("name"));
+                    }
+
+
                     description = response.getString("description");
                     executionTime = response.getString("executionTime");
                     difficulty = response.getString("difficulty");
@@ -274,6 +285,43 @@ public class DrawerActivity extends AppCompatActivity
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonObjReq);
     }
+
+//    private User reqUser() {
+//        final User usuarioPerfil = new User();
+//
+//        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+//
+//        final String urlPerfil = URL_PERFIL + settings.getString("id","");
+//
+//        Log.i("script", urlPerfil);
+//
+//        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+//                urlPerfil, null, new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                try {
+//
+//                    usuarioPerfil.setNome(response.getString("name"));
+//                    usuarioPerfil.setEmail(response.getString("email"));
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                    Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
+//                }
+//            }
+//        },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(DrawerActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+//                    }
+//                });
+//
+//        RequestQueue requestQueue = Volley.newRequestQueue(this);
+//        requestQueue.add(jsonObjReq);
+//
+//        return usuarioPerfil;
+//    }
 
     private void usuarioLogout() {
 
