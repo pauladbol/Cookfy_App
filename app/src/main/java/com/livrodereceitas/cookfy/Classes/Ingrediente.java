@@ -3,8 +3,9 @@ package com.livrodereceitas.cookfy.Classes;
 /**
  * Created by Asus on 15/10/2016.
  */
-public class IngredientePesquisa {
+public class Ingrediente {
     String nome;
+    String medida;
 
     public String getNome() {
         return nome;

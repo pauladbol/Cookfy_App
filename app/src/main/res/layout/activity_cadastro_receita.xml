@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    >
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+    <ImageView
+        android:id="@+id/imagemReceita"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/imagem" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nome da receita..."
+        android:id="@+id/nomeReceita"
+        android:textSize="30dp"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+
+        >
+        <EditText
+            android:layout_marginTop="30dp"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="Ex: Feijão!"
+            android:id="@+id/ingredienteReceitaNome"/>
+        <EditText
+
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="Ex: 1 kg"
+            android:id="@+id/ingredienteReceitaMedida"/>
+        <Button
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="+"
+            android:textSize="30sp"
+            android:elevation="6dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/fundo"
+            android:textColor="#ffff"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:id="@+id/ingredienteReceitaAdicionar"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ListView
+            android:id="@+id/gridIngredientesReceitas"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+
+            />
+    </RelativeLayout>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:hint="Modo de Preparo..."
+        android:id="@+id/modoPreparoReceita"
+        android:textSize="20dp"/>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:id="@+id/dificuldadeReceita"
+        android:textAlignment="center"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Salva Receita"/>
+</LinearLayout>
+</ScrollView>

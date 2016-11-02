@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.livrodereceitas.cookfy.Classes.IngredientePesquisa;
+import com.livrodereceitas.cookfy.Classes.Ingrediente;
 import com.livrodereceitas.cookfy.R;
 
 import java.util.List;
@@ -16,12 +16,12 @@ import java.util.List;
  * Created by Asus on 20/10/2016.
  */
 public class GridIngredienteAdapter extends BaseAdapter {
-    private List<IngredientePesquisa> ListaingredientesPesquisa ;
+    private List<Ingrediente> ListaingredientesPesquisa ;
     private final LayoutInflater mInflater;
 
-    public GridIngredienteAdapter(Context context, List<IngredientePesquisa> ingredientePesquisas) {
+    public GridIngredienteAdapter(Context context, List<Ingrediente> ingredientes) {
         mInflater = LayoutInflater.from(context);
-        ListaingredientesPesquisa = ingredientePesquisas;
+        ListaingredientesPesquisa = ingredientes;
 
     }
 
@@ -31,7 +31,7 @@ public class GridIngredienteAdapter extends BaseAdapter {
     }
 
     @Override
-    public IngredientePesquisa getItem(int position) {
+    public Ingrediente getItem(int position) {
         return ListaingredientesPesquisa.get(position);
     }
 
@@ -49,8 +49,8 @@ public class GridIngredienteAdapter extends BaseAdapter {
             v.setTag(R.id.ingrediente, v.findViewById(R.id.ingrediente));
         }
         nome = (TextView) v.getTag(R.id.ingrediente);
-        IngredientePesquisa ingredientePesquisa = (IngredientePesquisa) getItem(position);
-        nome.setText(ingredientePesquisa.getNome());
+        Ingrediente ingrediente = (Ingrediente) getItem(position);
+        nome.setText(ingrediente.getNome());
 
         return v;
     }

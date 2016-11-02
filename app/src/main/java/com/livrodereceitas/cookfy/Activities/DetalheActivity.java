@@ -41,4 +41,8 @@ public class  DetalheActivity extends AppCompatActivity {
 //        ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_2, ingredientes);
 //        lista_ingredientes.setAdapter(adapter);
     }
+
+    private void Favoritar(){
+
+    }
 }
