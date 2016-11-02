@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,17 +24,21 @@ import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CadastroActivity extends AppCompatActivity {
-    private static final String REGISTER_URL = "https://cookfy.herokuapp/signup";
+    public static final String REGISTER_URL = "https://cookfy.herokuapp.com/signup";
+    public static final String KEY_NAME = "name";
     public static final String KEY_USERNAME = "username";
-    public static final String KEY_PASSWORD = "password";
+    public static final String KEY_PASSWORD = "hash";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_ADAPTER = "adapter";
+    public static final String KEY_DATEC = "dateCreated";
+    public static final String KEY_DATEU = "dateUpdated";
     public static final String PREFS_NAME = "MyPrefsFile";
 
     private EditText usuario;
@@ -78,11 +83,11 @@ public class CadastroActivity extends AppCompatActivity {
                     senha.setError("Senha Invalido");
                     senha.requestFocus();
                 } else {
-                    Toast.makeText(CadastroActivity.this, "Cadastro feito com sucesso", Toast.LENGTH_LONG).show();
-                    Intent intentLogar = new Intent(CadastroActivity.this, LoginNovoActivity.class);
-                    startActivity(intentLogar);
-                    finish();
-                    //registerUser();
+//                    Toast.makeText(CadastroActivity.this, "Cadastro feito com sucesso", Toast.LENGTH_LONG).show();
+//                    Intent intentLogar = new Intent(CadastroActivity.this, LoginNovoActivity.class);
+//                    startActivity(intentLogar);
+//                    finish();
+                    registerUser();
                 }
 
             }
@@ -121,52 +126,55 @@ public class CadastroActivity extends AppCompatActivity {
     }
 
     private void registerUser(){
+        //final HashMap<String, String> params = new HashMap<String, String>();
+
+        final JSONObject jsonobj = new JSONObject();
+
         final String adapter = "application";
+        final String name = nome.getText().toString().trim();
         final String username = usuario.getText().toString().trim();
         final String password = senha.getText().toString().trim();
         final String emaill = email.getText().toString().trim();
+        final Date date = new Date();
 
-        final String passwordHash = hashMd5(password);
+        Log.i("script", "data "+date);
+        final String passwordHash = hashSHA256(password);
+        Log.i("script", "hash cadastro "+passwordHash);
+
+        try {
+            jsonobj.put(KEY_NAME,name);
+            jsonobj.put(KEY_USERNAME,username);
+            jsonobj.put(KEY_EMAIL, emaill);
+            jsonobj.put(KEY_PASSWORD,passwordHash);
+            jsonobj.put(KEY_ADAPTER,adapter);
+//            jsonobj.put(KEY_DATEC,date);
+//            jsonobj.put(KEY_DATEU,date);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(),"123456789: " + e.getMessage(),Toast.LENGTH_LONG).show();
+        }
+
+        Log.i("script", jsonobj.toString());
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                REGISTER_URL, null, new Response.Listener<JSONObject>() {
+                REGISTER_URL, jsonobj, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                try {
-                    id_user = response.getString("id");
-                    token = response.getString("token");
 
-                    salvarTokenID(token, id_user);
-
+                    Log.i("script", "entrou no request!!");
                     Toast.makeText(CadastroActivity.this, "Bem vindo!", Toast.LENGTH_LONG).show();
-                    Intent intentLogar = new Intent(CadastroActivity.this, Main2Activity.class);
+                    Intent intentLogar = new Intent(CadastroActivity.this, LoginNovoActivity.class);
                     startActivity(intentLogar);
                     finish();
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
-                    Intent intentLogar = new Intent(CadastroActivity.this, CadastroActivity.class);
-                    startActivity(intentLogar);
-                    finish();
-                }
             }
         },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(CadastroActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(CadastroActivity.this,"!!"+error.toString(),Toast.LENGTH_LONG).show();
                     }
                 }){
-            @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
-                params.put(KEY_USERNAME,username);
-                params.put(KEY_PASSWORD,passwordHash);
-                params.put(KEY_EMAIL, emaill);
-                params.put(KEY_ADAPTER,adapter);
-                return params;
-            }
 
         };
 
@@ -174,10 +182,10 @@ public class CadastroActivity extends AppCompatActivity {
         requestQueue.add(jsonObjReq);
     }
 
-    public String hashMd5(String s) {
+    public String hashSHA256(String s) {
         try {
-            // Create MD5 Hash
-            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+            // Create SHA256 Hash
+            MessageDigest digest = java.security.MessageDigest.getInstance("SHA256");
             digest.update(s.getBytes());
             byte messageDigest[] = digest.digest();
 
@@ -192,14 +200,4 @@ public class CadastroActivity extends AppCompatActivity {
         }
         return "";
     }
-
-    public void salvarTokenID(String token, String id) {
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString("token", token);
-        editor.putString("id", id);
-
-        editor.commit();
-    }
-
 }

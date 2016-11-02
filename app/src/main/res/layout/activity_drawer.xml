@@ -50,43 +50,6 @@
         app:menu="@menu/activity_drawer_drawer" />
 
 
-    <!--<ScrollView-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:paddingTop="50dp"-->
-        <!--&gt;-->
-        <!--<ImageView-->
-            <!--android:id="@+id/logo"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:src="@drawable/logo_mini"/>-->
-    <!--</ScrollView>-->
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:paddingTop="80dp">-->
-
-        <!--<ImageView-->
-        <!--android:id="@+id/logo"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:src="@drawable/logo_mini"/>-->
-    <!--</LinearLayout>-->
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:paddingTop="140dp">-->
-
-        <!--<android.support.v4.view.ViewPager-->
-            <!--android:id="@+id/viewPager"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_marginRight="15dp"-->
-            <!--&gt;-->
-
-        <!--</android.support.v4.view.ViewPager>-->
-    <!--</LinearLayout>-->
 </android.support.v4.widget.DrawerLayout>
 
 

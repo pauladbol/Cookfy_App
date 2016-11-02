@@ -16,7 +16,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.livrodereceitas.cookfy.GsonRequest;
 import com.livrodereceitas.cookfy.R;
 
 import org.json.JSONException;
@@ -24,8 +23,6 @@ import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -57,14 +54,14 @@ public class LoginNovoActivity extends AppCompatActivity {
         logar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!validarUsuario(usuario.getText().toString())) {
-                    usuario.setError("Usuario Invalido");
-                    usuario.requestFocus();
-                } else if (!validarSenha(senha.getText().toString())) {
-                    senha.setError("Senha Invalida");
-                    //senha.requestFocus();
-
-                } else {
+//                if (!validarUsuario(usuario.getText().toString())) {
+//                    usuario.setError("Usuario Invalido");
+//                    usuario.requestFocus();
+//                } else if (!validarSenha(senha.getText().toString())) {
+//                    senha.setError("Senha Invalida");
+//                    //senha.requestFocus();
+//
+//                } else {
 
                     //Toast.makeText(LoginNovoActivity.this, "Bem vindo " + usuario.getText().toString() +"!", Toast.LENGTH_LONG).show();
                     //Intent intentLogar = new Intent(LoginNovoActivity.this, Main2Activity.class);
@@ -73,7 +70,7 @@ public class LoginNovoActivity extends AppCompatActivity {
                     autenticaUsuario();
 
 
-                }
+//                }
 
             }
         });
@@ -86,8 +83,16 @@ public class LoginNovoActivity extends AppCompatActivity {
 
         final String passwordHash = hashSHA256(password);
 
-        final String urlLogin = REGISTER_URL + "?username=" + username + "&hash=" + passwordHash;
-        Log.i("script", "hash "+passwordHash);
+        final String login;
+
+        if (username.contains("@")) {
+            login = "?email=";
+        } else {
+            login = "?username=";
+        }
+
+        final String urlLogin = REGISTER_URL + login + username + "&hash=" + password;
+        Log.i("script", "hash login "+passwordHash);
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
                 urlLogin, null, new Response.Listener<JSONObject>() {
@@ -101,7 +106,7 @@ public class LoginNovoActivity extends AppCompatActivity {
                             salvarTokenID(token, id_user);
 
                             Toast.makeText(LoginNovoActivity.this, "Bem vindo!", Toast.LENGTH_LONG).show();
-                            Intent intentLogar = new Intent(LoginNovoActivity.this, Main2Activity.class);
+                            Intent intentLogar = new Intent(LoginNovoActivity.this, DrawerActivity.class);
                             startActivity(intentLogar);
                             finish();
 
@@ -120,17 +125,6 @@ public class LoginNovoActivity extends AppCompatActivity {
                         Toast.makeText(LoginNovoActivity.this,error.toString(),Toast.LENGTH_LONG).show();
                     }
                });
-//        {
-//            @Override
-//            protected Map<String,String> getParams(){
-//                Map<String,String> params = new HashMap<String, String>();
-//                params.put(KEY_USERNAME,username);
-//                params.put(KEY_PASSWORD,passwordHash);
-//                params.put(KEY_ADAPTER,adapter);
-//                return params;
-//            }
-//
-//        };
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonObjReq);
@@ -175,7 +169,8 @@ public class LoginNovoActivity extends AppCompatActivity {
         editor.putString("token", token);
         editor.putString("id", id);
 
-        Log.i("script", "TOKEN");
+        Log.i("script", "TOKEN "+token);
+        Log.i("script", "id "+id);
         editor.commit();
     }
 

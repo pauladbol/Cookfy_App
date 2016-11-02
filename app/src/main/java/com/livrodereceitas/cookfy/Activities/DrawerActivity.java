@@ -1,10 +1,12 @@
 package com.livrodereceitas.cookfy.Activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -15,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -24,18 +27,24 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.livrodereceitas.cookfy.Adapters.ImagemPagerAdapter;
+import com.livrodereceitas.cookfy.Classes.Recipes;
+import com.livrodereceitas.cookfy.Classes.User;
 import com.livrodereceitas.cookfy.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String REGISTER_URL = "https://cookfy.herokuapp.com/recipes/";
+    private static final String URL_CATEG = "https://cookfy.herokuapp.com/recipes/";
+    private static final String URL_FAV = "https://cookfy.herokuapp.com/favorites/";
+    private static final String URL_PERFIL = "https://cookfy.herokuapp.com/users/";
     public static final String KEY_USERNAME = "user";
-    public static final String KEY_PASSWORD = "hash";
-    public static final String KEY_ADAPTER = "adapter";
+    public static final String PREFS_NAME = "MyPrefsFile";
 
 
     private String id;
@@ -45,6 +54,9 @@ public class DrawerActivity extends AppCompatActivity
     private String difficulty;
     private String ingredientes;
     private String recipeBooks;
+    private String urlReq;
+
+    private List<Recipes> receitasList = new ArrayList<Recipes>();
 
     private int[] imagens = {R.drawable.img1, R.drawable.img2, R.drawable.img3, R.drawable.img4};
 
@@ -55,15 +67,6 @@ public class DrawerActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -72,6 +75,12 @@ public class DrawerActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+//        TextView nome = (TextView) this.findViewById(R.id.drawer_nome);
+//        TextView email = (TextView) this.findViewById(R.id.drawer_email);
+//
+//        nome.setText(usuario.getNome());
+//        email.setText(usuario.getEmail());
 
         ViewPager g = (ViewPager) findViewById(R.id.viewPager);
         g.setAdapter(new ImagemPagerAdapter(this, imagens));
@@ -104,6 +113,7 @@ public class DrawerActivity extends AppCompatActivity
 
                     @Override
                     public void onClick(View view) {
+                        //reqReceitas("categorias");
                         Intent intentLogar = new Intent(DrawerActivity.this, ListaReceitasActivity.class);
                         startActivity(intentLogar);
 
@@ -152,39 +162,37 @@ public class DrawerActivity extends AppCompatActivity
 
 
         if (id == R.id.nav_perfil) {
-            // Handle the camera action
-            Intent intentPerfil = new Intent(DrawerActivity.this, PerfilActivity.class);
-            startActivity(intentPerfil);
+            reqPerfil();
+
         } else if (id == R.id.nav_favoritos) {
-            Intent intentFav = new Intent(DrawerActivity.this, ListaReceitasActivity.class);
-            startActivity(intentFav);
+            reqReceitas("favoritos");
 
         } else if (id == R.id.nav_config) {
             Intent intentConfig = new Intent(DrawerActivity.this, ListaReceitasActivity.class);
             startActivity(intentConfig);
 
         } else if (id == R.id.nav_sair) {
-            Intent intentSair = new Intent(DrawerActivity.this, ListaReceitasActivity.class);
-            startActivity(intentSair);
-
+            usuarioLogout();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
-
-
         return true;
     }
 
-    private void pegaReceitas(){
+    private void reqReceitas(String type){
+        if (type.equals("favoritos")) {
+            urlReq = URL_FAV;
+        } else {
+            urlReq = URL_CATEG;
+        }
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-                REGISTER_URL, null, new Response.Listener<JSONObject>() {
+                urlReq, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-
                     id = response.getString("id");
                     name = response.getString("name");
                     description = response.getString("description");
@@ -193,7 +201,7 @@ public class DrawerActivity extends AppCompatActivity
                     ingredientes = response.getString("ingredientes");
                     recipeBooks = response.getString("recipeBooks");
 
-                    Toast.makeText(DrawerActivity.this, "Bem vindo!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(DrawerActivity.this, "!", Toast.LENGTH_LONG).show();
                     Intent intentLogar = new Intent(DrawerActivity.this, ListaReceitasActivity.class);
                     startActivity(intentLogar);
                     finish();
@@ -219,5 +227,65 @@ public class DrawerActivity extends AppCompatActivity
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonObjReq);
+    }
+
+    private void reqPerfil() {
+        final User usuarioPerfil = new User();
+
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+
+        final String urlPerfil = URL_PERFIL + settings.getString("id","");
+
+        Log.i("script", urlPerfil);
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                urlPerfil, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+
+                    usuarioPerfil.setNome(response.getString("name"));
+                    usuarioPerfil.setUsername(response.getString("username"));
+                    usuarioPerfil.setEmail(response.getString("email"));
+
+                    Intent intentPerfil = new Intent(DrawerActivity.this, PerfilActivity.class);
+                    intentPerfil.putExtra("usuario", usuarioPerfil);
+
+
+                    startActivity(intentPerfil);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
+                    Intent intentLogar = new Intent(DrawerActivity.this, DrawerActivity.class);
+                    startActivity(intentLogar);
+                    finish();
+                }
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(DrawerActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsonObjReq);
+    }
+
+    private void usuarioLogout() {
+
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+
+        editor.remove("token");
+        editor.remove("id");
+
+        editor.commit();
+
+        Intent intentSair = new Intent(DrawerActivity.this, MainActivity.class);
+        startActivity(intentSair);
     }
 }
