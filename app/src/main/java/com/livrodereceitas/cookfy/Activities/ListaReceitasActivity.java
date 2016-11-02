@@ -103,7 +103,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
 
                     receitaDetalhe.setName(response.getString("name"));
                     receitaDetalhe.setDescription(response.getString("description"));
-
+                    receitaDetalhe.setId(response.getString("id"));
 
                     Log.i("script", receitaDetalhe.getName());
                     Intent intentDetalhe = new Intent(ListaReceitasActivity.this, DetalheActivity.class);
@@ -136,7 +136,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
 
 
     public List<Recipes> PreencheReceitas() {
-        listaReceitas.add(new Recipes(1, "Almondegas", R.drawable.img1,"500 g de carne moída\n" +
+        listaReceitas.add(new Recipes("1", "Almondegas", R.drawable.img1,"500 g de carne moída\n" +
                 "2 colheres (sopa) de azeite de oliva (30 ml)\n" +
                 "1 xícara de cebola bem picada (60 g)\n" +
                 "1 ovo\n" +
@@ -151,7 +151,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
                 "Em outra panela, esquente o molho de tomate em fogo baixo\n" +
                 "Na mesma panela da almôndega, elimine o excesso de azeite e coloque o molho de tomate, colocando as almôndegas para cozinhar por alguns minutos\n" +
                 "Em cerca de 15 minutos as almôndegas estarão totalmente cozidas e o prato estará pronto"));
-        listaReceitas.add(new Recipes(2, "Lazanha", R.drawable.img2, "2 peitos de frango\n" +
+        listaReceitas.add(new Recipes("2", "Lazanha", R.drawable.img2, "2 peitos de frango\n" +
                 "1/2 kg de queijo mussarela\n" +
                 "800 g de presunto\n" +
                 "1 pote de requeijão médio\n" +
@@ -180,7 +180,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
                 "Um pouco de creme branco sob uma forma redonda grande ou um pirex retangular grande, uma cama de massa pronta presunto e requeijão\n" +
                 "Depois frango, queijo e mais creme, presunto e requeijão e massa pronta, mais requeijão, presunto, frango, creme e queijo\n" +
                 "Nessa ordem fica uma delícia e rende bastante"));
-        listaReceitas.add(new Recipes(3, "Bolo Chocolate", R.drawable.img3, "MASSA:\n" +
+        listaReceitas.add(new Recipes("3", "Bolo Chocolate", R.drawable.img3, "MASSA:\n" +
                 "\n" +
                 "1 xícara (chá) de leite morno\n" +
                 "3 ovos\n" +
@@ -203,7 +203,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
                 "Cubra o bolo em seguida\n" +
                 "Coloque em uma forma redonda, untada com manteiga e polvilhada com farinha de trigo\n" +
                 "Asse por cerca de 40 minutos em forno médio (180º C), preaquecido."));
-        listaReceitas.add(new Recipes(4, "Panquecas", R.drawable.img4, "1 copo de leite\n" +
+        listaReceitas.add(new Recipes("4", "Panquecas", R.drawable.img4, "1 copo de leite\n" +
                 "1 ovo\n" +
                 "1 copo de farinha de trigo\n" +
                 "1 colher (sopa) de óleo\n" +
@@ -213,7 +213,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
                 "Deixe assar até que a borda obtenha uma cor dourada\n" +
                 "Espere até a massa se soltar do fundo, vire e deixe fritar do outro lado\n" +
                 "Recheie a gosto, enrole e sirva"));
-        listaReceitas.add(new Recipes(5, "Almondegas", R.drawable.img1,"500 g de carne moída\n" +
+        listaReceitas.add(new Recipes("5", "Almondegas", R.drawable.img1,"500 g de carne moída\n" +
                 "2 colheres (sopa) de azeite de oliva (30 ml)\n" +
                 "1 xícara de cebola bem picada (60 g)\n" +
                 "1 ovo\n" +
@@ -228,7 +228,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
                 "Em outra panela, esquente o molho de tomate em fogo baixo\n" +
                 "Na mesma panela da almôndega, elimine o excesso de azeite e coloque o molho de tomate, colocando as almôndegas para cozinhar por alguns minutos\n" +
                 "Em cerca de 15 minutos as almôndegas estarão totalmente cozidas e o prato estará pronto"));
-        listaReceitas.add(new Recipes(6, "Lazanha", R.drawable.img2, "2 peitos de frango\n" +
+        listaReceitas.add(new Recipes("6", "Lazanha", R.drawable.img2, "2 peitos de frango\n" +
                 "1/2 kg de queijo mussarela\n" +
                 "800 g de presunto\n" +
                 "1 pote de requeijão médio\n" +
@@ -257,7 +257,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
                 "Um pouco de creme branco sob uma forma redonda grande ou um pirex retangular grande, uma cama de massa pronta presunto e requeijão\n" +
                 "Depois frango, queijo e mais creme, presunto e requeijão e massa pronta, mais requeijão, presunto, frango, creme e queijo\n" +
                 "Nessa ordem fica uma delícia e rende bastante"));
-        listaReceitas.add(new Recipes(7, "Bolo Chocolate", R.drawable.img3, "MASSA:\n" +
+        listaReceitas.add(new Recipes("7", "Bolo Chocolate", R.drawable.img3, "MASSA:\n" +
                 "\n" +
                 "1 xícara (chá) de leite morno\n" +
                 "3 ovos\n" +
@@ -280,7 +280,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
                 "Cubra o bolo em seguida\n" +
                 "Coloque em uma forma redonda, untada com manteiga e polvilhada com farinha de trigo\n" +
                 "Asse por cerca de 40 minutos em forno médio (180º C), preaquecido."));
-        listaReceitas.add(new Recipes(8, "Panquecas", R.drawable.img4, "1 copo de leite\n" +
+        listaReceitas.add(new Recipes("8", "Panquecas", R.drawable.img4, "1 copo de leite\n" +
                 "1 ovo\n" +
                 "1 copo de farinha de trigo\n" +
                 "1 colher (sopa) de óleo\n" +
@@ -290,7 +290,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
                 "Deixe assar até que a borda obtenha uma cor dourada\n" +
                 "Espere até a massa se soltar do fundo, vire e deixe fritar do outro lado\n" +
                 "Recheie a gosto, enrole e sirva"));
-        listaReceitas.add(new Recipes(9, "Almondegas", R.drawable.img1,"500 g de carne moída\n" +
+        listaReceitas.add(new Recipes("9", "Almondegas", R.drawable.img1,"500 g de carne moída\n" +
                 "2 colheres (sopa) de azeite de oliva (30 ml)\n" +
                 "1 xícara de cebola bem picada (60 g)\n" +
                 "1 ovo\n" +
@@ -305,7 +305,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
                 "Em outra panela, esquente o molho de tomate em fogo baixo\n" +
                 "Na mesma panela da almôndega, elimine o excesso de azeite e coloque o molho de tomate, colocando as almôndegas para cozinhar por alguns minutos\n" +
                 "Em cerca de 15 minutos as almôndegas estarão totalmente cozidas e o prato estará pronto"));
-        listaReceitas.add(new Recipes(10, "Lazanha", R.drawable.img2, "2 peitos de frango\n" +
+        listaReceitas.add(new Recipes("10", "Lazanha", R.drawable.img2, "2 peitos de frango\n" +
                 "1/2 kg de queijo mussarela\n" +
                 "800 g de presunto\n" +
                 "1 pote de requeijão médio\n" +
@@ -334,7 +334,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
                 "Um pouco de creme branco sob uma forma redonda grande ou um pirex retangular grande, uma cama de massa pronta presunto e requeijão\n" +
                 "Depois frango, queijo e mais creme, presunto e requeijão e massa pronta, mais requeijão, presunto, frango, creme e queijo\n" +
                 "Nessa ordem fica uma delícia e rende bastante"));
-        listaReceitas.add(new Recipes(11, "Bolo Chocolate", R.drawable.img3, "MASSA:\n" +
+        listaReceitas.add(new Recipes("11", "Bolo Chocolate", R.drawable.img3, "MASSA:\n" +
                 "\n" +
                 "1 xícara (chá) de leite morno\n" +
                 "3 ovos\n" +
@@ -357,7 +357,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
                 "Cubra o bolo em seguida\n" +
                 "Coloque em uma forma redonda, untada com manteiga e polvilhada com farinha de trigo\n" +
                 "Asse por cerca de 40 minutos em forno médio (180º C), preaquecido."));
-        listaReceitas.add(new Recipes(12, "Panquecas", R.drawable.img4, "1 copo de leite\n" +
+        listaReceitas.add(new Recipes("12", "Panquecas", R.drawable.img4, "1 copo de leite\n" +
                 "1 ovo\n" +
                 "1 copo de farinha de trigo\n" +
                 "1 colher (sopa) de óleo\n" +
@@ -367,7 +367,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
                 "Deixe assar até que a borda obtenha uma cor dourada\n" +
                 "Espere até a massa se soltar do fundo, vire e deixe fritar do outro lado\n" +
                 "Recheie a gosto, enrole e sirva"));
-        listaReceitas.add(new Recipes(12, "Almondegas", R.drawable.img1,"500 g de carne moída\n" +
+        listaReceitas.add(new Recipes("13", "Almondegas", R.drawable.img1,"500 g de carne moída\n" +
                 "2 colheres (sopa) de azeite de oliva (30 ml)\n" +
                 "1 xícara de cebola bem picada (60 g)\n" +
                 "1 ovo\n" +
@@ -382,7 +382,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
                 "Em outra panela, esquente o molho de tomate em fogo baixo\n" +
                 "Na mesma panela da almôndega, elimine o excesso de azeite e coloque o molho de tomate, colocando as almôndegas para cozinhar por alguns minutos\n" +
                 "Em cerca de 15 minutos as almôndegas estarão totalmente cozidas e o prato estará pronto"));
-        listaReceitas.add(new Recipes(14, "Lazanha", R.drawable.img2, "2 peitos de frango\n" +
+        listaReceitas.add(new Recipes("14", "Lazanha", R.drawable.img2, "2 peitos de frango\n" +
                 "1/2 kg de queijo mussarela\n" +
                 "800 g de presunto\n" +
                 "1 pote de requeijão médio\n" +
@@ -411,7 +411,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
                 "Um pouco de creme branco sob uma forma redonda grande ou um pirex retangular grande, uma cama de massa pronta presunto e requeijão\n" +
                 "Depois frango, queijo e mais creme, presunto e requeijão e massa pronta, mais requeijão, presunto, frango, creme e queijo\n" +
                 "Nessa ordem fica uma delícia e rende bastante"));
-        listaReceitas.add(new Recipes(15, "Bolo Chocolate", R.drawable.img3, "MASSA:\n" +
+        listaReceitas.add(new Recipes("15", "Bolo Chocolate", R.drawable.img3, "MASSA:\n" +
                 "\n" +
                 "1 xícara (chá) de leite morno\n" +
                 "3 ovos\n" +
@@ -434,7 +434,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
                 "Cubra o bolo em seguida\n" +
                 "Coloque em uma forma redonda, untada com manteiga e polvilhada com farinha de trigo\n" +
                 "Asse por cerca de 40 minutos em forno médio (180º C), preaquecido."));
-        listaReceitas.add(new Recipes(16, "Panquecas", R.drawable.img4, "1 copo de leite\n" +
+        listaReceitas.add(new Recipes("16", "Panquecas", R.drawable.img4, "1 copo de leite\n" +
                 "1 ovo\n" +
                 "1 copo de farinha de trigo\n" +
                 "1 colher (sopa) de óleo\n" +
@@ -444,7 +444,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
                 "Deixe assar até que a borda obtenha uma cor dourada\n" +
                 "Espere até a massa se soltar do fundo, vire e deixe fritar do outro lado\n" +
                 "Recheie a gosto, enrole e sirva"));
-        listaReceitas.add(new Recipes(17, "Almondegas", R.drawable.img1,"500 g de carne moída\n" +
+        listaReceitas.add(new Recipes("17", "Almondegas", R.drawable.img1,"500 g de carne moída\n" +
                 "2 colheres (sopa) de azeite de oliva (30 ml)\n" +
                 "1 xícara de cebola bem picada (60 g)\n" +
                 "1 ovo\n" +
@@ -459,7 +459,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
                 "Em outra panela, esquente o molho de tomate em fogo baixo\n" +
                 "Na mesma panela da almôndega, elimine o excesso de azeite e coloque o molho de tomate, colocando as almôndegas para cozinhar por alguns minutos\n" +
                 "Em cerca de 15 minutos as almôndegas estarão totalmente cozidas e o prato estará pronto"));
-        listaReceitas.add(new Recipes(18, "Lazanha", R.drawable.img2, "2 peitos de frango\n" +
+        listaReceitas.add(new Recipes("18", "Lazanha", R.drawable.img2, "2 peitos de frango\n" +
                 "1/2 kg de queijo mussarela\n" +
                 "800 g de presunto\n" +
                 "1 pote de requeijão médio\n" +
@@ -488,7 +488,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
                 "Um pouco de creme branco sob uma forma redonda grande ou um pirex retangular grande, uma cama de massa pronta presunto e requeijão\n" +
                 "Depois frango, queijo e mais creme, presunto e requeijão e massa pronta, mais requeijão, presunto, frango, creme e queijo\n" +
                 "Nessa ordem fica uma delícia e rende bastante"));
-        listaReceitas.add(new Recipes(19, "Bolo Chocolate", R.drawable.img3, "MASSA:\n" +
+        listaReceitas.add(new Recipes("19", "Bolo Chocolate", R.drawable.img3, "MASSA:\n" +
                 "\n" +
                 "1 xícara (chá) de leite morno\n" +
                 "3 ovos\n" +
@@ -512,7 +512,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
                 "Coloque em uma forma redonda, untada com manteiga e polvilhada com farinha de trigo\n" +
                 "Asse por cerca de 40 minutos em forno médio (180º C), preaquecido\n INFORMAÇÕES ADICIONAIS\n"  +
                 "Filme de referência: Matilda."));
-        listaReceitas.add(new Recipes(20, "Panquecas", R.drawable.img4, "1 copo de leite\n" +
+        listaReceitas.add(new Recipes("20", "Panquecas", R.drawable.img4, "1 copo de leite\n" +
                 "1 ovo\n" +
                 "1 copo de farinha de trigo\n" +
                 "1 colher (sopa) de óleo\n" +
@@ -522,7 +522,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
                 "Deixe assar até que a borda obtenha uma cor dourada\n" +
                 "Espere até a massa se soltar do fundo, vire e deixe fritar do outro lado\n" +
                 "Recheie a gosto, enrole e sirva"));
-        listaReceitas.add(new Recipes(21, "Almondegas", R.drawable.img1,"500 g de carne moída\n" +
+        listaReceitas.add(new Recipes("21", "Almondegas", R.drawable.img1,"500 g de carne moída\n" +
                 "2 colheres (sopa) de azeite de oliva (30 ml)\n" +
                 "1 xícara de cebola bem picada (60 g)\n" +
                 "1 ovo\n" +
@@ -537,7 +537,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
                 "Em outra panela, esquente o molho de tomate em fogo baixo\n" +
                 "Na mesma panela da almôndega, elimine o excesso de azeite e coloque o molho de tomate, colocando as almôndegas para cozinhar por alguns minutos\n" +
                 "Em cerca de 15 minutos as almôndegas estarão totalmente cozidas e o prato estará pronto"));
-        listaReceitas.add(new Recipes(22, "Lazanha", R.drawable.img2, "2 peitos de frango\n" +
+        listaReceitas.add(new Recipes("22", "Lazanha", R.drawable.img2, "2 peitos de frango\n" +
                 "1/2 kg de queijo mussarela\n" +
                 "800 g de presunto\n" +
                 "1 pote de requeijão médio\n" +
@@ -566,7 +566,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
                 "Um pouco de creme branco sob uma forma redonda grande ou um pirex retangular grande, uma cama de massa pronta presunto e requeijão\n" +
                 "Depois frango, queijo e mais creme, presunto e requeijão e massa pronta, mais requeijão, presunto, frango, creme e queijo\n" +
                 "Nessa ordem fica uma delícia e rende bastante"));
-        listaReceitas.add(new Recipes(23, "Bolo Chocolate", R.drawable.img3, "MASSA:\n" +
+        listaReceitas.add(new Recipes("23", "Bolo Chocolate", R.drawable.img3, "MASSA:\n" +
                 "\n" +
                 "1 xícara (chá) de leite morno\n" +
                 "3 ovos\n" +
@@ -590,7 +590,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
                 "Coloque em uma forma redonda, untada com manteiga e polvilhada com farinha de trigo\n" +
                 "Asse por cerca de 40 minutos em forno médio (180º C), preaquecido\nINFORMAÇÕES ADICIONAIS\n"  +
                 "Filme de referência: Matilda."));
-        listaReceitas.add(new Recipes(24, "Panquecas", R.drawable.img4, "1 copo de leite\n" +
+        listaReceitas.add(new Recipes("24", "Panquecas", R.drawable.img4, "1 copo de leite\n" +
                 "1 ovo\n" +
                 "1 copo de farinha de trigo\n" +
                 "1 colher (sopa) de óleo\n" +

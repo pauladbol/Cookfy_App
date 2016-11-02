@@ -7,7 +7,7 @@ import java.util.UUID;
  * Created by Asus on 01/10/2016.
  */
 public class Recipes implements Serializable {
-        private int id;
+        private String id;
         private int drawableId;
         private String name;
         private String description;
@@ -16,7 +16,7 @@ public class Recipes implements Serializable {
         private String difficulty;
         private String[] recipeBooks;
 
-    public Recipes(int id, String nome, int imagem, String ingredientes, String description) {
+    public Recipes(String id, String nome, int imagem, String ingredientes, String description) {
         this.id = id;
         this.name = nome;
         this.drawableId = imagem;
@@ -35,11 +35,11 @@ public class Recipes implements Serializable {
 
 
 
-    public int getId() {
+    public String getId() {
 
         return id;
         }
-    public void setId(int id) {
+    public void setId(String id) {
 
         this.id = id;
         }

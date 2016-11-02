@@ -13,7 +13,9 @@ import com.livrodereceitas.cookfy.R;
 import com.livrodereceitas.cookfy.Classes.Recipes;
 
 public class  DetalheActivity extends AppCompatActivity {
+    public static final String REGISTER_URL = "https://cookfy.herokuapp.com/recipes/";
     private DetalheHelper helper;
+    Recipes receita;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,8 +24,7 @@ public class  DetalheActivity extends AppCompatActivity {
 
         final CheckBox favorito = (CheckBox) findViewById(R.id.favorita);
         Intent intent = getIntent();
-        Recipes receita = (Recipes) intent.getSerializableExtra("receita");
-
+        receita = (Recipes) intent.getSerializableExtra("receita");
         TextView nomeReceita = (TextView) this.findViewById(R.id.nome_receita);
         TextView descricaoReceita = (TextView) this.findViewById(R.id.descricao);
 
@@ -49,6 +50,6 @@ public class  DetalheActivity extends AppCompatActivity {
     }
 
     private void Favoritar(){
-
+       // String urlFavoritar = REGISTER_URL + receita.getId() +"/reacts?user" +
     }
 }
