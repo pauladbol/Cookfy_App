@@ -39,7 +39,8 @@
             android:name=".Activities.DrawerActivity"
             android:label="Inicio"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.PerfilActivity"></activity>
+        <activity android:name=".Activities.PerfilActivity" />
+        <activity android:name=".Activities.CadastroReceitaActivity"></activity>
     </application>
 
 </manifest>
