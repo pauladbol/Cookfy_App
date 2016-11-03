@@ -168,8 +168,8 @@ public class DrawerActivity extends AppCompatActivity
         } else if (id == R.id.nav_favoritos) {
             reqReceitas("favoritos");
 
-        } else if (id == R.id.nav_config) {
-            Intent intentConfig = new Intent(DrawerActivity.this, ListaReceitasActivity.class);
+        } else if (id == R.id.nav_pesquisa) {
+            Intent intentConfig = new Intent(DrawerActivity.this, PesquisaIngredienteActivity.class);
             startActivity(intentConfig);
 
         } else if (id == R.id.nav_sair) {
@@ -192,7 +192,7 @@ public class DrawerActivity extends AppCompatActivity
         } else {
             urlReq = URL_CATEG;
         }
-
+        Log.i("script", "123456");
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
                 urlReq, null, new Response.Listener<JSONObject>() {
             @Override
@@ -200,6 +200,8 @@ public class DrawerActivity extends AppCompatActivity
                 try {
                     Log.i("fav","aqui");
                     JSONArray favoritas = response.getJSONArray("myReacts");
+
+                    Log.i("script", "FAV "+favoritas.toString());
 
                     for (int i = 0; i < favoritas.length(); i++) {
                         Recipes receita = new Recipes();
