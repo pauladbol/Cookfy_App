@@ -56,7 +56,7 @@ public class DrawerActivity extends AppCompatActivity
     private String recipeBooks;
     private String urlReq;
 
-    private List<Recipes> receitasList = new ArrayList<Recipes>();
+    private ArrayList<Recipes> receitasList = new ArrayList<Recipes>();
 
     private int[] imagens = {R.drawable.img1, R.drawable.img2, R.drawable.img3, R.drawable.img4};
 
@@ -115,8 +115,8 @@ public class DrawerActivity extends AppCompatActivity
                     @Override
                     public void onClick(View view) {
                         //reqReceitas("categorias");
-                        Intent intentLogar = new Intent(DrawerActivity.this, ListaReceitasActivity.class);
-                        startActivity(intentLogar);
+                        Intent intentCateg = new Intent(DrawerActivity.this, ListaReceitasActivity.class);
+                        startActivity(intentCateg);
 
                     }
                 }
@@ -166,7 +166,7 @@ public class DrawerActivity extends AppCompatActivity
             reqPerfil();
 
         } else if (id == R.id.nav_favoritos) {
-            //reqReceitas("favoritos");
+            reqReceitas("favoritos");
 
         } else if (id == R.id.nav_config) {
             Intent intentConfig = new Intent(DrawerActivity.this, ListaReceitasActivity.class);
@@ -186,7 +186,9 @@ public class DrawerActivity extends AppCompatActivity
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 
         if (type.equals("favoritos")) { ////    http://cookfy.herokuapp.com/users/{idUser}/reacts?react={FAVORITY|LOVE|LIKE}
-            urlReq = URL_PERFIL + settings.getString("id","")+ "reacts?react=FAVORITY";
+
+            urlReq = URL_PERFIL + settings.getString("id","")+"/reacts?react=FAVORITY";
+            Log.i("fav",urlReq);
         } else {
             urlReq = URL_CATEG;
         }
@@ -196,25 +198,24 @@ public class DrawerActivity extends AppCompatActivity
             @Override
             public void onResponse(JSONObject response) {
                 try {
-
+                    Log.i("fav","aqui");
                     JSONArray favoritas = response.getJSONArray("myReacts");
 
                     for (int i = 0; i < favoritas.length(); i++) {
                         Recipes receita = new Recipes();
-
+                        receita.setId(response.getString("id"));
                         receita.setName(response.getString("name"));
+                        receita.setDescription(response.getString("description"));
+                        receita.setExecutionTime(response.getString("executionTime"));
+                        receita.setDifficulty(response.getString("difficulty"));
+
+                        receitasList.add(receita);
                     }
 
-
-                    description = response.getString("description");
-                    executionTime = response.getString("executionTime");
-                    difficulty = response.getString("difficulty");
-                    ingredientes = response.getString("ingredientes");
-                    recipeBooks = response.getString("recipeBooks");
-
                     Toast.makeText(DrawerActivity.this, "!", Toast.LENGTH_LONG).show();
-                    Intent intentLogar = new Intent(DrawerActivity.this, ListaReceitasActivity.class);
-                    startActivity(intentLogar);
+                    Intent intentFav = new Intent(DrawerActivity.this, ListaReceitasActivity.class);
+                    //intentFav.putParcelableArrayListExtra("receitasList", receitasList);
+                    startActivity(intentFav);
                     finish();
 
                 } catch (JSONException e) {

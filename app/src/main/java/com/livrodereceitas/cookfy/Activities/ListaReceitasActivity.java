@@ -25,13 +25,17 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.livrodereceitas.cookfy.Adapters.GridViewAdapter;
 import com.livrodereceitas.cookfy.R;
 import com.livrodereceitas.cookfy.Classes.Recipes;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,8 +47,9 @@ import com.livrodereceitas.cookfy.Classes.Recipes;
 public class ListaReceitasActivity extends AppCompatActivity {
 
     private static final String REGISTER_URL = "https://cookfy.herokuapp.com/recipes/";
+    public static final String PREFS_NAME = "MyPrefsFile";
 
-    List<Recipes> listaReceitas = new ArrayList<>();
+    List<Recipes> listaReceitas = new ArrayList<Recipes>();
     private Recipes receitaTeste;
 
     Recipes receita = new Recipes();
@@ -58,7 +63,8 @@ public class ListaReceitasActivity extends AppCompatActivity {
 
         final GridView gridView = (GridView) findViewById(R.id.gridview);
 
-        listaReceitas = PreencheReceitas();
+        listaReceitas = preencheReceitas();
+
         BaseAdapter baseAdapterReceita = new GridViewAdapter(this, listaReceitas);
 
         gridView.setAdapter(baseAdapterReceita);
@@ -89,7 +95,10 @@ public class ListaReceitasActivity extends AppCompatActivity {
     }
 
     private void pegaReceita(final Recipes receitaDetalhe){
-        final String urlReceita = REGISTER_URL + receitaDetalhe.getId();
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+
+        final String urlReceita = REGISTER_URL + receitaDetalhe.getId() + "?user=" + settings.getString("id","");
+
         Log.i("script", "1");
         //Map<String,String> params = new HashMap<String, String>();
         //params.put("recId","1");
@@ -105,9 +114,30 @@ public class ListaReceitasActivity extends AppCompatActivity {
                     receitaDetalhe.setDescription(response.getString("description"));
                     receitaDetalhe.setId(response.getString("id"));
 
+                    JSONArray ingredientes = response.getJSONArray("recipeIngredients");
+
+                    List<JSONObject> ing = new ArrayList<JSONObject>();
+
+                    List<JSONObject> listing = new ArrayList<JSONObject>();
+
+                    ArrayList<String> ingredientesList = new ArrayList<String>();
+
+
+                    for (int i = 0; i < ingredientes.length(); i++) {
+
+                        ing.add(i, ingredientes.getJSONObject(i));
+
+                        listing.add(i, ing.get(i).getJSONObject("ingredient"));
+
+                        ingredientesList.add(i, listing.get(i).getString("name"));
+
+                    }
+
                     Log.i("script", receitaDetalhe.getName());
                     Intent intentDetalhe = new Intent(ListaReceitasActivity.this, DetalheActivity.class);
                     intentDetalhe.putExtra("receita", receitaDetalhe);
+                    intentDetalhe.putExtra("ingredientes",ingredientesList);
+
                     startActivity(intentDetalhe);
 
 
@@ -135,7 +165,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
     }
 
 
-    public List<Recipes> PreencheReceitas() {
+    public List<Recipes> preencheReceitas() {
         listaReceitas.add(new Recipes("1", "Almondegas", R.drawable.img1,"500 g de carne moída\n" +
                 "2 colheres (sopa) de azeite de oliva (30 ml)\n" +
                 "1 xícara de cebola bem picada (60 g)\n" +
