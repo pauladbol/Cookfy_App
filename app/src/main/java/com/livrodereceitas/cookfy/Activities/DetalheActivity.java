@@ -33,6 +33,7 @@ public class  DetalheActivity extends AppCompatActivity {
     private DetalheHelper helper;
     Recipes receita;
     ArrayList<String> ingredientesArray = new ArrayList<String>();
+    Boolean ehfavorito;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class  DetalheActivity extends AppCompatActivity {
 
         receita = (Recipes) intent.getSerializableExtra("receita");
         ingredientesArray = intent.getStringArrayListExtra("ingredientes");
+        ehfavorito = intent.getBooleanExtra("favorito",false);
 
         TextView nomeReceita = (TextView) this.findViewById(R.id.nome_receita);
         TextView descricaoReceita = (TextView) this.findViewById(R.id.descricao);
@@ -63,6 +65,10 @@ public class  DetalheActivity extends AppCompatActivity {
         nomeReceita.setText(receita.getName());
         descricaoReceita.setText(receita.getDescription());
         ingredientes.setText(ingredientesString);
+
+
+        favorito.setChecked(ehfavorito);
+
 
         favorito.setOnClickListener(new View.OnClickListener() {
             @Override
