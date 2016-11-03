@@ -91,7 +91,7 @@ public class LoginNovoActivity extends AppCompatActivity {
             login = "?username=";
         }
 
-        final String urlLogin = REGISTER_URL + login + username + "&hash=" + password;
+        final String urlLogin = REGISTER_URL + login + username + "&hash=" + passwordHash;
         Log.i("script", "hash login "+passwordHash);
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,

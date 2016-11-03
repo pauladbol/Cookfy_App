@@ -1,6 +1,7 @@
 package com.livrodereceitas.cookfy.Activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,14 +10,26 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.livrodereceitas.cookfy.Helpers.DetalheHelper;
 import com.livrodereceitas.cookfy.R;
 import com.livrodereceitas.cookfy.Classes.Recipes;
 
+
 import java.util.ArrayList;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 public class  DetalheActivity extends AppCompatActivity {
     public static final String REGISTER_URL = "https://cookfy.herokuapp.com/recipes/";
+    public static final String PREFS_NAME = "MyPrefsFile";
     private DetalheHelper helper;
     Recipes receita;
     ArrayList<String> ingredientesArray = new ArrayList<String>();
@@ -55,10 +68,10 @@ public class  DetalheActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(favorito.isChecked()){
-                    Toast.makeText(DetalheActivity.this, "agora é favorito " + favorito.isChecked() , Toast.LENGTH_SHORT).show();
+                    Favoritar();
                 }
                 else
-                    Toast.makeText(DetalheActivity.this, "não é mais favorito " + favorito.isChecked(), Toast.LENGTH_SHORT).show();
+                DesFavoritar();
             }
         });
         //helper.preencheDetalhe(receita);
@@ -70,6 +83,97 @@ public class  DetalheActivity extends AppCompatActivity {
     }
 
     private void Favoritar(){
-       // String urlFavoritar = REGISTER_URL + receita.getId() +"/reacts?user" +
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+
+        String urlFavoritar = REGISTER_URL + receita.getId() +"/reacts?user=" + settings.getString("id","") +"&react=FAVORITY";
+        /*JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                urlFavoritar, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Log.i("script", "id_user "+response.getString("id"));
+
+                    Toast.makeText(DetalheActivity.this, receita.getName() +" adiconada aos favoritos", Toast.LENGTH_LONG).show();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
+                }
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(DetalheActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsonObjReq);*/
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, urlFavoritar,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Toast.makeText(DetalheActivity.this, receita.getName() +" adiconada aos favoritos", Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(DetalheActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+    private void DesFavoritar(){
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+
+        String urlFavoritar = REGISTER_URL + receita.getId() +"/reacts?user=" + settings.getString("id","") +"&react=FAVORITY";
+        /*JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                urlFavoritar, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Log.i("script", "id_user "+response.getString("id"));
+
+                    Toast.makeText(DetalheActivity.this, receita.getName() +" adiconada aos favoritos", Toast.LENGTH_LONG).show();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
+                }
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(DetalheActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsonObjReq);*/
+
+        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, urlFavoritar,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Toast.makeText(DetalheActivity.this, receita.getName() +" retirada dos favoritos", Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(DetalheActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 }

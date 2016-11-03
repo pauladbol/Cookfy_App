@@ -13,9 +13,11 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.livrodereceitas.cookfy.Adapters.GridIngredienteAdapter;
 import com.livrodereceitas.cookfy.Classes.Ingrediente;
 import com.livrodereceitas.cookfy.R;
@@ -70,7 +72,7 @@ public class PesquisaIngredienteActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-              // PesquisaIngrediente();
+               PesquisaIngrediente();
 
 
             }
@@ -95,7 +97,7 @@ public class PesquisaIngredienteActivity extends AppCompatActivity {
         Matcher matcher = pattern.matcher(ingrediente);
         return matcher.matches();
     }
-    /*private void PesquisaIngrediente(){
+    private void PesquisaIngrediente(){
         String urlListaIngredientes = REGISTER_URL;
         boolean primeira = true;
         for(Ingrediente teste: listaIngredientesPesquisa){
@@ -110,9 +112,9 @@ public class PesquisaIngredienteActivity extends AppCompatActivity {
                 urlListaIngredientes, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                *//*Log.i("script", "id_user "+response.getString("id"));
-                id_user = response.getString("id");
-                token = response.getString("token");*//*
+//                Log.i("script", "id_user "+response.getString("id"));
+//                id_user = response.getString("id");
+//                token = response.getString("token");
 
                 Intent intentListaReceitas = new Intent(PesquisaIngredienteActivity.this, ListaReceitasActivity.class);
                 startActivity(intentListaReceitas);
@@ -126,5 +128,7 @@ public class PesquisaIngredienteActivity extends AppCompatActivity {
                         Toast.makeText(PesquisaIngredienteActivity.this,error.toString(),Toast.LENGTH_LONG).show();
                     }
                 });
-    }*/
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsonObjReq);
+    }
 }
