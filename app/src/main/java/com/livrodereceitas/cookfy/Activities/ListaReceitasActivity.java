@@ -54,6 +54,8 @@ public class ListaReceitasActivity extends AppCompatActivity {
 
     Recipes receita = new Recipes();
 
+    Boolean favorito = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +116,8 @@ public class ListaReceitasActivity extends AppCompatActivity {
                     receitaDetalhe.setDescription(response.getString("description"));
                     receitaDetalhe.setId(response.getString("id"));
 
+                    favorito = response.getBoolean("favority");
+
                     JSONArray ingredientes = response.getJSONArray("recipeIngredients");
 
                     List<JSONObject> ing = new ArrayList<JSONObject>();
@@ -137,6 +141,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
                     Intent intentDetalhe = new Intent(ListaReceitasActivity.this, DetalheActivity.class);
                     intentDetalhe.putExtra("receita", receitaDetalhe);
                     intentDetalhe.putExtra("ingredientes",ingredientesList);
+                    intentDetalhe.putExtra("favorito", favorito);
 
                     startActivity(intentDetalhe);
 

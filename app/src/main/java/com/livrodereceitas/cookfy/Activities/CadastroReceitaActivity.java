@@ -25,6 +25,7 @@ import com.livrodereceitas.cookfy.Adapters.GridIngredienteAdapter;
 import com.livrodereceitas.cookfy.Classes.Ingrediente;
 import com.livrodereceitas.cookfy.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -121,7 +122,7 @@ public class CadastroReceitaActivity extends AppCompatActivity {
         Matcher matcher = pattern.matcher(ingrediente);
         return matcher.matches();
     }
-    /*private void CadastrarReceita(){
+   /* private void CadastrarReceita(){
         final JSONObject jsonobj = new JSONObject();
 
         final String adapter = "application";
@@ -131,12 +132,16 @@ public class CadastroReceitaActivity extends AppCompatActivity {
         final String emaill = email.getText().toString().trim();
         final Date date = new Date();
 
+        JSONArray jsonarray = new JSONArray();
+
+        jsonarray.put(listaIngredientesReceita);
 
         try {
             jsonobj.put(KEY_NAME,name);
             jsonobj.put(KEY_CHEF,username);
             jsonobj.put(KEY_DIFFICULTY, emaill);
             //jsonobj.put(KEY_STEP,passwordHash);
+            jsonobj.put("ingredientes",jsonarray);
             jsonobj.put(KEY_INGREDIENT,listaIngredientesReceita);
 
 //            jsonobj.put(KEY_DATEC,date);
