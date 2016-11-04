@@ -50,7 +50,8 @@ public class GridIngredienteAdapter extends BaseAdapter {
         }
         nome = (TextView) v.getTag(R.id.ingrediente);
         Ingrediente ingrediente = (Ingrediente) getItem(position);
-        nome.setText(ingrediente.getNome());
+        int pos = ingrediente.getNome().indexOf(";");
+        nome.setText(ingrediente.getNome().substring(pos+1, ingrediente.getNome().length()));
 
         return v;
     }

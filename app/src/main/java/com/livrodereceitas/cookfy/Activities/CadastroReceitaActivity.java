@@ -20,6 +20,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.livrodereceitas.cookfy.Adapters.GridIngredienteAdapter;
 import com.livrodereceitas.cookfy.Classes.Ingrediente;
@@ -47,21 +48,25 @@ public class CadastroReceitaActivity extends AppCompatActivity {
     public static final String KEY_INGREDIENT= "ingredient_measure";
 
     private List<Ingrediente> listaIngredientesReceita = new ArrayList<Ingrediente>();
-    Ingrediente ingrediente;
-    Spinner spinnerDificuldade;
+    private Ingrediente ingrediente;
+    private Spinner spinnerDificuldade;
+    private String dificuldadeReceita;
+    private EditText nomeReceita;
+    private EditText modoPreparo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_receita);
         Button adicionar = (Button) findViewById(R.id.ingredienteReceitaAdicionar);
-
+        Button salvar = (Button)findViewById(R.id.salvarReceita);
         // final GridView gridView = (GridView) findViewById(R.id.gridIngredientesReceitas);
 
         final ListView listView =(ListView) findViewById(R.id.gridIngredientesReceitas);
         final BaseAdapter baseAdapter = new GridIngredienteAdapter(this, listaIngredientesReceita);
-
-        final String[] dificuldade = {"Dificuldade", "Tetinha", "Vai, mas não vai muito", "Fudeu", "É o capeta"};
-
+        final String[] dificuldade = {"Dificuldade", "EASY", "MEDIUM", "HARD"};
+        nomeReceita = (EditText) findViewById(R.id.nomeReceita);
+        modoPreparo = (EditText) findViewById(R.id.modoPreparoReceita);
         ArrayAdapter<String> adpDificuldade = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dificuldade);
         spinnerDificuldade = (Spinner) findViewById(R.id.dificuldadeReceita);
         adpDificuldade.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -71,7 +76,7 @@ public class CadastroReceitaActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(CadastroReceitaActivity.this, "Selection: "+dificuldade[position], Toast.LENGTH_SHORT).show();
-
+                dificuldadeReceita = dificuldade[position];
             }
 
             @Override
@@ -115,6 +120,13 @@ public class CadastroReceitaActivity extends AppCompatActivity {
             }
         });
 
+        salvar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // CadastrarReceita(listaIngredientesReceita);
+            }
+        });
+
     }
     private boolean validarIngrediente(String ingrediente) {
         String nomePattern = "^[aA-zZ]{2,}+(([ aA-zZ]+)+)?$";
@@ -122,30 +134,22 @@ public class CadastroReceitaActivity extends AppCompatActivity {
         Matcher matcher = pattern.matcher(ingrediente);
         return matcher.matches();
     }
-   /* private void CadastrarReceita(){
+    private void CadastrarReceita(List<Ingrediente> ingredientesLista){
         final JSONObject jsonobj = new JSONObject();
 
-        final String adapter = "application";
-        final String name = nome.getText().toString().trim();
-        final String username = usuario.getText().toString().trim();
-        final String password = senha.getText().toString().trim();
-        final String emaill = email.getText().toString().trim();
-        final Date date = new Date();
+        final String nome = nomeReceita.getText().toString().trim();
+        final List<String> modoPreparoReceita = new ArrayList<>();
+        modoPreparoReceita.add(modoPreparo.getText().toString().trim());
 
-        JSONArray jsonarray = new JSONArray();
-
-        jsonarray.put(listaIngredientesReceita);
-
+        JSONArray ingredienteArray = new JSONArray(ingredientesLista);
+        JSONArray modoPreparoArray = new JSONArray(modoPreparoReceita);
         try {
-            jsonobj.put(KEY_NAME,name);
-            jsonobj.put(KEY_CHEF,username);
-            jsonobj.put(KEY_DIFFICULTY, emaill);
-            //jsonobj.put(KEY_STEP,passwordHash);
-            jsonobj.put("ingredientes",jsonarray);
-            jsonobj.put(KEY_INGREDIENT,listaIngredientesReceita);
+            jsonobj.put(KEY_NAME, nome);
+            jsonobj.put(KEY_DIFFICULTY, dificuldadeReceita);
+            jsonobj.put(KEY_STEP, modoPreparoArray);
+            jsonobj.put(KEY_INGREDIENT, ingredienteArray);
 
-//            jsonobj.put(KEY_DATEC,date);
-//            jsonobj.put(KEY_DATEU,date);
+
         } catch (JSONException e) {
             e.printStackTrace();
             Toast.makeText(getApplicationContext(),"123456789: " + e.getMessage(),Toast.LENGTH_LONG).show();
@@ -159,9 +163,9 @@ public class CadastroReceitaActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
 
                 Log.i("script", "entrou no request!!");
-                Toast.makeText(CadastroActivity.this, "Bem vindo!", Toast.LENGTH_LONG).show();
-                Intent intentLogar = new Intent(CadastroActivity.this, LoginNovoActivity.class);
-                startActivity(intentLogar);
+                Toast.makeText(CadastroReceitaActivity.this, "Receita salva com sucesso!", Toast.LENGTH_LONG).show();
+                Intent intentCadastrar = new Intent(CadastroReceitaActivity.this, Main2Activity.class);
+                startActivity(intentCadastrar);
                 finish();
 
             }
@@ -169,7 +173,7 @@ public class CadastroReceitaActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(CadastroActivity.this,"!!"+error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(CadastroReceitaActivity.this,"!!"+error.toString(),Toast.LENGTH_LONG).show();
                     }
                 }){
 
@@ -177,7 +181,8 @@ public class CadastroReceitaActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonObjReq);
-    }*/
+
+    }
 }
 
 

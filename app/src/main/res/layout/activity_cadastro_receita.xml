@@ -79,6 +79,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Salva Receita"/>
+        android:text="Salvar Receita"
+        android:id="@+id/salvarReceita"/>
 </LinearLayout>
 </ScrollView>
