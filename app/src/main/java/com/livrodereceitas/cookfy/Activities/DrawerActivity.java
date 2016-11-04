@@ -169,9 +169,12 @@ public class DrawerActivity extends AppCompatActivity
             reqReceitas("favoritos");
 
         } else if (id == R.id.nav_pesquisa) {
-            Intent intentConfig = new Intent(DrawerActivity.this, PesquisaIngredienteActivity.class);
-            startActivity(intentConfig);
+            Intent intentPesq = new Intent(DrawerActivity.this, PesquisaIngredienteActivity.class);
+            startActivity(intentPesq);
 
+        } else if (id == R.id.nav_cadastro) {
+            Intent intentCad = new Intent(DrawerActivity.this, CadastroReceitaActivity.class);
+            startActivity(intentCad);
         } else if (id == R.id.nav_sair) {
             usuarioLogout();
         }
