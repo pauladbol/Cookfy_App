@@ -10,11 +10,28 @@
     tools:context=".Activities.PerfilActivity"
     android:orientation="vertical">
 
-    <ImageView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/user_icon_big2"
-       />
+        android:layout_height="225dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/user_icon_big2"
+
+            />
+        <Button
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:elevation="6dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/fundocamera"
+            android:layout_marginRight="16dp"
+            android:id="@+id/camera"
+            />
+    </RelativeLayout>
+
 
     <TextView
         android:id="@+id/nome"

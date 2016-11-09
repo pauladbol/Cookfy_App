@@ -162,7 +162,7 @@ public class CadastroActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
 
                     Log.i("script", "entrou no request!!");
-                    Toast.makeText(CadastroActivity.this, "Bem vindo!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CadastroActivity.this, "Cadastro salvo!", Toast.LENGTH_LONG).show();
                     Intent intentLogar = new Intent(CadastroActivity.this, LoginNovoActivity.class);
                     startActivity(intentLogar);
                     finish();

@@ -7,11 +7,31 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
-    <ImageView
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="280dp">
+        <ImageView
         android:id="@+id/imagemReceita"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/imagem" />
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/imagem"
+       />
+
+        <Button
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:textSize="30sp"
+            android:elevation="6dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/fundocamera"
+            android:textColor="#ffff"
+            android:layout_marginRight="16dp"
+            android:id="@+id/camera"
+            />
+
+    </RelativeLayout>
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,7 +64,7 @@
             android:elevation="6dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:background="@drawable/fundo"
+            android:background="@drawable/fundoadd"
             android:textColor="#ffff"
             android:layout_marginBottom="16dp"
             android:layout_marginRight="16dp"

@@ -1,6 +1,11 @@
 package com.livrodereceitas.cookfy.Activities;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +16,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -30,6 +36,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,6 +53,7 @@ public class CadastroReceitaActivity extends AppCompatActivity {
     public static final String KEY_CATEGORY= "category_id";
     public static final String KEY_STEP= "recipeStep";
     public static final String KEY_INGREDIENT= "ingredient_measure";
+    private static final int CODIGO_CAMERA = 567;
 
     private List<Ingrediente> listaIngredientesReceita = new ArrayList<Ingrediente>();
     private Ingrediente ingrediente;
@@ -53,6 +61,8 @@ public class CadastroReceitaActivity extends AppCompatActivity {
     private String dificuldadeReceita;
     private EditText nomeReceita;
     private EditText modoPreparo;
+    private Button camera;
+    private String caminhoFoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +71,7 @@ public class CadastroReceitaActivity extends AppCompatActivity {
         Button adicionar = (Button) findViewById(R.id.ingredienteReceitaAdicionar);
         Button salvar = (Button)findViewById(R.id.salvarReceita);
         // final GridView gridView = (GridView) findViewById(R.id.gridIngredientesReceitas);
-
+        camera = (Button) findViewById(R.id.camera);
         final ListView listView =(ListView) findViewById(R.id.gridIngredientesReceitas);
         final BaseAdapter baseAdapter = new GridIngredienteAdapter(this, listaIngredientesReceita);
         final String[] dificuldade = {"Dificuldade", "EASY", "MEDIUM", "HARD"};
@@ -126,8 +136,35 @@ public class CadastroReceitaActivity extends AppCompatActivity {
                // CadastrarReceita(listaIngredientesReceita);
             }
         });
+        camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                caminhoFoto = getExternalFilesDir(null) +  "/" + System.currentTimeMillis() +".jpg";
+                File arquivoFoto = new File(caminhoFoto);
+                intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(arquivoFoto));
+
+                //startActivityForResult(intentCamera, CODIGO_CAMERA);
+                startActivityForResult(intentCamera, CODIGO_CAMERA);
+            }
+        });
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == Activity.RESULT_OK) {
+            if (requestCode == CODIGO_CAMERA) {
+                ImageView foto = (ImageView) findViewById(R.id.imagemReceita);
+                Bitmap bitmap = BitmapFactory.decodeFile(caminhoFoto);
+                Bitmap bitmapReduzido = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
+                foto.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                foto.setImageBitmap(bitmapReduzido);
+            }
+        }
+    }
+
     private boolean validarIngrediente(String ingrediente) {
         String nomePattern = "^[aA-zZ]{2,}+(([ aA-zZ]+)+)?$";
         Pattern pattern = Pattern.compile(nomePattern);
