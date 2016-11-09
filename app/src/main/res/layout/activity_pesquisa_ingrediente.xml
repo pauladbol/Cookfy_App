@@ -29,7 +29,7 @@
             android:elevation="6dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="false"
-            android:background="@drawable/fundo"
+            android:background="@drawable/fundoadd"
             android:textColor="#ffff"
             android:layout_marginBottom="16dp"
             android:layout_marginRight="16dp"
