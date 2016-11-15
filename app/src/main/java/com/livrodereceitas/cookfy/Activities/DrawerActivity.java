@@ -117,11 +117,15 @@ public class DrawerActivity extends AppCompatActivity
                     public void onClick(View view) {
 
                         Intent intentCateg = new Intent(DrawerActivity.this, ListaReceitasActivity.class);
+
                         startActivity(intentCateg);
+
+                        //reqReceitas("categorias");
 
                     }
                 }
         );
+
     }
 
     @Override
@@ -197,6 +201,8 @@ public class DrawerActivity extends AppCompatActivity
         } else if (type.equals("minhas")){
             urlReq = URL_PERFIL + settings.getString("id","") + "/recipes";
             Log.i("minhas ",urlReq);
+        } else {
+            urlReq = URL_CATEG;
         }
 
         JsonArrayRequest jsonArrayReq = new JsonArrayRequest(Request.Method.GET,

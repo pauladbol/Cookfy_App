@@ -67,10 +67,6 @@ public class ListaReceitasActivity extends AppCompatActivity {
 
        Intent intent = getIntent();
 
-        ArrayList<Recipes> listaReceitas2 = intent.getParcelableArrayListExtra("receitasList");
-
-        Log.i("fav", listaReceitas2.toString());
-
         listaReceitas = intent.getParcelableArrayListExtra("receitasList"); /*preencheReceitas();*/
 
         BaseAdapter baseAdapterReceita = new GridViewAdapter(this, listaReceitas);
@@ -104,7 +100,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
 
     private void pegaReceita(final Recipes receitaDetalhe){
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-
+        Log.i("detalhe", receitaDetalhe.getId());
         final String urlReceita = REGISTER_URL + receitaDetalhe.getId() + "?user=" + settings.getString("id","");
 
         Log.i("script", "1");
@@ -126,29 +122,29 @@ public class ListaReceitasActivity extends AppCompatActivity {
 
                     favorito = response.getBoolean("favority");
 
-                    JSONArray ingredientes = response.getJSONArray("recipeIngredients");
+                    //JSONArray ingredientes = response.getJSONArray("recipeIngredients");
 
-                    List<JSONObject> ing = new ArrayList<JSONObject>();
+//                    List<JSONObject> ing = new ArrayList<JSONObject>();
+//
+//                    List<JSONObject> listing = new ArrayList<JSONObject>();
+//
+//                    ArrayList<String> ingredientesList = new ArrayList<String>();
 
-                    List<JSONObject> listing = new ArrayList<JSONObject>();
 
-                    ArrayList<String> ingredientesList = new ArrayList<String>();
-
-
-                    for (int i = 0; i < ingredientes.length(); i++) {
-
-                        ing.add(i, ingredientes.getJSONObject(i));
-
-                        listing.add(i, ing.get(i).getJSONObject("ingredient"));
-
-                        ingredientesList.add(i, listing.get(i).getString("name"));
-
-                    }
+//                    for (int i = 0; i < ingredientes.length(); i++) {
+//
+//                        ing.add(i, ingredientes.getJSONObject(i));
+//
+//                        listing.add(i, ing.get(i).getJSONObject("ingredient"));
+//
+//                        ingredientesList.add(i, listing.get(i).getString("name"));
+//
+//                    }
 
                     Log.i("script", receitaDetalhe.getName());
                     Intent intentDetalhe = new Intent(ListaReceitasActivity.this, DetalheActivity.class);
                     intentDetalhe.putExtra("receita", receitaDetalhe);
-                    intentDetalhe.putExtra("ingredientes",ingredientesList);
+                    //intentDetalhe.putExtra("ingredientes",ingredientesList);
                     intentDetalhe.putExtra("favorito", favorito);
 
                     startActivity(intentDetalhe);
