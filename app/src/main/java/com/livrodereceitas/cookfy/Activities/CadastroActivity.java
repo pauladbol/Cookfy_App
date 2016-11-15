@@ -83,10 +83,6 @@ public class CadastroActivity extends AppCompatActivity {
                     senha.setError("Senha Invalido");
                     senha.requestFocus();
                 } else {
-//                    Toast.makeText(CadastroActivity.this, "Cadastro feito com sucesso", Toast.LENGTH_LONG).show();
-//                    Intent intentLogar = new Intent(CadastroActivity.this, LoginNovoActivity.class);
-//                    startActivity(intentLogar);
-//                    finish();
                     registerUser();
                 }
 
@@ -151,17 +147,13 @@ public class CadastroActivity extends AppCompatActivity {
 //            jsonobj.put(KEY_DATEU,date);
         } catch (JSONException e) {
             e.printStackTrace();
-            Toast.makeText(getApplicationContext(),"123456789: " + e.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Erro: " + e.getMessage(),Toast.LENGTH_LONG).show();
         }
-
-        Log.i("script", jsonobj.toString());
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 REGISTER_URL, jsonobj, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-
-                    Log.i("script", "entrou no request!!");
                     Toast.makeText(CadastroActivity.this, "Cadastro salvo!", Toast.LENGTH_LONG).show();
                     Intent intentLogar = new Intent(CadastroActivity.this, LoginNovoActivity.class);
                     startActivity(intentLogar);
@@ -172,7 +164,7 @@ public class CadastroActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(CadastroActivity.this,"!!"+error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(CadastroActivity.this,"Ocorreu um erro: "+error.toString(),Toast.LENGTH_LONG).show();
                     }
                 }){
 
