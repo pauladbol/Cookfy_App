@@ -115,7 +115,7 @@ public class DrawerActivity extends AppCompatActivity
 
                     @Override
                     public void onClick(View view) {
-                        //reqReceitas("categorias");
+
                         Intent intentCateg = new Intent(DrawerActivity.this, ListaReceitasActivity.class);
                         startActivity(intentCateg);
 
@@ -162,9 +162,11 @@ public class DrawerActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-
         if (id == R.id.nav_perfil) {
             reqPerfil();
+
+        } else if (id == R.id.nav_minhas) {
+            reqReceitas("minhas");
 
         } else if (id == R.id.nav_favoritos) {
             reqReceitas("favoritos");
@@ -189,27 +191,21 @@ public class DrawerActivity extends AppCompatActivity
     private void reqReceitas(String type){
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 
-        if (type.equals("favoritos")) { ////    http://cookfy.herokuapp.com/users/{idUser}/reacts?react={FAVORITY|LOVE|LIKE}
-
+        if (type.equals("favoritos")) {
             urlReq = URL_PERFIL + settings.getString("id","")+"/reacts?react=FAVORITY";
             Log.i("fav ",urlReq);
-        } else {
-            urlReq = URL_CATEG;
+        } else if (type.equals("minhas")){
+            urlReq = URL_PERFIL + settings.getString("id","") + "/recipes";
+            Log.i("minhas ",urlReq);
         }
 
-        //Log.i("script", "123456");
-        JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
+        JsonArrayRequest jsonArrayReq = new JsonArrayRequest(Request.Method.GET,
                 urlReq, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 try {
-                    Log.i("fav","aqui");
-
-
 
                     for (int i = 0; i < response.length(); i++) {
-                        Log.i("fav", "FAV "+response.toString());
-
                         JSONObject receitaJSON = response.getJSONObject(i);
 
                         Recipes receita = new Recipes();
@@ -222,13 +218,8 @@ public class DrawerActivity extends AppCompatActivity
 
                         receitasList.add(receita);
 
-
-//
                     }
 
-                    Log.i("fav", "aqui2");
-
-                    Toast.makeText(DrawerActivity.this, "!", Toast.LENGTH_LONG).show();
                     Intent intentFav = new Intent(DrawerActivity.this, ListaReceitasActivity.class);
                     intentFav.putParcelableArrayListExtra("receitasList", receitasList);
                     startActivity(intentFav);
@@ -254,7 +245,7 @@ public class DrawerActivity extends AppCompatActivity
         };
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(jsonObjReq);
+        requestQueue.add(jsonArrayReq);
     }
 
     private void reqPerfil() {

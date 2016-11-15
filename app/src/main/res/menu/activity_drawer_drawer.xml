@@ -7,6 +7,10 @@
             android:icon="@drawable/ic_account_box_black_24dp"
             android:title="Meu Perfil" />
         <item
+            android:id="@+id/nav_minhas"
+            android:icon="@drawable/ic_highlight_black_24dp"
+            android:title="Minhas Receitas" />
+        <item
             android:id="@+id/nav_favoritos"
             android:icon="@drawable/ic_star_black_24dp"
             android:title="Meus Favoritos" />
