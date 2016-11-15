@@ -45,13 +45,15 @@ public class  DetalheActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        receita = (Recipes) intent.getSerializableExtra("receita");
+        receita = (Recipes) intent.getParcelableExtra("receita");
         ingredientesArray = intent.getStringArrayListExtra("ingredientes");
         ehfavorito = intent.getBooleanExtra("favorito",false);
 
         TextView nomeReceita = (TextView) this.findViewById(R.id.nome_receita);
         TextView descricaoReceita = (TextView) this.findViewById(R.id.descricao);
         TextView ingredientes = (TextView) this.findViewById(R.id.descricao1);
+        TextView dificuldade = (TextView) this.findViewById(R.id.dificuldadeTexto);
+        TextView time = (TextView) this.findViewById(R.id.timeTexto);
 
         String ingredientesString = "" /*ingredientesArray.toString()*/ ;
 
@@ -65,7 +67,19 @@ public class  DetalheActivity extends AppCompatActivity {
         nomeReceita.setText(receita.getName());
         descricaoReceita.setText(receita.getDescription());
         ingredientes.setText(ingredientesString);
+        time.setText(receita.getExecutionTime());
 
+        String dificuldadeReceita = "";
+
+        if (receita.getDifficulty().equals("HARD")) {
+            dificuldadeReceita = "Difícil";
+        } else if (receita.getDifficulty().equals("MEDIUM")) {
+            dificuldadeReceita = "Média";
+        } else {
+            dificuldadeReceita = "Fácil";
+        }
+
+        dificuldade.setText(dificuldadeReceita);
 
         favorito.setChecked(ehfavorito);
 

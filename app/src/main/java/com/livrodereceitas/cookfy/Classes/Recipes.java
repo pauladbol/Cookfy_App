@@ -1,12 +1,15 @@
 package com.livrodereceitas.cookfy.Classes;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.util.UUID;
 
 /**
  * Created by Asus on 01/10/2016.
  */
-public class Recipes implements Serializable {
+public class Recipes implements Parcelable {
         private String id;
         private int drawableId;
         private String name;
@@ -33,7 +36,28 @@ public class Recipes implements Serializable {
         private String difficulty;*/
 
 
+    protected Recipes(Parcel in) {
+        id = in.readString();
+        drawableId = in.readInt();
+        name = in.readString();
+        description = in.readString();
+        ingredientes = in.readString();
+        prepTime = in.readString();
+        difficulty = in.readString();
+        recipeBooks = in.createStringArray();
+    }
 
+    public static final Creator<Recipes> CREATOR = new Creator<Recipes>() {
+        @Override
+        public Recipes createFromParcel(Parcel in) {
+            return new Recipes(in);
+        }
+
+        @Override
+        public Recipes[] newArray(int size) {
+            return new Recipes[size];
+        }
+    };
 
     public String getId() {
 
@@ -108,5 +132,22 @@ public class Recipes implements Serializable {
 
     public void setRecipeBooks(String[] recipeBooks) {
         this.recipeBooks = recipeBooks;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeInt(drawableId);
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeString(ingredientes);
+        dest.writeString(prepTime);
+        dest.writeString(difficulty);
+        dest.writeStringArray(recipeBooks);
     }
 }

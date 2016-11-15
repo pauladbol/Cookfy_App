@@ -49,7 +49,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
     private static final String REGISTER_URL = "https://cookfy.herokuapp.com/recipes/";
     public static final String PREFS_NAME = "MyPrefsFile";
 
-    List<Recipes> listaReceitas = new ArrayList<Recipes>();
+    ArrayList<Recipes> listaReceitas = new ArrayList<Recipes>();
     private Recipes receitaTeste;
 
     Recipes receita = new Recipes();
@@ -65,7 +65,13 @@ public class ListaReceitasActivity extends AppCompatActivity {
 
         final GridView gridView = (GridView) findViewById(R.id.gridview);
 
-        listaReceitas = preencheReceitas();
+       Intent intent = getIntent();
+
+        ArrayList<Recipes> listaReceitas2 = intent.getParcelableArrayListExtra("receitasList");
+
+        Log.i("fav", listaReceitas2.toString());
+
+        listaReceitas = intent.getParcelableArrayListExtra("receitasList"); /*preencheReceitas();*/
 
         BaseAdapter baseAdapterReceita = new GridViewAdapter(this, listaReceitas);
 
@@ -115,6 +121,8 @@ public class ListaReceitasActivity extends AppCompatActivity {
                     receitaDetalhe.setName(response.getString("name"));
                     receitaDetalhe.setDescription(response.getString("description"));
                     receitaDetalhe.setId(response.getString("id"));
+                    receitaDetalhe.setDifficulty(response.getString("difficulty"));
+                    receitaDetalhe.setExecutionTime(response.getString("prepTime"));
 
                     favorito = response.getBoolean("favority");
 
@@ -170,7 +178,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
     }
 
 
-    public List<Recipes> preencheReceitas() {
+    public ArrayList<Recipes> preencheReceitas() {
         /*Intent intent = getIntent();
         if (intent!= null){
             List<Recipes> teste = intent.getExtras();        }*/

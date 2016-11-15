@@ -15,10 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GridViewAdapter extends BaseAdapter {
-    private List<Recipes> listaReceita;
+    private ArrayList<Recipes> listaReceita;
     private final LayoutInflater mInflater;
 
-    public GridViewAdapter(Context context, List<Recipes> receita) {
+    public GridViewAdapter(Context context, ArrayList<Recipes> receita) {
         mInflater = LayoutInflater.from(context);
         listaReceita = receita;
     }

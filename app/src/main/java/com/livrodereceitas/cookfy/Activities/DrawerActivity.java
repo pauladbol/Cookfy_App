@@ -24,6 +24,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.livrodereceitas.cookfy.Adapters.ImagemPagerAdapter;
@@ -191,35 +192,45 @@ public class DrawerActivity extends AppCompatActivity
         if (type.equals("favoritos")) { ////    http://cookfy.herokuapp.com/users/{idUser}/reacts?react={FAVORITY|LOVE|LIKE}
 
             urlReq = URL_PERFIL + settings.getString("id","")+"/reacts?react=FAVORITY";
-            Log.i("fav",urlReq);
+            Log.i("fav ",urlReq);
         } else {
             urlReq = URL_CATEG;
         }
-        Log.i("script", "123456");
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-                urlReq, null, new Response.Listener<JSONObject>() {
+
+        //Log.i("script", "123456");
+        JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
+                urlReq, null, new Response.Listener<JSONArray>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(JSONArray response) {
                 try {
                     Log.i("fav","aqui");
-                    JSONArray favoritas = response.getJSONArray("myReacts");
 
-                    Log.i("script", "FAV "+favoritas.toString());
 
-                    for (int i = 0; i < favoritas.length(); i++) {
+
+                    for (int i = 0; i < response.length(); i++) {
+                        Log.i("fav", "FAV "+response.toString());
+
+                        JSONObject receitaJSON = response.getJSONObject(i);
+
                         Recipes receita = new Recipes();
-                        receita.setId(response.getString("id"));
-                        receita.setName(response.getString("name"));
-                        receita.setDescription(response.getString("description"));
-                        receita.setExecutionTime(response.getString("executionTime"));
-                        receita.setDifficulty(response.getString("difficulty"));
+                        receita.setId(receitaJSON.getString("id"));
+                        receita.setName(receitaJSON.getString("name"));
+                        receita.setDescription(receitaJSON.getString("description"));
+                        receita.setExecutionTime(receitaJSON.getString("prepTime"));
+                        receita.setDifficulty(receitaJSON.getString("difficulty"));
+                        receita.setDrawableId(R.drawable.imagem);
 
                         receitasList.add(receita);
+
+
+//
                     }
+
+                    Log.i("fav", "aqui2");
 
                     Toast.makeText(DrawerActivity.this, "!", Toast.LENGTH_LONG).show();
                     Intent intentFav = new Intent(DrawerActivity.this, ListaReceitasActivity.class);
-                    //intentFav.putParcelableArrayListExtra("receitasList", receitasList);
+                    intentFav.putParcelableArrayListExtra("receitasList", receitasList);
                     startActivity(intentFav);
                     finish();
 

@@ -106,6 +106,54 @@
             android:textSize="15dp"
             android:textColor="@color/colorPrimaryDarker"
             />
+
+        <TextView
+            android:id="@+id/dificuldade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nível de Dificuldade"
+            android:textAlignment="inherit"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:textSize="20dp"
+            android:textColor="@color/colorPrimaryDarker"
+            />
+        <TextView
+            android:id="@+id/dificuldadeTexto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="inherit"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:textSize="15dp"
+            android:textColor="@color/colorPrimaryDarker"
+            />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tempo de Preparo"
+            android:textAlignment="inherit"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:textSize="20dp"
+            android:textColor="@color/colorPrimaryDarker"
+            />
+        <TextView
+            android:id="@+id/timeTexto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="inherit"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:textSize="15dp"
+            android:textColor="@color/colorPrimaryDarker"
+            />
     </LinearLayout>
 </ScrollView>
 
