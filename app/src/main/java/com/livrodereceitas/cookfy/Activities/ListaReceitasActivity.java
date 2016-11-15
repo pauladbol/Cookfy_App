@@ -67,9 +67,6 @@ public class ListaReceitasActivity extends AppCompatActivity {
 
        Intent intent = getIntent();
 
-        ArrayList<Recipes> listaReceitas2 = intent.getParcelableArrayListExtra("receitasList");
-
-        Log.i("fav", listaReceitas2.toString());
 
         listaReceitas = intent.getParcelableArrayListExtra("receitasList"); /*preencheReceitas();*/
 
