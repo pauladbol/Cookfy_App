@@ -31,6 +31,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonObject;
 import com.livrodereceitas.cookfy.Adapters.AdapterStepsReceita;
 import com.livrodereceitas.cookfy.Adapters.GridIngredienteAdapter;
 import com.livrodereceitas.cookfy.Classes.Ingrediente;
@@ -43,6 +44,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -62,8 +64,8 @@ public class CadastroReceitaActivity extends AppCompatActivity {
     private static final String PREFS_NAME = "MyPrefsFile";
 
     private String[] dificuldade;
-    private List<Ingrediente> listaIngredientesReceita = new ArrayList<Ingrediente>();
-    private List<RecipeStep> listaStepsReceita = new ArrayList<>();
+    private ArrayList<Ingrediente> listaIngredientesReceita = new ArrayList<Ingrediente>();
+    private ArrayList<RecipeStep> listaStepsReceita = new ArrayList<>();
     private RecipeStep recipeStep;
     private Ingrediente ingrediente;
     private Spinner spinnerDificuldade;
@@ -175,7 +177,7 @@ public class CadastroReceitaActivity extends AppCompatActivity {
         salvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //CadastrarReceita(listaIngredientesReceita);
+                CadastrarReceita(listaIngredientesReceita);
             }
         });
         camera.setOnClickListener(new View.OnClickListener() {
@@ -212,26 +214,38 @@ public class CadastroReceitaActivity extends AppCompatActivity {
         Matcher matcher = pattern.matcher(ingrediente);
         return matcher.matches();
     }
-   /* private void CadastrarReceita(List<Ingrediente> ingredientesLista){
+    private void CadastrarReceita(ArrayList<Ingrediente> ingredientesLista){
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         final JSONObject jsonobj = new JSONObject();
-        List<Ingrediente> teste1 = new ArrayList<>();
-        List<RecipeStep> teste2 = new ArrayList<>();
-        teste1 = ingredientesLista;
-        teste2 = listaStepsReceita;
         final String nome = nomeReceita.getText().toString().trim();
         String tempoPreparoReceitaString = tempoPreparo.getText().toString().trim();
         String tempoFornoReceitaString = tempoForno.getText().toString().trim();
         Integer tempoFornoReceita = Integer.parseInt(tempoFornoReceitaString);
         Integer tempoPreparoReceita = Integer.parseInt(tempoPreparoReceitaString);
         Integer cheffId = Integer.parseInt(settings.getString("id", ""));
-        JSONArray ingredienteArray = new JSONArray(teste1);
-        JSONArray modoPreparoArray = new JSONArray(teste2);
+
+        JSONArray modoPreparoArray = new JSONArray();
+        JSONArray ingredientesArray = new JSONArray();
+        for(int i=0; i<ingredientesLista.size();i++){
+            ingredientesArray.put(ingredientesLista.get(i).getNome());
+        }
+        for(RecipeStep recipeStep : listaStepsReceita){
+            final JSONObject jsonSteps = new JSONObject();
+            try {
+                jsonSteps.put("stepOrder", recipeStep.getStepOrder());
+                jsonSteps.put("description", recipeStep.getDescription());
+
+                modoPreparoArray.put(jsonSteps);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
         try {
             jsonobj.put(KEY_NAME, nome);
             jsonobj.put(KEY_DIFFICULTY, dificuldadeReceita);
             jsonobj.put(KEY_STEP, modoPreparoArray);
-            jsonobj.put(KEY_INGREDIENT, ingredienteArray);
+            jsonobj.put(KEY_INGREDIENT, ingredientesArray);
             jsonobj.put(KEY_COOKTIME, tempoFornoReceita);
             jsonobj.put(KEY_PREPTIME, tempoPreparoReceita);
             jsonobj.put(KEY_CHEF, cheffId);
@@ -252,7 +266,7 @@ public class CadastroReceitaActivity extends AppCompatActivity {
 
                 Log.i("script", "entrou no request!!");
                 Toast.makeText(CadastroReceitaActivity.this, "Receita salva com sucesso!", Toast.LENGTH_LONG).show();
-                Intent intentCadastrar = new Intent(CadastroReceitaActivity.this, Main2Activity.class);
+                Intent intentCadastrar = new Intent(CadastroReceitaActivity.this, DrawerActivity.class);
                 startActivity(intentCadastrar);
                 finish();
 
@@ -270,7 +284,7 @@ public class CadastroReceitaActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonObjReq);
 
-    }*/
+    }
     public static boolean setListViewHeightBasedOnItems(ListView listView) {
 
         ListAdapter listAdapter = listView.getAdapter();

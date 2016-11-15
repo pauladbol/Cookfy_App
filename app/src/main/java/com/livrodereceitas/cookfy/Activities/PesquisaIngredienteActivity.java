@@ -16,12 +16,15 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.livrodereceitas.cookfy.Adapters.GridIngredienteAdapter;
 import com.livrodereceitas.cookfy.Classes.Ingrediente;
+import com.livrodereceitas.cookfy.Classes.Recipes;
 import com.livrodereceitas.cookfy.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,8 +34,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PesquisaIngredienteActivity extends AppCompatActivity {
-    private static final String REGISTER_URL = "https://cookfy.herokuapp.com/recipes/ingredient?";
-
+    private static final String REGISTER_URL = "https://cookfy.herokuapp.com/recipes/ingredients?";
+    private ArrayList<Recipes> receitasList = new ArrayList<Recipes>();
     private List<Ingrediente> listaIngredientesPesquisa = new ArrayList<Ingrediente>();
     Ingrediente ingrediente;
 
@@ -108,18 +111,40 @@ public class PesquisaIngredienteActivity extends AppCompatActivity {
                 urlListaIngredientes += "&ingredient=" + teste.getNome();
             }
         }
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-                urlListaIngredientes, null, new Response.Listener<JSONObject>() {
+        JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
+                urlListaIngredientes, null, new Response.Listener<JSONArray>() {
             @Override
-            public void onResponse(JSONObject response) {
-//                Log.i("script", "id_user "+response.getString("id"));
-//                id_user = response.getString("id");
-//                token = response.getString("token");
+            public void onResponse(JSONArray response) {
+                try {
+                    Log.i("fav","aqui");
 
-                Intent intentListaReceitas = new Intent(PesquisaIngredienteActivity.this, ListaReceitasActivity.class);
-                startActivity(intentListaReceitas);
-                finish();
+                    for (int i = 0; i < response.length(); i++) {
+                        Log.i("fav", "FAV "+response.toString());
 
+                        JSONObject receitaJSON = response.getJSONObject(i);
+
+                        Recipes receita = new Recipes();
+                        receita.setId(receitaJSON.getString("id"));
+                        receita.setName(receitaJSON.getString("name"));
+                        receita.setDescription(receitaJSON.getString("description"));
+                        receita.setExecutionTime(receitaJSON.getString("prepTime"));
+                        receita.setDifficulty(receitaJSON.getString("difficulty"));
+                        receita.setDrawableId(R.drawable.imagem);
+
+                        receitasList.add(receita);
+                    }
+
+                    Toast.makeText(PesquisaIngredienteActivity.this, "!", Toast.LENGTH_LONG).show();
+                    Intent intentFav = new Intent(PesquisaIngredienteActivity.this, ListaReceitasActivity.class);
+                    intentFav.putParcelableArrayListExtra("receitasList", receitasList);
+                    startActivity(intentFav);
+                    finish();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
+
+                }
             }
         },
                 new Response.ErrorListener() {
@@ -127,7 +152,11 @@ public class PesquisaIngredienteActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(PesquisaIngredienteActivity.this,error.toString(),Toast.LENGTH_LONG).show();
                     }
-                });
+                }){
+
+
+        };
+
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonObjReq);
     }
