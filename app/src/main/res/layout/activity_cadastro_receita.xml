@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:fillViewport="true"
     >
 <LinearLayout
     android:orientation="vertical"
@@ -9,7 +10,8 @@
     android:layout_width="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="280dp">
+        android:layout_height="280dp"
+        android:background="#FFFFFF">
         <ImageView
         android:id="@+id/imagemReceita"
         android:layout_width="match_parent"
@@ -33,29 +35,46 @@
     </RelativeLayout>
 
     <EditText
+        android:layout_marginTop="5dp"
+        android:background="@drawable/editborda"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Nome da receita..."
         android:id="@+id/nomeReceita"
-        android:textSize="30dp"/>
+        android:textSize="20dp"
+        />
     <RelativeLayout
+        android:layout_marginTop="5dp"
+        android:background="@drawable/editborda"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-
         >
-        <EditText
-            android:layout_marginTop="30dp"
-            android:layout_width="300dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Ex: Feijão!"
-            android:id="@+id/ingredienteReceitaNome"/>
-        <EditText
-
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:hint="Ex: 1 kg"
-            android:id="@+id/ingredienteReceitaMedida"/>
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ingredientes"
+                android:textSize="20dp"
+                android:textColor="#000000"/>
+            <EditText
+                android:background="@drawable/editborda"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="Ex: Feijão..."
+                android:textSize="20dp"
+                android:id="@+id/ingredienteReceitaNome"/>
+            <EditText
+                android:layout_marginTop="5dp"
+                android:background="@drawable/editborda"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="Ex: 1 kg"
+                android:textSize="20dp"
+                android:id="@+id/ingredienteReceitaMedida"/>
+        </LinearLayout>
         <Button
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -65,8 +84,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:background="@drawable/fundoadd"
-            android:textColor="#ffff"
-            android:layout_marginBottom="16dp"
+            android:textColor="#000000"
             android:layout_marginRight="16dp"
             android:id="@+id/ingredienteReceitaAdicionar"
             />
@@ -76,26 +94,134 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <ListView
+            android:layout_marginTop="5dp"
+            android:background="#FFFFFF"
             android:id="@+id/gridIngredientesReceitas"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
 
             />
     </RelativeLayout>
-    <EditText
+    <RelativeLayout
+        android:layout_marginTop="5dp"
+        android:background="@drawable/editborda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Passo a Passo Modo de Preparo"
+                android:textSize="20dp"
+                android:textColor="#000000"/>
+
+            <EditText
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="Ex: Misturar os ingredientes"
+                android:textSize="20dp"
+                android:id="@+id/stepReceita"
+                android:background="@drawable/editborda"/>
+        </LinearLayout>
+        <Button
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="+"
+            android:textSize="30sp"
+            android:elevation="6dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/fundoadd"
+            android:textColor="#000000"
+            android:layout_marginRight="16dp"
+            android:id="@+id/stepReceitaAdicionar"
+            />
+    </RelativeLayout>
+    <ListView
+        android:layout_marginTop="5dp"
+        android:background="#FFFFFF"
+        android:id="@+id/listStepsReceita"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:hint="Modo de Preparo..."
-        android:id="@+id/modoPreparoReceita"
-        android:textSize="20dp"/>
 
+        />
+<LinearLayout
+    android:background="@drawable/editborda"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dificuldade"
+        android:textSize="15dp"/>
     <Spinner
+
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:id="@+id/dificuldadeReceita"
         android:textAlignment="center"
+        android:background="@drawable/editborda"
         />
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tempo de preparo"
+            android:textSize="15dp"
+            android:textColor="#000000"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tempo no forno"
+            android:textSize="15dp"
+            android:layout_marginLeft="75dp"
+            android:textColor="#000000"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <EditText
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:hint="200"
+            android:textSize="20dp"
+            android:id="@+id/tempoPreparoReceita"
+            android:background="@drawable/editborda"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="min"/>
+        <EditText
+            android:background="@drawable/editborda"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:hint="200"
+            android:textSize="20dp"
+            android:id="@+id/tempoFornoReceita"
+            android:layout_marginLeft="80dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="min"/>
+    </LinearLayout>
+</LinearLayout>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
