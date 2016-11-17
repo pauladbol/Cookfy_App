@@ -106,30 +106,6 @@ public class  DetalheActivity extends AppCompatActivity {
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 
         String urlFavoritar = REGISTER_URL + receita.getId() +"/reacts?user=" + settings.getString("id","") +"&react=FAVORITY";
-        /*JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                urlFavoritar, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    Log.i("script", "id_user "+response.getString("id"));
-
-                    Toast.makeText(DetalheActivity.this, receita.getName() +" adiconada aos favoritos", Toast.LENGTH_LONG).show();
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
-                }
-            }
-        },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(DetalheActivity.this,error.toString(),Toast.LENGTH_LONG).show();
-                    }
-                });
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(jsonObjReq);*/
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, urlFavoritar,
                 new Response.Listener<String>() {
@@ -153,30 +129,6 @@ public class  DetalheActivity extends AppCompatActivity {
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 
         String urlFavoritar = REGISTER_URL + receita.getId() +"/reacts?user=" + settings.getString("id","") +"&react=FAVORITY";
-        /*JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                urlFavoritar, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    Log.i("script", "id_user "+response.getString("id"));
-
-                    Toast.makeText(DetalheActivity.this, receita.getName() +" adiconada aos favoritos", Toast.LENGTH_LONG).show();
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
-                }
-            }
-        },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(DetalheActivity.this,error.toString(),Toast.LENGTH_LONG).show();
-                    }
-                });
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(jsonObjReq);*/
 
         StringRequest stringRequest = new StringRequest(Request.Method.DELETE, urlFavoritar,
                 new Response.Listener<String>() {
