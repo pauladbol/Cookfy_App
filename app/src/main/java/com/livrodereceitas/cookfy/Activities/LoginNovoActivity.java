@@ -130,14 +130,14 @@ public class LoginNovoActivity extends AppCompatActivity {
         requestQueue.add(jsonObjReq);
     }
 
-    private boolean validarSenha(String s) {
+    public boolean validarSenha(String s) {
         String senha = s;
         if(senha.length()<6){
             return false;
         }else
             return true;
     }
-    private boolean validarUsuario(String usuario) {
+    public boolean validarUsuario(String usuario) {
         String usuarioPattern = "^[aA-zZ]{3,}+(([aA-zZ0-9]+)+)?$";
         Pattern pattern = Pattern.compile(usuarioPattern);
         Matcher matcher = pattern.matcher(usuario);

@@ -59,4 +59,8 @@ public class CadastroActivityTest {
     public void testHash() {
 
     }
+
+
+    //metodo void: verify times called
+    //Mockito.verify(mockConnection.createStatement(), Mockito.times(1));
 }

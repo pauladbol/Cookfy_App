@@ -229,6 +229,7 @@ public class DrawerActivity extends AppCompatActivity
                     Intent intentFav = new Intent(DrawerActivity.this, ListaReceitasActivity.class);
                     intentFav.putParcelableArrayListExtra("receitasList", receitasList);
                     startActivity(intentFav);
+                    receitasList.clear();
                     finish();
 
                 } catch (JSONException e) {
