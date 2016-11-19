@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:background="#FFFFFF"
     >
 
     <LinearLayout
@@ -21,18 +22,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/logo"/>
-        <EditText android:hint="Nome"
+        <EditText
+            android:background="@drawable/editborda"
+            android:hint="Nome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:id="@+id/cadastro_nome"/>
-        <EditText android:hint="Usuário"
+        <EditText
+            android:background="@drawable/editborda"
+            android:hint="Usuário"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
             android:id="@+id/cadastro_usuario"
             />
-        <EditText android:hint="Email"
+        <EditText
+            android:background="@drawable/editborda"
+            android:hint="Email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
@@ -40,7 +47,9 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <EditText android:hint="Senha"
+            <EditText
+                android:background="@drawable/editborda"
+                android:hint="Senha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
@@ -52,6 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/cadastro_cadastrar"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp"
+            android:background="@drawable/botaofundo"/>
     </LinearLayout>
 </ScrollView>

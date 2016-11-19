@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -62,7 +67,6 @@ public class CadastroReceitaActivity extends AppCompatActivity {
     public static final String KEY_INGREDIENT= "ingredient_measure";
     private static final int CODIGO_CAMERA = 567;
     private static final String PREFS_NAME = "MyPrefsFile";
-
     private String[] dificuldade;
     private ArrayList<Ingrediente> listaIngredientesReceita = new ArrayList<Ingrediente>();
     private ArrayList<RecipeStep> listaStepsReceita = new ArrayList<>();
@@ -78,6 +82,14 @@ public class CadastroReceitaActivity extends AppCompatActivity {
     private Button camera;
     private String caminhoFoto;
     private Integer stepOrder = 0;
+    private File arquivoFoto;
+    private BaseAdapter baseAdapterStepRecipe;
+    private BaseAdapter baseAdapter;
+    private ListView listViewSteps;
+    private ListView listView;
+    private Bitmap testeGaleria;
+    private ImageView foto;
+    private Button galeria;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,14 +99,11 @@ public class CadastroReceitaActivity extends AppCompatActivity {
         Button adicionar = (Button) findViewById(R.id.ingredienteReceitaAdicionar);
         Button adicionarStepsReceita = (Button) findViewById(R.id.stepReceitaAdicionar);
         Button salvar = (Button)findViewById(R.id.salvarReceita);
-        // final GridView gridView = (GridView) findViewById(R.id.gridIngredientesReceitas);
-
-        final ListView listView =(ListView) findViewById(R.id.gridIngredientesReceitas);
-        final ListView listViewSteps = (ListView) findViewById(R.id.listStepsReceita);
-
-        //final ArrayAdapter<RecipeStep> adpStepsRecipes = new ArrayAdapter<RecipeStep>(this, android.R.layout.simple_list_item_1, listaStepsReceita);
-        final BaseAdapter baseAdapter = new GridIngredienteAdapter(this, listaIngredientesReceita);
-        final BaseAdapter baseAdapterStepRecipe = new AdapterStepsReceita(this, listaStepsReceita);
+        galeria = (Button)findViewById(R.id.galeria);
+        listView =(ListView) findViewById(R.id.gridIngredientesReceitas);
+        listViewSteps = (ListView) findViewById(R.id.listStepsReceita);
+        baseAdapter = new GridIngredienteAdapter(this, listaIngredientesReceita);
+        baseAdapterStepRecipe = new AdapterStepsReceita(this, listaStepsReceita);
         dificuldade = new String[]{"Dificuldade", "EASY", "MEDIUM", "HARD"};
         ArrayAdapter<String> adpDificuldade = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, dificuldade);
 
@@ -111,11 +120,9 @@ public class CadastroReceitaActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 dificuldadeReceita = dificuldade[position];
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 Toast.makeText(CadastroReceitaActivity.this, "Selections cleared.", Toast.LENGTH_SHORT).show();
-
             }
 
         });
@@ -123,41 +130,13 @@ public class CadastroReceitaActivity extends AppCompatActivity {
         adicionarStepsReceita.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recipeStep = new RecipeStep();
-                EditText stepReceitaDescription = (EditText) findViewById(R.id.stepReceita);
-
-                CadastroReceitaActivity.this.recipeStep.setDescription(stepReceitaDescription.getText().toString());
-                CadastroReceitaActivity.this.recipeStep.setStepOrder(stepOrder+=1);
-
-                listaStepsReceita.add(CadastroReceitaActivity.this.recipeStep);
-                stepReceitaDescription.setText("");
-
-                baseAdapterStepRecipe.notifyDataSetChanged();
-                listViewSteps.setAdapter(baseAdapterStepRecipe);
-                setListViewHeightBasedOnItems(listViewSteps);
+                adicionarPassosModoPreparo();
             }
         });
         adicionar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ingrediente = new Ingrediente();
-                ingredienteRecitaNome = (EditText) findViewById(R.id.ingredienteReceitaNome);
-                ingredienteReceitaMedida = (EditText) findViewById(R.id.ingredienteReceitaMedida);
-
-                if (!validarIngrediente(ingredienteRecitaNome.getText().toString())) {
-                    ingredienteRecitaNome.setError("O campo ingrediente não pode ser vazio");
-                    ingredienteRecitaNome.requestFocus();}
-                else {
-
-                    CadastroReceitaActivity.this.ingrediente.setNome(ingredienteReceitaMedida.getText().toString() + ";" + ingredienteRecitaNome.getText().toString());
-
-                    listaIngredientesReceita.add(CadastroReceitaActivity.this.ingrediente);
-                    ingredienteRecitaNome.setText("");
-                    ingredienteReceitaMedida.setText("");
-                    baseAdapter.notifyDataSetChanged();
-                }
-                listView.setAdapter(baseAdapter);
-                setListViewHeightBasedOnItems(listView);
+                adicionarIngrediente();
             }
         });
 
@@ -165,12 +144,7 @@ public class CadastroReceitaActivity extends AppCompatActivity {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                ingrediente = (Ingrediente) listView.getItemAtPosition(position);
-                listaIngredientesReceita.remove(position);
-                baseAdapter.notifyDataSetChanged();
-                Toast.makeText(CadastroReceitaActivity.this, "ingrediente " + ingrediente.getNome() + " apagado", Toast.LENGTH_SHORT).show();
-                setListViewHeightBasedOnItems(listView);
-                return true;
+                return apagarIngrediente(parent, view, position, id);
             }
         });
 
@@ -183,31 +157,128 @@ public class CadastroReceitaActivity extends AppCompatActivity {
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                caminhoFoto = getExternalFilesDir(null) +  "/" + System.currentTimeMillis() +".jpg";
-                File arquivoFoto = new File(caminhoFoto);
-                intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(arquivoFoto));
-
-                startActivityForResult(intentCamera, CODIGO_CAMERA);
+                chamarCamera();
             }
         });
-
+        galeria.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                carregarGaleria();
+            }
+        });
     }
 
+    public Boolean apagarIngrediente(AdapterView<?> parent, View view, int position, long id){
+        ingrediente = (Ingrediente) listView.getItemAtPosition(position);
+        listaIngredientesReceita.remove(position);
+        baseAdapter.notifyDataSetChanged();
+        Toast.makeText(CadastroReceitaActivity.this, "ingrediente " + ingrediente.getNome() + " apagado", Toast.LENGTH_SHORT).show();
+        setListViewHeightBasedOnItems(listView);
+        return true;
+    }
+
+    public void adicionarPassosModoPreparo(){
+        recipeStep = new RecipeStep();
+        EditText stepReceitaDescription = (EditText) findViewById(R.id.stepReceita);
+
+        CadastroReceitaActivity.this.recipeStep.setDescription(stepReceitaDescription.getText().toString());
+        CadastroReceitaActivity.this.recipeStep.setStepOrder(stepOrder+=1);
+
+        listaStepsReceita.add(CadastroReceitaActivity.this.recipeStep);
+        stepReceitaDescription.setText("");
+
+        baseAdapterStepRecipe.notifyDataSetChanged();
+        listViewSteps.setAdapter(baseAdapterStepRecipe);
+        setListViewHeightBasedOnItems(listViewSteps);
+    }
+
+    public void adicionarIngrediente(){
+        ingrediente = new Ingrediente();
+        ingredienteRecitaNome = (EditText) findViewById(R.id.ingredienteReceitaNome);
+        ingredienteReceitaMedida = (EditText) findViewById(R.id.ingredienteReceitaMedida);
+
+        if (!validarIngrediente(ingredienteRecitaNome.getText().toString())) {
+            ingredienteRecitaNome.setError("O campo ingrediente não pode ser vazio");
+            ingredienteRecitaNome.requestFocus();}
+        else {
+
+            CadastroReceitaActivity.this.ingrediente.setNome(ingredienteReceitaMedida.getText().toString() + ";" + ingredienteRecitaNome.getText().toString());
+            listaIngredientesReceita.add(CadastroReceitaActivity.this.ingrediente);
+            ingredienteRecitaNome.setText("");
+            ingredienteReceitaMedida.setText("");
+            baseAdapter.notifyDataSetChanged();
+        }
+        listView.setAdapter(baseAdapter);
+        setListViewHeightBasedOnItems(listView);
+    }
+
+    public void chamarCamera(){
+        Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        caminhoFoto = getExternalFilesDir(null) +  "/" + System.currentTimeMillis() +".jpg";
+        arquivoFoto = new File(caminhoFoto);
+        intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(arquivoFoto));
+
+        startActivityForResult(intentCamera, CODIGO_CAMERA);
+    }
+    public void carregarGaleria(){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        startActivityForResult(intent,1);
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        InputStream stream1 = null;
         if(resultCode == Activity.RESULT_OK) {
             if (requestCode == CODIGO_CAMERA) {
-                ImageView foto = (ImageView) findViewById(R.id.imagemReceita);
+                foto = (ImageView) findViewById(R.id.imagemReceita);
                 Bitmap bitmap = BitmapFactory.decodeFile(caminhoFoto);
-                Bitmap bitmapReduzido = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
-                foto.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                foto.setImageBitmap(bitmapReduzido);
-            }
-        }
-    }
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                byte[] bitMapData = stream.toByteArray();
+                String encodedImage2 = Base64.encodeToString(bitMapData,Base64.DEFAULT);
+                Log.i("script", encodedImage2);
+               // Bitmap bitmapReduzido = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
+                /*--------------------*/
+                byte[] teste = Base64.decode(encodedImage2, Base64.DEFAULT);
+                Bitmap testeBit = BitmapFactory.decodeByteArray(teste, 0, teste.length);
+                /*--------------------*/
+                int nh = (int) ( testeBit.getHeight() * (512.0 / testeBit.getWidth()) );
+                Bitmap scaled = Bitmap.createScaledBitmap(testeBit, 512, nh, true);
 
+
+                foto.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                foto.setImageBitmap(scaled);
+            }else if (requestCode == 1){
+                foto = (ImageView) findViewById(R.id.imagemReceita);
+                try {
+                    if (testeGaleria != null) {
+                        testeGaleria.recycle();
+                    }
+                    stream1 = getContentResolver().openInputStream(data.getData());
+                    testeGaleria = BitmapFactory.decodeStream(stream1);
+                    int nh = (int) ( testeGaleria.getHeight() * (512.0 / testeGaleria.getWidth()) );
+                    Bitmap scaled = Bitmap.createScaledBitmap(testeGaleria, 512, nh, true);
+                    foto.setImageBitmap(scaled);
+                }
+                catch(FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                finally {
+                    if (stream1 != null)
+                        try {
+                            stream1.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                }
+
+            }
+
+        }
+
+    }
     private boolean validarIngrediente(String ingrediente) {
         String nomePattern = "^[aA-zZ]{2,}+(([ aA-zZ]+)+)?$";
         Pattern pattern = Pattern.compile(nomePattern);
@@ -240,6 +311,8 @@ public class CadastroReceitaActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+
+
 
         try {
             jsonobj.put(KEY_NAME, nome);

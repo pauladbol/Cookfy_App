@@ -229,6 +229,7 @@ public class DrawerActivity extends AppCompatActivity
                     Intent intentFav = new Intent(DrawerActivity.this, ListaReceitasActivity.class);
                     intentFav.putParcelableArrayListExtra("receitasList", receitasList);
                     startActivity(intentFav);
+
                     receitasList.clear();
                     finish();
 
@@ -286,7 +287,7 @@ public class DrawerActivity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
                     Intent intentLogar = new Intent(DrawerActivity.this, DrawerActivity.class);
                     startActivity(intentLogar);
-                    finish();
+
                 }
             }
         },
