@@ -91,7 +91,7 @@ public class CadastroActivity extends AppCompatActivity {
 
     }
 
-    private boolean validarSenha(String s) {
+    public boolean validarSenha(String s) {
         String senha = s;
         if(senha.length()<6){
             return false;
@@ -99,7 +99,7 @@ public class CadastroActivity extends AppCompatActivity {
             return true;
     }
 
-    private boolean validarEmail(String email) {
+    public boolean validarEmail(String email) {
         String emailPattern = "[a-zA-Z0-9][a-zA-Z0-9\\._-]+@([a-zA-Z0-9\\._-]+\\.)[a-zA-Z-0-9]{2,3}";
 
         Pattern pattern = Pattern.compile(emailPattern);
@@ -107,21 +107,21 @@ public class CadastroActivity extends AppCompatActivity {
         return matcher.matches();
     }
 
-    private boolean validarNome(String nome) {
+    public boolean validarNome(String nome) {
         String nomePattern = "^[aA-zZ]{3,}+(([ aA-zZ]+)+)?$";
         Pattern pattern = Pattern.compile(nomePattern);
         Matcher matcher = pattern.matcher(nome);
         return matcher.matches();
     }
 
-    private boolean validarUsuario(String usuario) {
+    public boolean validarUsuario(String usuario) {
         String usuarioPattern = "^[aA-zZ]{3,}+(([aA-zZ0-9]+)+)?$";
         Pattern pattern = Pattern.compile(usuarioPattern);
         Matcher matcher = pattern.matcher(usuario);
         return matcher.matches();
     }
 
-    private void registerUser(){
+    public void registerUser(){
         //final HashMap<String, String> params = new HashMap<String, String>();
 
         final JSONObject jsonobj = new JSONObject();
