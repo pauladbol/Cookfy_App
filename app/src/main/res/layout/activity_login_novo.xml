@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 android:layout_height="match_parent"
 android:layout_width="match_parent"
+    android:background="#FFFFFF"
     >
 
 <LinearLayout
@@ -22,7 +23,9 @@ android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/logo"/>
 
-    <EditText android:hint="Usuário ou Email"
+    <EditText
+        android:background="@drawable/editborda"
+        android:hint="Usuário ou Email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
@@ -32,7 +35,9 @@ android:layout_width="match_parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <EditText android:hint="Senha"
+        <EditText
+            android:background="@drawable/editborda"
+            android:hint="Senha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
@@ -43,7 +48,9 @@ android:layout_width="match_parent"
     </android.support.design.widget.TextInputLayout>
 
 
-    <Button android:text="Entrar"
+    <Button
+        android:background="@drawable/botaofundo"
+        android:text="Entrar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

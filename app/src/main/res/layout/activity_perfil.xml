@@ -8,17 +8,19 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Activities.PerfilActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#FFFFFF">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="225dp">
 
         <ImageView
+            android:layout_centerInParent="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/user_icon_big2"
-
+            android:id="@+id/imagemPerfil"
             />
         <Button
             android:layout_width="56dp"
@@ -28,14 +30,14 @@
             android:layout_alignParentBottom="true"
             android:background="@drawable/fundocamera"
             android:layout_marginRight="16dp"
-            android:id="@+id/camera"
+            android:id="@+id/cameraPerfil"
             />
     </RelativeLayout>
 
 
     <TextView
         android:id="@+id/nome"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:layout_marginTop="20dp"

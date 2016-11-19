@@ -42,4 +42,5 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:24.2.0'
     compile 'com.android.support:support-v4:24.2.0'
     compile 'com.google.code.gson:gson:2.3'
+    compile 'com.twelvemonkeys.imageio:imageio:3.3'
 }
