@@ -51,11 +51,14 @@ public class ImagemPagerAdapter extends PagerAdapter {
 
         ImageView iv = new ImageView(ctx);
         iv.setImageResource(imagens[position]);
+        iv.setVisibility(position);
         ll.addView(iv);
 
         TextView tv = new TextView(ctx);
         tv.setText(R.string.description_cookfy);
         ll.addView(tv);
+
+
 
         return(ll);
     }
