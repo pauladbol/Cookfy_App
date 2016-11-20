@@ -1,8 +1,10 @@
 package com.livrodereceitas.cookfy.Adapters;
 
+import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -30,6 +32,7 @@ public class ImagemPagerAdapter extends PagerAdapter {
         return imagens.length;
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     public  Object instantiateItem(ViewGroup container, int position) {
 //        View view = LayoutInflater.from(this.ctx).inflate(R.layout.adapter_imagem, container, false);
@@ -54,8 +57,30 @@ public class ImagemPagerAdapter extends PagerAdapter {
         iv.setVisibility(position);
         ll.addView(iv);
 
+        String text = "";
+        switch (position) {
+            case 0:
+                text = "Comida Mexicana";
+                break;
+            case 1:
+                text = "Comida Italiana";
+                break;
+            case 2:
+                text = "Comida Caseira";
+                break;
+            case 3:
+                text = "Comida Tailandesa";
+                break;
+            case 4:
+                text = "Café da Manhã";
+                break;
+
+        }
+
         TextView tv = new TextView(ctx);
-        tv.setText(R.string.description_cookfy);
+        tv.setText(text);
+        tv.setTextSize(20);
+        tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         ll.addView(tv);
 
 

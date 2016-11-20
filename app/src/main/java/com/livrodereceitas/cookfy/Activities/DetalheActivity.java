@@ -46,7 +46,7 @@ public class  DetalheActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         receita = (Recipes) intent.getParcelableExtra("receita");
-        //ingredientesArray = intent.getStringArrayListExtra("ingredientes");
+        ingredientesArray = intent.getStringArrayListExtra("ingredientes");
         ehfavorito = intent.getBooleanExtra("favorito",false);
 
         TextView nomeReceita = (TextView) this.findViewById(R.id.nome_receita);
@@ -55,18 +55,18 @@ public class  DetalheActivity extends AppCompatActivity {
         TextView dificuldade = (TextView) this.findViewById(R.id.dificuldadeTexto);
         TextView time = (TextView) this.findViewById(R.id.timeTexto);
 
-//        String ingredientesString = "" /*ingredientesArray.toString()*/ ;
-//
-//        for(int i = 0; i < ingredientesArray.size(); i++) {
-//            ingredientesString += ingredientesArray.get(i) + "\n";
-//        }
+        String ingredientesString = "" /*ingredientesArray.toString()*/ ;
 
-        //Log.i("script","LISTA "+ingredientesArray.get(1));
+        for(int i = 0; i < ingredientesArray.size(); i++) {
+            ingredientesString += ingredientesArray.get(i) + "\n";
+        }
+
+        Log.i("listaingred","LISTA "+ingredientesArray.get(1));
 
 
         nomeReceita.setText(receita.getName());
         descricaoReceita.setText(receita.getDescription());
-        ingredientes.setText("testeeee");
+        ingredientes.setText(ingredientesString);
         time.setText(receita.getExecutionTime());
 
         String dificuldadeReceita = "";
