@@ -231,14 +231,11 @@ public class DrawerActivity extends AppCompatActivity
                     startActivity(intentFav);
 
                     receitasList.clear();
-                    finish();
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
-                    Intent intentLogar = new Intent(DrawerActivity.this, DrawerActivity.class);
-                    startActivity(intentLogar);
-                    finish();
                 }
             }
         },

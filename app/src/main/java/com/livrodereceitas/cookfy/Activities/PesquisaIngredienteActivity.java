@@ -103,8 +103,8 @@ public class PesquisaIngredienteActivity extends AppCompatActivity {
     }
     private void PesquisaIngrediente(){
         String urlListaIngredientes = REGISTER_URL;
-        boolean primeira = true;
         if(listaIngredientesPesquisa != null){
+        boolean primeira = true;
             for(Ingrediente teste: listaIngredientesPesquisa){
                 if (primeira) {
                     urlListaIngredientes+= "ingredient=" + teste.getNome().replace(" ", "%20");
