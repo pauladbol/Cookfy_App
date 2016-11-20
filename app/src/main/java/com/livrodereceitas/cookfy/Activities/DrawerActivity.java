@@ -288,7 +288,6 @@ public class DrawerActivity extends AppCompatActivity
                     e.printStackTrace();
                     Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
 
-
                 }
             }
         },
