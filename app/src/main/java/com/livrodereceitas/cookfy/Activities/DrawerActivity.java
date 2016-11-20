@@ -36,13 +36,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String URL_CATEG = "https://cookfy.herokuapp.com/recipes/";
+    private static final String URL_CATEG = "https://cookfy.herokuapp.com/categories/";
+    private static final String URL_RECIPES = "https://cookfy.herokuapp.com/recipes/";
     private static final String URL_PERFIL = "https://cookfy.herokuapp.com/users/";
     public static final String KEY_USERNAME = "user";
     public static final String PREFS_NAME = "MyPrefsFile";
@@ -84,8 +86,10 @@ public class DrawerActivity extends AppCompatActivity
 //        nome.setText(usuario.getNome());
 //        email.setText(usuario.getEmail());
 
-        ViewPager g = (ViewPager) findViewById(R.id.viewPager);
+        final ViewPager g = (ViewPager) findViewById(R.id.viewPager);
         g.setAdapter(new ImagemPagerAdapter(this, imagens));
+
+
 
         g.setOnTouchListener(
                 new View.OnTouchListener() {
@@ -110,17 +114,44 @@ public class DrawerActivity extends AppCompatActivity
                 }
         );
 
+       g.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+           @Override
+           public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+           }
+
+           @Override
+           public void onPageSelected(final int position) {
+               g.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
+
+                       reqCategorias(position);
+                   }
+               });
+
+           }
+
+           @Override
+           public void onPageScrollStateChanged(int state) {
+
+           }
+       });
+
+        //final int currentItem = g.;
         g.setOnClickListener(
-                new View.OnClickListener() {
+                new ViewPager.OnClickListener() {
 
                     @Override
                     public void onClick(View view) {
 
-                        Intent intentCateg = new Intent(DrawerActivity.this, ListaReceitasActivity.class);
+                        //Intent intentCateg = new Intent(DrawerActivity.this, ListaReceitasActivity.class);
 
-                        startActivity(intentCateg);
+                        //startActivity(intentCateg);
 
-                        //reqReceitas("categorias");
+
+                        reqCategorias(view.getVisibility());
 
                     }
                 }
@@ -202,7 +233,7 @@ public class DrawerActivity extends AppCompatActivity
             urlReq = URL_PERFIL + settings.getString("id","") + "/recipes";
             Log.i("minhas ",urlReq);
         } else {
-            urlReq = URL_CATEG;
+            urlReq = URL_RECIPES;
         }
 
         JsonArrayRequest jsonArrayReq = new JsonArrayRequest(Request.Method.GET,
@@ -231,14 +262,14 @@ public class DrawerActivity extends AppCompatActivity
                     startActivity(intentFav);
 
                     receitasList.clear();
-                    finish();
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
                     Intent intentLogar = new Intent(DrawerActivity.this, DrawerActivity.class);
                     startActivity(intentLogar);
-                    finish();
+
                 }
             }
         },
@@ -254,6 +285,62 @@ public class DrawerActivity extends AppCompatActivity
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayReq);
+    }
+
+    private void reqCategorias(int position){
+
+        String urlCateg = URL_CATEG + (position+1);
+
+        Log.i("categ", urlCateg);
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                urlCateg, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray recipes = response.getJSONArray("recipes");
+                    for (int i = 0; i < recipes.length(); i++) {
+                        JSONObject receitaJSON = recipes.getJSONObject(i);
+
+                        Recipes receita = new Recipes();
+                        receita.setId(receitaJSON.getString("id"));
+                        receita.setName(receitaJSON.getString("name"));
+                        receita.setDescription(receitaJSON.getString("description"));
+                        receita.setExecutionTime(receitaJSON.getString("prepTime"));
+                        receita.setDifficulty(receitaJSON.getString("difficulty"));
+                        receita.setDrawableId(R.drawable.imagem);
+
+                        receitasList.add(receita);
+
+                    }
+
+                    Intent intentFav = new Intent(DrawerActivity.this, ListaReceitasActivity.class);
+                    intentFav.putParcelableArrayListExtra("receitasList", receitasList);
+                    startActivity(intentFav);
+
+                    receitasList.clear();
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
+                    Intent intentLogar = new Intent(DrawerActivity.this, DrawerActivity.class);
+                    startActivity(intentLogar);
+
+                }
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(DrawerActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+
+
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsonObjReq);
     }
 
     private void reqPerfil() {
