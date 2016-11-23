@@ -1,6 +1,7 @@
 package com.livrodereceitas.cookfy;
 
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.SharedPreferences;
 
 import com.livrodereceitas.cookfy.Activities.LoginNovoActivity;
@@ -17,9 +18,6 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
-/**
- * Created by pauladbol on 2016-11-18.
- */
 public class LoginNovoActivityTest {
 
     //@Mock
@@ -29,7 +27,7 @@ public class LoginNovoActivityTest {
     SharedPreferences sharedPreferences = Mockito.mock(SharedPreferences.class);;
 
     //@Mock
-    Context context = Mockito.mock(Context.class);;
+    ContextWrapper context = Mockito.mock(ContextWrapper.class);;
 
     //@Mock
     SharedPreferences.Editor editor = Mockito.mock(SharedPreferences.Editor.class);;
@@ -56,7 +54,7 @@ public class LoginNovoActivityTest {
         assertFalse(login.validarUsuario("teste teste"));
     }
 
-    @Ignore /*(expected = NoSuchAlgorithmException.class)*/
+    @Test /*(expected = NoSuchAlgorithmException.class)*/
     public void testHash() {
         String hash = login.hashSHA256("teste");
         String senha = "teste";
@@ -64,11 +62,10 @@ public class LoginNovoActivityTest {
 
     }
 
-
-
     @Ignore
     public void testSalvarTokenID() {
         Mockito.when(context.getSharedPreferences(Mockito.anyString(), Mockito.anyInt())).thenReturn(sharedPreferences);
-        Mockito.verify(editor.commit(),Mockito.times(1));
+        login.salvarTokenID("teste","id");
+        Mockito.verify(editor,Mockito.times(1)).apply();
     }
 }

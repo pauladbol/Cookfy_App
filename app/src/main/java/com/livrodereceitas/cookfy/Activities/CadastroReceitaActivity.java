@@ -104,6 +104,14 @@ public class CadastroReceitaActivity extends AppCompatActivity {
         listViewSteps = (ListView) findViewById(R.id.listStepsReceita);
         baseAdapter = new GridIngredienteAdapter(this, listaIngredientesReceita);
         baseAdapterStepRecipe = new AdapterStepsReceita(this, listaStepsReceita);
+
+//        if (receita.getDifficulty().equals("HARD")) {
+//            dificuldadeReceita = "Difícil";
+//        } else if (receita.getDifficulty().equals("MEDIUM")) {
+//            dificuldadeReceita = "Média";
+//        } else {
+//            dificuldadeReceita = "Fácil";
+//        }
         dificuldade = new String[]{"Dificuldade", "EASY", "MEDIUM", "HARD"};
         ArrayAdapter<String> adpDificuldade = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, dificuldade);
 
@@ -279,13 +287,13 @@ public class CadastroReceitaActivity extends AppCompatActivity {
         }
 
     }
-    private boolean validarIngrediente(String ingrediente) {
+    public boolean validarIngrediente(String ingrediente) {
         String nomePattern = "^[aA-zZ]{2,}+(([ aA-zZ]+)+)?$";
         Pattern pattern = Pattern.compile(nomePattern);
         Matcher matcher = pattern.matcher(ingrediente);
         return matcher.matches();
     }
-    private void CadastrarReceita(ArrayList<Ingrediente> ingredientesLista){
+    public void CadastrarReceita(ArrayList<Ingrediente> ingredientesLista){
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         final JSONObject jsonobj = new JSONObject();
         final String nome = nomeReceita.getText().toString().trim();

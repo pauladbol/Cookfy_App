@@ -95,13 +95,13 @@ public class PesquisaIngredienteActivity extends AppCompatActivity {
         });
 
     }
-    private boolean validarIngrediente(String ingrediente) {
+    public boolean validarIngrediente(String ingrediente) {
         String nomePattern = "^[aA-zZ]{2,}+(([ aA-zZ]+)+)?$";
         Pattern pattern = Pattern.compile(nomePattern);
         Matcher matcher = pattern.matcher(ingrediente);
         return matcher.matches();
     }
-    private void PesquisaIngrediente(){
+    public void PesquisaIngrediente(){
         String urlListaIngredientes = REGISTER_URL;
         if(listaIngredientesPesquisa != null){
         boolean primeira = true;

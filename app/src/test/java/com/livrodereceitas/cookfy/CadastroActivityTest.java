@@ -8,9 +8,6 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.assertFalse;
 
-/**
- * Created by pauladbol on 2016-11-17.
- */
 public class CadastroActivityTest {
     CadastroActivity cadastro = new CadastroActivity();
 
@@ -57,7 +54,9 @@ public class CadastroActivityTest {
 
     @Test
     public void testHash() {
-
+        String hash = cadastro.hashSHA256("teste");
+        String senha = "teste";
+        assertEquals(hash,cadastro.hashSHA256(senha));
     }
 
 
