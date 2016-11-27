@@ -1,5 +1,6 @@
 package com.livrodereceitas.cookfy.Activities;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -62,6 +63,7 @@ public class ListaReceitasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_receitas);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final GridView gridView = (GridView) findViewById(R.id.gridview);
 
@@ -116,10 +118,11 @@ public class ListaReceitasActivity extends AppCompatActivity {
 
 
                 } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
-                    Intent intentLogar = new Intent(ListaReceitasActivity.this, ListaReceitasActivity.class);
-                    startActivity(intentLogar);
+                    //e.printStackTrace();
+                    Toast.makeText(getApplicationContext(),"Ocorreu um erro! Tente novamente mais tarde.",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
+                    //Intent intentLogar = new Intent(ListaReceitasActivity.this, ListaReceitasActivity.class);
+                    //startActivity(intentLogar);
                     finish();
                 }
             }
@@ -127,7 +130,8 @@ public class ListaReceitasActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(ListaReceitasActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"Ocorreu um erro! Tente novamente mais tarde.",Toast.LENGTH_LONG).show();
+                        //Toast.makeText(ListaReceitasActivity.this,error.toString(),Toast.LENGTH_LONG).show();
                     }
                 }){
 
@@ -161,9 +165,17 @@ public class ListaReceitasActivity extends AppCompatActivity {
         }  catch (JSONException e) {
             //e.printStackTrace();
 
+
         }
 
         return ingredientesList;
+    }
+
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 
     public ArrayList<Recipes> preencheReceitas() {
@@ -374,129 +386,5 @@ public class ListaReceitasActivity extends AppCompatActivity {
 
         return listaReceitas;
     }
-
-//    @Override
-//    public void onBackPressed() {
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        if (drawer.isDrawerOpen(GravityCompat.START)) {
-//            drawer.closeDrawer(GravityCompat.START);
-//        } else {
-//            super.onBackPressed();
-//        }
-//    }
-//
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.drawer, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-//
-//    @SuppressWarnings("StatementWithEmptyBody")
-//    @Override
-//    public boolean onNavigationItemSelected(MenuItem item) {
-//        // Handle navigation view item clicks here.
-//        int id = item.getItemId();
-//
-//
-//        if (id == R.id.nav_perfil) {
-//            Intent intentPerfil = new Intent(ListaReceitasActivity.this, PerfilActivity.class);
-//            startActivity(intentPerfil);
-//        } else if (id == R.id.nav_favoritos) {
-//            reqReceitas("favoritos");
-//
-//        } else if (id == R.id.nav_config) {
-//            Intent intentConfig = new Intent(ListaReceitasActivity.this, ListaReceitasActivity.class);
-//            startActivity(intentConfig);
-//
-//        } else if (id == R.id.nav_sair) {
-//            usuarioLogout();
-//        }
-//
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        drawer.closeDrawer(GravityCompat.START);
-//
-//
-//
-//        return true;
-//    }
-//
-//
-//    private void reqReceitas(String type){
-//        if (type.equals("favoritos")) {
-//            urlReq = REGISTER_URL_FAV;
-//        } else {
-//            urlReq = REGISTER_URL_CATEG;
-//        }
-//
-//        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-//                urlReq, null, new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                try {
-//                    id = response.getString("id");
-//                    name = response.getString("name");
-//                    description = response.getString("description");
-//                    executionTime = response.getString("executionTime");
-//                    difficulty = response.getString("difficulty");
-//                    ingredientes = response.getString("ingredientes");
-//                    recipeBooks = response.getString("recipeBooks");
-//
-//                    Toast.makeText(ListaReceitasActivity.this, "!", Toast.LENGTH_LONG).show();
-//                    Intent intentLogar = new Intent(ListaReceitasActivity.this, ListaReceitasActivity.class);
-//                    startActivity(intentLogar);
-//                    finish();
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                    Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
-//                    Intent intentLogar = new Intent(ListaReceitasActivity.this, DrawerActivity.class);
-//                    startActivity(intentLogar);
-//                    finish();
-//                }
-//            }
-//        },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        Toast.makeText(ListaReceitasActivity.this,error.toString(),Toast.LENGTH_LONG).show();
-//                    }
-//                }){
-//
-//
-//        };
-//
-//        RequestQueue requestQueue = Volley.newRequestQueue(this);
-//        requestQueue.add(jsonObjReq);
-//    }
-//
-//    private void usuarioLogout() {
-//
-//        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-//        SharedPreferences.Editor editor = settings.edit();
-//
-//        editor.remove("token");
-//        editor.remove("id");
-//
-//        editor.commit();
-//
-//        Intent intentSair = new Intent(ListaReceitasActivity.this, MainActivity.class);
-//        startActivity(intentSair);
-//    }
 
 }

@@ -29,6 +29,8 @@ public class PerfilActivity extends AppCompatActivity {
 
         camera = (Button) findViewById(R.id.cameraPerfil);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Intent intent = getIntent();
         User usuario = (User) intent.getSerializableExtra("usuario");
 
@@ -53,6 +55,7 @@ public class PerfilActivity extends AppCompatActivity {
         });
 
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -66,4 +69,11 @@ public class PerfilActivity extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
+    }
+
 }

@@ -35,5 +35,6 @@ public class PesquisaIngredienteActivityTest {
         JSONArray jsonArray = Mockito.mock(JSONArray.class);
 
         assertEquals(pesquisa.montaReceitasPesquisa(jsonArray),Mockito.anyIterable());
+
     }
 }

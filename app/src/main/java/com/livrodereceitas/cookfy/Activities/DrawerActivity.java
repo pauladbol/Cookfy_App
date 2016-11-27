@@ -168,14 +168,11 @@ public class DrawerActivity extends AppCompatActivity
 
                         //startActivity(intentCateg);
 
-
                         reqCategorias(view.getVisibility());
 
                     }
                 }
         );
-
-
 
     }
 
@@ -286,7 +283,8 @@ public class DrawerActivity extends AppCompatActivity
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Ocorreu um erro! Tente novamente mais tarde.",Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -294,7 +292,8 @@ public class DrawerActivity extends AppCompatActivity
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(DrawerActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                        //Toast.makeText(DrawerActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"Ocorreu um erro! Tente novamente mais tarde.",Toast.LENGTH_LONG).show();
                     }
                 }){
 
@@ -339,8 +338,9 @@ public class DrawerActivity extends AppCompatActivity
 
 
                 } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
+                    //e.printStackTrace();
+                    //Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Ocorreu um erro! Tente novamente mais tarde.",Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -397,50 +397,14 @@ public class DrawerActivity extends AppCompatActivity
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(DrawerActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                        //Toast.makeText(DrawerActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"Ocorreu um erro! Usuário não encontrado.",Toast.LENGTH_LONG).show();
                     }
                 });
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonObjReq);
     }
-
-//    private User reqUser() {
-//        final User usuarioPerfil = new User();
-//
-//        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-//
-//        final String urlPerfil = URL_PERFIL + settings.getString("id","");
-//
-//        Log.i("script", urlPerfil);
-//
-//        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-//                urlPerfil, null, new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                try {
-//
-//                    usuarioPerfil.setNome(response.getString("name"));
-//                    usuarioPerfil.setEmail(response.getString("email"));
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                    Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        Toast.makeText(DrawerActivity.this,error.toString(),Toast.LENGTH_LONG).show();
-//                    }
-//                });
-//
-//        RequestQueue requestQueue = Volley.newRequestQueue(this);
-//        requestQueue.add(jsonObjReq);
-//
-//        return usuarioPerfil;
-//    }
 
     private void usuarioLogout() {
 

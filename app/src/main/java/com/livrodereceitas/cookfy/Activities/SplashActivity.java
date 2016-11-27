@@ -51,8 +51,6 @@ public class SplashActivity extends Activity {
                 }
                 // Esse método será executado sempre que o timer acabar
                 // E inicia a activity principal
-
-
                 // Fecha esta activity
                 finish();
             }

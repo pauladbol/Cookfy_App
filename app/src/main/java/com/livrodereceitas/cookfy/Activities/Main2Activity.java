@@ -114,7 +114,8 @@ public class Main2Activity extends AppCompatActivity {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Ocorreu um erro! Tente novamente mais tarde.",Toast.LENGTH_LONG).show();
                     Intent intentLogar = new Intent(Main2Activity.this, Main2Activity.class);
                     startActivity(intentLogar);
                     finish();
@@ -124,7 +125,8 @@ public class Main2Activity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Main2Activity.this,error.toString(),Toast.LENGTH_LONG).show();
+                        //Toast.makeText(Main2Activity.this,error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"Ocorreu um erro! Tente novamente mais tarde.",Toast.LENGTH_LONG).show();
                     }
                 }){
 
