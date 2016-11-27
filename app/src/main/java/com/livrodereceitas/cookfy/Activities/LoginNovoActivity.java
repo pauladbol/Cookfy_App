@@ -158,7 +158,7 @@ public class LoginNovoActivity extends AppCompatActivity {
             return hexString.toString();
 
         } catch (NoSuchAlgorithmException e) {
-            //e.printStackTrace();
+            e.printStackTrace();
         }
         return "";
     }
