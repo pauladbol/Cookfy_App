@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,7 +62,7 @@ public class DrawerActivity extends AppCompatActivity
 
     private ArrayList<Recipes> receitasList = new ArrayList<Recipes>();
 
-    private int[] imagens = {R.drawable.img1, R.drawable.img2, R.drawable.img3, R.drawable.img4};
+    private int[] imagens = {R.drawable.comidamexicana, R.drawable.comidaitaliana, R.drawable.comidacaseira, R.drawable.comidatailandesa};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,23 @@ public class DrawerActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        Button pesquisa = (Button) findViewById(R.id.pesquisa);
+        Button listareceitas = (Button) findViewById(R.id.listareceitas);
+
+        pesquisa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentPesq = new Intent(DrawerActivity.this, PesquisaIngredienteActivity.class);
+                startActivity(intentPesq);
+            }
+        });
+
+        listareceitas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reqReceitas("lista");
+            }
+        });
 //        User usuario = reqUser();
 //        TextView nome = (TextView) this.findViewById(R.id.drawer_nome);
 //        TextView email = (TextView) this.findViewById(R.id.drawer_email);
@@ -156,6 +174,8 @@ public class DrawerActivity extends AppCompatActivity
                     }
                 }
         );
+
+
 
     }
 
@@ -267,6 +287,7 @@ public class DrawerActivity extends AppCompatActivity
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
+
                 }
             }
         },
@@ -320,8 +341,6 @@ public class DrawerActivity extends AppCompatActivity
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
-                    Intent intentLogar = new Intent(DrawerActivity.this, DrawerActivity.class);
-                    startActivity(intentLogar);
 
                 }
             }

@@ -82,29 +82,12 @@ public class ListaReceitasActivity extends AppCompatActivity {
             }
         });
 
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.list_layout);
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-//                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-//        drawer.setDrawerListener(toggle);
-//        toggle.syncState();
-//
-//
-//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view2);
-//        navigationView.setNavigationItemSelectedListener(this);
     }
 
     private void pegaReceita(final Recipes receitaDetalhe){
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        Log.i("detalhe", receitaDetalhe.getId());
-        final String urlReceita = REGISTER_URL + receitaDetalhe.getId() + "?user=" + settings.getString("id","");
 
-        Log.i("script", "1");
-        //Map<String,String> params = new HashMap<String, String>();
-        //params.put("recId","1");
-        Log.i("script", "2");
+        final String urlReceita = REGISTER_URL + receitaDetalhe.getId() + "?user=" + settings.getString("id","");
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
                 urlReceita, null, new Response.Listener<JSONObject>() {
@@ -120,29 +103,13 @@ public class ListaReceitasActivity extends AppCompatActivity {
 
                     favorito = response.getBoolean("favority");
 
-                    //JSONArray ingredientes = response.getJSONArray("recipeIngredients");
+                    JSONArray ingredientes = response.getJSONArray("recipeIngredients");
 
-//                    List<JSONObject> ing = new ArrayList<JSONObject>();
-//
-//                    List<JSONObject> listing = new ArrayList<JSONObject>();
-//
-//                    ArrayList<String> ingredientesList = new ArrayList<String>();
+                    ArrayList<String> ingredientesList = montalistaIngredientes(ingredientes);
 
-
-//                    for (int i = 0; i < ingredientes.length(); i++) {
-//
-//                        ing.add(i, ingredientes.getJSONObject(i));
-//
-//                        listing.add(i, ing.get(i).getJSONObject("ingredient"));
-//
-//                        ingredientesList.add(i, listing.get(i).getString("name"));
-//
-//                    }
-
-                    Log.i("script", receitaDetalhe.getName());
                     Intent intentDetalhe = new Intent(ListaReceitasActivity.this, DetalheActivity.class);
                     intentDetalhe.putExtra("receita", receitaDetalhe);
-                    //intentDetalhe.putExtra("ingredientes",ingredientesList);
+                    intentDetalhe.putExtra("ingredientes",ingredientesList);
                     intentDetalhe.putExtra("favorito", favorito);
 
                     startActivity(intentDetalhe);
@@ -166,11 +133,38 @@ public class ListaReceitasActivity extends AppCompatActivity {
 
 
         };
-        Log.i("script", "3");
+
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonObjReq);
     }
 
+
+    public static ArrayList<String> montalistaIngredientes(JSONArray ingredientes) {
+
+        List<JSONObject> ingJsonObjAux = new ArrayList<JSONObject>();
+
+        List<JSONObject> ingJsonObj = new ArrayList<JSONObject>();
+
+        ArrayList<String> ingredientesList = new ArrayList<String>();
+
+        try {
+            for (int i = 0; i < ingredientes.length(); i++) {
+
+                ingJsonObjAux.add(i, ingredientes.getJSONObject(i));
+
+                ingJsonObj.add(i, ingJsonObjAux.get(i).getJSONObject("ingredient"));
+                String measure = ingJsonObjAux.get(i).getString("measure");
+
+                ingredientesList.add(i, (measure + " - " + ingJsonObj.get(i).getString("name")));
+
+            }
+        }  catch (JSONException e) {
+            //e.printStackTrace();
+
+        }
+
+        return ingredientesList;
+    }
 
     public ArrayList<Recipes> preencheReceitas() {
         Intent intent = getIntent();

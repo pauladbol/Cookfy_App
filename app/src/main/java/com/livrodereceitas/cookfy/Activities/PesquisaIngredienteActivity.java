@@ -95,13 +95,13 @@ public class PesquisaIngredienteActivity extends AppCompatActivity {
         });
 
     }
-    private boolean validarIngrediente(String ingrediente) {
+    public boolean validarIngrediente(String ingrediente) {
         String nomePattern = "^[aA-zZ]{2,}+(([ aA-zZ]+)+)?$";
         Pattern pattern = Pattern.compile(nomePattern);
         Matcher matcher = pattern.matcher(ingrediente);
         return matcher.matches();
     }
-    private void PesquisaIngrediente(){
+    public void PesquisaIngrediente(){
         String urlListaIngredientes = REGISTER_URL;
         if(listaIngredientesPesquisa != null){
         boolean primeira = true;
@@ -117,36 +117,39 @@ public class PesquisaIngredienteActivity extends AppCompatActivity {
                     urlListaIngredientes, null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
-                    try {
+                    //try {
                         Log.i("fav","aqui");
 
-                        for (int i = 0; i < response.length(); i++) {
-                            Log.i("fav", "FAV "+response.toString());
+                        receitasList = montaReceitasPesquisa(response);
 
-                            JSONObject receitaJSON = response.getJSONObject(i);
+//                        for (int i = 0; i < response.length(); i++) {
+//                            Log.i("fav", "FAV "+response.toString());
+//
+//                            JSONObject receitaJSON = response.getJSONObject(i);
+//
+//                            Recipes receita = new Recipes();
+//                            receita.setId(receitaJSON.getString("id"));
+//                            receita.setName(receitaJSON.getString("name"));
+//                            receita.setDescription(receitaJSON.getString("description"));
+//                            receita.setExecutionTime(receitaJSON.getString("prepTime"));
+//                            receita.setDifficulty(receitaJSON.getString("difficulty"));
+//                            receita.setDrawableId(R.drawable.imagem);
+//
+//                            receitasList.add(receita);
+//                        }
 
-                            Recipes receita = new Recipes();
-                            receita.setId(receitaJSON.getString("id"));
-                            receita.setName(receitaJSON.getString("name"));
-                            receita.setDescription(receitaJSON.getString("description"));
-                            receita.setExecutionTime(receitaJSON.getString("prepTime"));
-                            receita.setDifficulty(receitaJSON.getString("difficulty"));
-                            receita.setDrawableId(R.drawable.imagem);
 
-                            receitasList.add(receita);
-                        }
-
-                        Toast.makeText(PesquisaIngredienteActivity.this, "!", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(PesquisaIngredienteActivity.this, "!", Toast.LENGTH_LONG).show();
                         Intent intentFav = new Intent(PesquisaIngredienteActivity.this, ListaReceitasActivity.class);
                         intentFav.putParcelableArrayListExtra("receitasList", receitasList);
                         startActivity(intentFav);
                         finish();
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
-
-                    }
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                        Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
+//
+//                    }
                 }
             },
                     new Response.ErrorListener() {
@@ -165,5 +168,31 @@ public class PesquisaIngredienteActivity extends AppCompatActivity {
             Toast.makeText(PesquisaIngredienteActivity.this,"Você precisa adicionar um ingrediente para fazer a pesquisa",Toast.LENGTH_LONG).show();
         }
 
+    }
+
+    public ArrayList<Recipes> montaReceitasPesquisa(JSONArray respostaWS) {
+        ArrayList<Recipes> lista = new ArrayList<Recipes>();
+
+        try {
+            for (int i = 0; i < respostaWS.length(); i++) {
+                Log.i("fav", "FAV " + respostaWS.toString());
+
+                JSONObject receitaJSON = respostaWS.getJSONObject(i);
+
+                Recipes receita = new Recipes();
+                receita.setId(receitaJSON.getString("id"));
+                receita.setName(receitaJSON.getString("name"));
+                receita.setDescription(receitaJSON.getString("description"));
+                receita.setExecutionTime(receitaJSON.getString("prepTime"));
+                receita.setDifficulty(receitaJSON.getString("difficulty"));
+                receita.setDrawableId(R.drawable.imagem);
+
+                lista.add(receita);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
+        }
+        return lista;
     }
 }
