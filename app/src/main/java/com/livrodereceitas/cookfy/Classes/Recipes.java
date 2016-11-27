@@ -1,5 +1,6 @@
 package com.livrodereceitas.cookfy.Classes;
 
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -18,13 +19,15 @@ public class Recipes implements Parcelable {
         private String prepTime;
         private String difficulty;
         private String[] recipeBooks;
+        private byte[] imagem2;
 
-    public Recipes(String id, String nome, int imagem, String ingredientes, String description) {
+    public Recipes(String id, String nome, int imagem, String ingredientes, String description, byte[] imagem2) {
         this.id = id;
         this.name = nome;
         this.drawableId = imagem;
         this.description = description;
         this.ingredientes = ingredientes;
+        this.imagem2 = imagem2;
     }
 
     public Recipes(){
@@ -45,6 +48,7 @@ public class Recipes implements Parcelable {
         prepTime = in.readString();
         difficulty = in.readString();
         recipeBooks = in.createStringArray();
+        imagem2 = in.createByteArray();
     }
 
     public static final Creator<Recipes> CREATOR = new Creator<Recipes>() {
@@ -134,6 +138,14 @@ public class Recipes implements Parcelable {
         this.recipeBooks = recipeBooks;
     }
 
+    public byte[] getImagem2() {
+        return imagem2;
+    }
+
+    public void setImagem2(byte[] imagem2) {
+        this.imagem2 = imagem2;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -149,5 +161,6 @@ public class Recipes implements Parcelable {
         dest.writeString(prepTime);
         dest.writeString(difficulty);
         dest.writeStringArray(recipeBooks);
+        dest.writeByteArray(imagem2);
     }
 }

@@ -18,7 +18,7 @@ public class DetalheHelper {
     private Recipes receita;
     public DetalheHelper(DetalheActivity activity){
         nomeReceita = (TextView) activity.findViewById(R.id.nome_receita);
-        fotoReceita = (ImageView) activity.findViewById(R.id.test);
+        fotoReceita = (ImageView) activity.findViewById(R.id.imagem);
         ingredientesReceita= (TextView) activity.findViewById(R.id.descricao1);
         modoPreparoReceita= (TextView) activity.findViewById(R.id.descricao);
         receita = new Recipes();

@@ -44,10 +44,10 @@
 
 
         <ImageView
-            android:id="@+id/test"
+            android:id="@+id/imagem"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/imagem"
+            android:layout_height="255dp"
+
             />
         <LinearLayout
             android:background="@drawable/editborda"

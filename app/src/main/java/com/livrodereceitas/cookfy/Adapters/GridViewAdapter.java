@@ -1,6 +1,8 @@
 package com.livrodereceitas.cookfy.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +61,14 @@ public class GridViewAdapter extends BaseAdapter {
 
         Recipes receita = getItem(i);
 
-        picture.setImageResource(receita.getDrawableId());
+        if (receita.getImagem2().length != 0) {
+            Bitmap bitNew = BitmapFactory.decodeByteArray(receita.getImagem2(), 0, receita.getImagem2().length);
+            picture.setImageBitmap(bitNew);
+        } else {
+            picture.setImageResource(R.drawable.imagem);
+        }
+
+        //picture.setImageResource(receita.getDrawableId());
         name.setText(receita.getName());
         //ingredientes.setText(receita.getIngredientes());
 
