@@ -25,6 +25,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -39,6 +40,7 @@ import com.livrodereceitas.cookfy.Classes.Ingrediente;
 import com.livrodereceitas.cookfy.Classes.RecipeStep;
 import com.livrodereceitas.cookfy.R;
 
+import org.apache.http.entity.mime.MultipartEntity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -67,6 +69,7 @@ public class CadastroReceitaActivity extends AppCompatActivity {
     public static final String KEY_INGREDIENT= "ingredient_measure";
     private static final int CODIGO_CAMERA = 567;
     private static final String PREFS_NAME = "MyPrefsFile";
+    private static final String KEY_PICTURE = "picture";
     private String[] dificuldade;
     private ArrayList<Ingrediente> listaIngredientesReceita = new ArrayList<Ingrediente>();
     private ArrayList<RecipeStep> listaStepsReceita = new ArrayList<>();
@@ -90,6 +93,7 @@ public class CadastroReceitaActivity extends AppCompatActivity {
     private Bitmap testeGaleria;
     private ImageView foto;
     private Button galeria;
+    private String encodedImage2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -235,21 +239,20 @@ public class CadastroReceitaActivity extends AppCompatActivity {
                 foto = (ImageView) findViewById(R.id.imagemReceita);
                 Bitmap bitmap = BitmapFactory.decodeFile(caminhoFoto);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream);
                 byte[] bitMapData = stream.toByteArray();
-                String encodedImage2 = Base64.encodeToString(bitMapData,Base64.DEFAULT);
+                encodedImage2 = Base64.encodeToString(bitMapData,Base64.NO_WRAP);
                 Log.i("script", encodedImage2);
-               // Bitmap bitmapReduzido = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
+                Bitmap bitmapReduzido = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
                 /*--------------------*/
-                byte[] teste = Base64.decode(encodedImage2, Base64.DEFAULT);
-                Bitmap testeBit = BitmapFactory.decodeByteArray(teste, 0, teste.length);
+                //byte[] teste = Base64.decode(encodedImage2, Base64.DEFAULT);
+                //Bitmap testeBit = BitmapFactory.decodeByteArray(teste, 0, teste.length);
                 /*--------------------*/
-                int nh = (int) ( testeBit.getHeight() * (512.0 / testeBit.getWidth()) );
-                Bitmap scaled = Bitmap.createScaledBitmap(testeBit, 512, nh, true);
-
+                //int nh = (int) ( testeBit.getHeight() * (512.0 / testeBit.getWidth()) );
+                //Bitmap scaled = Bitmap.createScaledBitmap(testeBit, 512, nh, true);
 
                 foto.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                foto.setImageBitmap(scaled);
+                foto.setImageBitmap(bitmapReduzido);
             }else if (requestCode == 1){
                 foto = (ImageView) findViewById(R.id.imagemReceita);
                 try {
@@ -261,6 +264,7 @@ public class CadastroReceitaActivity extends AppCompatActivity {
                     int nh = (int) ( testeGaleria.getHeight() * (512.0 / testeGaleria.getWidth()) );
                     Bitmap scaled = Bitmap.createScaledBitmap(testeGaleria, 512, nh, true);
                     foto.setImageBitmap(scaled);
+
                 }
                 catch(FileNotFoundException e) {
                     e.printStackTrace();
@@ -294,7 +298,6 @@ public class CadastroReceitaActivity extends AppCompatActivity {
         Integer tempoFornoReceita = Integer.parseInt(tempoFornoReceitaString);
         Integer tempoPreparoReceita = Integer.parseInt(tempoPreparoReceitaString);
         Integer cheffId = Integer.parseInt(settings.getString("id", ""));
-
         JSONArray modoPreparoArray = new JSONArray();
         JSONArray ingredientesArray = new JSONArray();
         for(int i=0; i<ingredientesLista.size();i++){
@@ -323,7 +326,7 @@ public class CadastroReceitaActivity extends AppCompatActivity {
             jsonobj.put(KEY_PREPTIME, tempoPreparoReceita);
             jsonobj.put(KEY_CHEF, cheffId);
             jsonobj.put(KEY_CATEGORY, 1);
-
+            jsonobj.put(KEY_PICTURE, encodedImage2.substring(0, 2000));
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -331,7 +334,6 @@ public class CadastroReceitaActivity extends AppCompatActivity {
         }
 
         Log.i("script", jsonobj.toString());
-
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 REGISTER_URL, jsonobj, new Response.Listener<JSONObject>() {
             @Override
@@ -354,6 +356,7 @@ public class CadastroReceitaActivity extends AppCompatActivity {
 
         };
 
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonObjReq);
 
