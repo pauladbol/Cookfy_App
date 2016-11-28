@@ -10,7 +10,6 @@
 
     <application
         android:allowBackup="true"
-        android:hardwareAccelerated="false"
         android:largeHeap="true"
         android:icon="@mipmap/ic_launcher_cookfy"
         android:label="@string/app_name"

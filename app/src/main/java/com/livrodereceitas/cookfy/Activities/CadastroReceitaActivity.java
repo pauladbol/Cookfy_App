@@ -247,9 +247,10 @@ public class CadastroReceitaActivity extends AppCompatActivity {
                 foto = (ImageView) findViewById(R.id.imagemReceita);
                 Bitmap bitmap = BitmapFactory.decodeFile(caminhoFoto);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream);
+                Bitmap teste123 = Bitmap.createScaledBitmap(bitmap, 220, 220, true);
+                teste123.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 byte[] bitMapData = stream.toByteArray();
-                encodedImage2 = Base64.encodeToString(bitMapData,Base64.NO_WRAP);
+                encodedImage2 = Base64.encodeToString(bitMapData,Base64.DEFAULT);
                 Log.i("script", encodedImage2);
                 Bitmap bitmapReduzido = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
                 /*--------------------*/
@@ -260,7 +261,7 @@ public class CadastroReceitaActivity extends AppCompatActivity {
                 //Bitmap scaled = Bitmap.createScaledBitmap(testeBit, 512, nh, true);
 
                 foto.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                foto.setImageBitmap(bitmapReduzido);
+                foto.setImageBitmap(teste123);
             }else if (requestCode == 1){
                 foto = (ImageView) findViewById(R.id.imagemReceita);
                 try {
@@ -334,7 +335,7 @@ public class CadastroReceitaActivity extends AppCompatActivity {
             jsonobj.put(KEY_PREPTIME, tempoPreparoReceita);
             jsonobj.put(KEY_CHEF, cheffId);
             jsonobj.put(KEY_CATEGORY, 1);
-            jsonobj.put(KEY_PICTURE, encodedImage2.substring(0, 2000));
+            jsonobj.put(KEY_PICTURE, encodedImage2);
 
         } catch (JSONException e) {
             e.printStackTrace();

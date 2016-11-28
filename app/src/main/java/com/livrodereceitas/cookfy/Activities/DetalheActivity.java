@@ -55,11 +55,9 @@ public class  DetalheActivity extends AppCompatActivity {
         TextView dificuldade = (TextView) this.findViewById(R.id.dificuldadeTexto);
         TextView time = (TextView) this.findViewById(R.id.timeTexto);
 
-        String ingredientesString = "" /*ingredientesArray.toString()*/ ;
+        String ingredientesString = montaStringIngredientes(ingredientesArray);
 
-        for(int i = 0; i < ingredientesArray.size(); i++) {
-            ingredientesString += ingredientesArray.get(i) + "\n";
-        }
+
 
         Log.i("listaingred","LISTA "+ingredientesArray.get(1));
 
@@ -69,15 +67,8 @@ public class  DetalheActivity extends AppCompatActivity {
         ingredientes.setText(ingredientesString);
         time.setText(receita.getExecutionTime());
 
-        String dificuldadeReceita = "";
+        String dificuldadeReceita = converteDificuldade(receita.getDifficulty());
 
-        if (receita.getDifficulty().equals("HARD")) {
-            dificuldadeReceita = "Difícil";
-        } else if (receita.getDifficulty().equals("MEDIUM")) {
-            dificuldadeReceita = "Média";
-        } else {
-            dificuldadeReceita = "Fácil";
-        }
 
         dificuldade.setText(dificuldadeReceita);
 
@@ -147,5 +138,25 @@ public class  DetalheActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
+    }
+
+    public String montaStringIngredientes(ArrayList<String> ingredientesArray){
+        String ingredientesString = "";
+
+        for(int i = 0; i < ingredientesArray.size(); i++) {
+            ingredientesString += ingredientesArray.get(i) + "\n";
+        }
+        return ingredientesString;
+    }
+
+    public String converteDificuldade(String dificuldade){
+
+        if (dificuldade.equals("HARD")) {
+            return  "Difícil";
+        } else if (dificuldade.equals("MEDIUM")) {
+            return  "Média";
+        } else {
+            return  "Fácil";
+        }
     }
 }
