@@ -10,12 +10,12 @@
     android:layout_width="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="280dp"
+        android:layout_height="420dp"
         android:background="#FFFFFF">
         <ImageView
         android:id="@+id/imagemReceita"
         android:layout_width="match_parent"
-        android:layout_height="255dp"
+        android:layout_height="400dp"
         android:src="@drawable/imagem"
        />
 

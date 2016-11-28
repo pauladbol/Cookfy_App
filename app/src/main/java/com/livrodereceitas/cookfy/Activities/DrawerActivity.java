@@ -244,17 +244,7 @@ public class DrawerActivity extends AppCompatActivity
     }
 
     private void reqReceitas(String type){
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-
-        if (type.equals("favoritos")) {
-            urlReq = URL_PERFIL + settings.getString("id","")+"/reacts?react=FAVORITY";
-            Log.i("fav ",urlReq);
-        } else if (type.equals("minhas")){
-            urlReq = URL_PERFIL + settings.getString("id","") + "/recipes";
-            Log.i("minhas ",urlReq);
-        } else {
-            urlReq = URL_RECIPES;
-        }
+        montaUrl(type);
 
         JsonArrayRequest jsonArrayReq = new JsonArrayRequest(Request.Method.GET,
                 urlReq, null, new Response.Listener<JSONArray>() {
@@ -314,6 +304,21 @@ public class DrawerActivity extends AppCompatActivity
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayReq);
+    }
+
+    public String montaUrl(String type) {
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        if (type.equals("favoritos")) {
+            urlReq = URL_PERFIL + settings.getString("id","")+"/reacts?react=FAVORITY";
+            Log.i("fav ",urlReq);
+            return urlReq;
+        } else if (type.equals("minhas")){
+            urlReq = URL_PERFIL + settings.getString("id","") + "/recipes";
+            Log.i("minhas ",urlReq);
+            return urlReq;
+        } else {
+            return urlReq = URL_RECIPES;
+        }
     }
 
     private void reqCategorias(int position){
