@@ -128,14 +128,15 @@ public class CadastroReceitaActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                    dificuldadeReceita = deParaDificuldade(dificuldade[position]);
 
-                if (dificuldade[position].equals("Difícil")) {
-                    dificuldadeReceita = "HARD";
-                } else if (dificuldade[position].equals("Média")) {
-                    dificuldadeReceita = "MEDIUM";
-                } else {
-                    dificuldadeReceita = "EASY";
-                }
+//                if (dificuldade[position].equals("Difícil")) {
+//                    dificuldadeReceita = "HARD";
+//                } else if (dificuldade[position].equals("Média")) {
+//                    dificuldadeReceita = "MEDIUM";
+//                } else {
+//                    dificuldadeReceita = "EASY";
+//                }
 
                 //dificuldadeReceita = dificuldade[position];
             }
@@ -416,6 +417,16 @@ public class CadastroReceitaActivity extends AppCompatActivity {
             return false;
         }
 
+    }
+
+    public String deParaDificuldade(String dificuldadeTela) {
+        if (dificuldadeTela.equals("Difícil")) {
+            return "HARD";
+        } else if (dificuldadeTela.equals("Média")) {
+            return "MEDIUM";
+        } else {
+            return "EASY";
+        }
     }
 
     @Override

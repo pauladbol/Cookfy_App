@@ -2,10 +2,13 @@ package com.livrodereceitas.cookfy.Activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -258,7 +261,16 @@ public class DrawerActivity extends AppCompatActivity
                         receita.setDescription(receitaJSON.getString("description"));
                         receita.setExecutionTime(receitaJSON.getString("prepTime"));
                         receita.setDifficulty(receitaJSON.getString("difficulty"));
-                        receita.setDrawableId(R.drawable.imagem);
+
+
+
+                        String imgBytes = receitaJSON.getString("picture");
+
+                        byte[] imgRecebida = Base64.decode(imgBytes, Base64.DEFAULT);
+                        //Bitmap bitNew = BitmapFactory.decodeByteArray(imgRecebida, 0, imgRecebida.length);
+
+                        receita.setImagem2(imgRecebida);
+                        //receita.setDrawableId(R.drawable.imagem);
 
                         receitasList.add(receita);
 

@@ -2,11 +2,14 @@ package com.livrodereceitas.cookfy.Activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +37,7 @@ public class  DetalheActivity extends AppCompatActivity {
     Recipes receita;
     ArrayList<String> ingredientesArray = new ArrayList<String>();
     Boolean ehfavorito;
+    byte[] imagem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,8 @@ public class  DetalheActivity extends AppCompatActivity {
         helper = new DetalheHelper(this);
 
         final CheckBox favorito = (CheckBox) findViewById(R.id.favorita);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
 
@@ -54,13 +60,20 @@ public class  DetalheActivity extends AppCompatActivity {
         TextView ingredientes = (TextView) this.findViewById(R.id.descricao1);
         TextView dificuldade = (TextView) this.findViewById(R.id.dificuldadeTexto);
         TextView time = (TextView) this.findViewById(R.id.timeTexto);
+        ImageView foto = (ImageView) this.findViewById(R.id.imagem);
 
         String ingredientesString = montaStringIngredientes(ingredientesArray);
 
 
 
-        Log.i("listaingred","LISTA "+ingredientesArray.get(1));
+        if (receita.getImagem2().length != 0) {
+            Bitmap bitNew = BitmapFactory.decodeByteArray(receita.getImagem2(), 0, receita.getImagem2().length);
 
+            foto.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            foto.setImageBitmap(bitNew);
+        } else {
+            foto.setImageResource(R.drawable.imagem);
+        }
 
         nomeReceita.setText(receita.getName());
         descricaoReceita.setText(receita.getDescription());
@@ -142,6 +155,12 @@ public class  DetalheActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
     public String montaStringIngredientes(ArrayList<String> ingredientesArray){
         String ingredientesString = "";
 
@@ -160,5 +179,6 @@ public class  DetalheActivity extends AppCompatActivity {
         } else {
             return  "Fácil";
         }
+
     }
 }
