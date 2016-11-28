@@ -49,8 +49,7 @@ public class PesquisaIngredienteActivity extends AppCompatActivity {
         final GridView gridView = (GridView) findViewById(R.id.gridIngredientes);
         final BaseAdapter baseAdapter = new GridIngredienteAdapter(this, listaIngredientesPesquisa);
 
-
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         adicionar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,45 +116,19 @@ public class PesquisaIngredienteActivity extends AppCompatActivity {
                     urlListaIngredientes, null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
-                    //try {
-                        Log.i("fav","aqui");
-
                         receitasList = montaReceitasPesquisa(response);
 
-//                        for (int i = 0; i < response.length(); i++) {
-//                            Log.i("fav", "FAV "+response.toString());
-//
-//                            JSONObject receitaJSON = response.getJSONObject(i);
-//
-//                            Recipes receita = new Recipes();
-//                            receita.setId(receitaJSON.getString("id"));
-//                            receita.setName(receitaJSON.getString("name"));
-//                            receita.setDescription(receitaJSON.getString("description"));
-//                            receita.setExecutionTime(receitaJSON.getString("prepTime"));
-//                            receita.setDifficulty(receitaJSON.getString("difficulty"));
-//                            receita.setDrawableId(R.drawable.imagem);
-//
-//                            receitasList.add(receita);
-//                        }
-
-
-                        //Toast.makeText(PesquisaIngredienteActivity.this, "!", Toast.LENGTH_LONG).show();
                         Intent intentFav = new Intent(PesquisaIngredienteActivity.this, ListaReceitasActivity.class);
                         intentFav.putParcelableArrayListExtra("receitasList", receitasList);
                         startActivity(intentFav);
                         finish();
-
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                        Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
-//
-//                    }
                 }
             },
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(PesquisaIngredienteActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),"Ocorreu um erro! Tente novamente mais tarde.",Toast.LENGTH_LONG).show();
+                            //Toast.makeText(PesquisaIngredienteActivity.this,error.toString(),Toast.LENGTH_LONG).show();
                         }
                     }){
 
@@ -191,8 +164,15 @@ public class PesquisaIngredienteActivity extends AppCompatActivity {
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Ocorreu um erro! Tente novamente mais tarde.",Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
         }
         return lista;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 }

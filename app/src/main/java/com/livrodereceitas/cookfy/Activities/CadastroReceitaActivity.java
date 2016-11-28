@@ -109,14 +109,11 @@ public class CadastroReceitaActivity extends AppCompatActivity {
         baseAdapter = new GridIngredienteAdapter(this, listaIngredientesReceita);
         baseAdapterStepRecipe = new AdapterStepsReceita(this, listaStepsReceita);
 
-//        if (receita.getDifficulty().equals("HARD")) {
-//            dificuldadeReceita = "Difícil";
-//        } else if (receita.getDifficulty().equals("MEDIUM")) {
-//            dificuldadeReceita = "Média";
-//        } else {
-//            dificuldadeReceita = "Fácil";
-//        }
-        dificuldade = new String[]{"Dificuldade", "EASY", "MEDIUM", "HARD"};
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        dificuldade = new String[]{"Dificuldade", "Difícil", "Média", "Fácil"};
+       // dificuldade = new String[]{"Dificuldade", "HARD", "MEDIUM", "EASY"};
         ArrayAdapter<String> adpDificuldade = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, dificuldade);
 
         nomeReceita = (EditText) findViewById(R.id.nomeReceita);
@@ -130,7 +127,17 @@ public class CadastroReceitaActivity extends AppCompatActivity {
         spinnerDificuldade.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                dificuldadeReceita = dificuldade[position];
+
+
+                if (dificuldade[position].equals("Difícil")) {
+                    dificuldadeReceita = "HARD";
+                } else if (dificuldade[position].equals("Média")) {
+                    dificuldadeReceita = "MEDIUM";
+                } else {
+                    dificuldadeReceita = "EASY";
+                }
+
+                //dificuldadeReceita = dificuldade[position];
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -292,18 +299,23 @@ public class CadastroReceitaActivity extends AppCompatActivity {
         }
 
     }
+
     public boolean validarIngrediente(String ingrediente) {
         String nomePattern = "^[aA-zZ]{2,}+(([ aA-zZ]+)+)?$";
         Pattern pattern = Pattern.compile(nomePattern);
         Matcher matcher = pattern.matcher(ingrediente);
         return matcher.matches();
     }
+
     public void CadastrarReceita(ArrayList<Ingrediente> ingredientesLista){
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+
         final JSONObject jsonobj = new JSONObject();
         final String nome = nomeReceita.getText().toString().trim();
+
         String tempoPreparoReceitaString = tempoPreparo.getText().toString().trim();
         String tempoFornoReceitaString = tempoForno.getText().toString().trim();
+
         Integer tempoFornoReceita = Integer.parseInt(tempoFornoReceitaString);
         Integer tempoPreparoReceita = Integer.parseInt(tempoPreparoReceitaString);
         Integer cheffId = Integer.parseInt(settings.getString("id", ""));
@@ -324,8 +336,6 @@ public class CadastroReceitaActivity extends AppCompatActivity {
             }
         }
 
-
-
         try {
             jsonobj.put(KEY_NAME, nome);
             jsonobj.put(KEY_DIFFICULTY, dificuldadeReceita);
@@ -338,8 +348,9 @@ public class CadastroReceitaActivity extends AppCompatActivity {
             jsonobj.put(KEY_PICTURE, encodedImage2);
 
         } catch (JSONException e) {
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(),"123456789: " + e.getMessage(),Toast.LENGTH_LONG).show();
+            //e.printStackTrace();
+            //Toast.makeText(getApplicationContext(),"123456789: " + e.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Ocorreu um erro! Tente novamente mais tarde.",Toast.LENGTH_LONG).show();
         }
 
         Log.i("script", jsonobj.toString());
@@ -348,7 +359,6 @@ public class CadastroReceitaActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
 
-                Log.i("script", "entrou no request!!");
                 Toast.makeText(CadastroReceitaActivity.this, "Receita salva com sucesso!", Toast.LENGTH_LONG).show();
                 Intent intentCadastrar = new Intent(CadastroReceitaActivity.this, DrawerActivity.class);
                 startActivity(intentCadastrar);
@@ -359,7 +369,8 @@ public class CadastroReceitaActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(CadastroReceitaActivity.this,"!!"+error.toString(),Toast.LENGTH_LONG).show();
+                        //Toast.makeText(CadastroReceitaActivity.this,"!!"+error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"Ocorreu um erro! Tente novamente mais tarde.",Toast.LENGTH_LONG).show();
                     }
                 }){
 
@@ -406,6 +417,13 @@ public class CadastroReceitaActivity extends AppCompatActivity {
         }
 
     }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
+    }
+
 }
 
 

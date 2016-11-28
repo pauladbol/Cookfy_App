@@ -109,7 +109,8 @@ public class  DetalheActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(DetalheActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                        //Toast.makeText(DetalheActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"Ocorreu um erro! Tente novamente mais tarde.",Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -132,7 +133,8 @@ public class  DetalheActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(DetalheActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                        //Toast.makeText(DetalheActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"Ocorreu um erro! Tente novamente mais tarde.",Toast.LENGTH_LONG).show();
                     }
                 });
 

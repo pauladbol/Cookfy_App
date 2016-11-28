@@ -48,7 +48,13 @@ public class PerfilActivity extends AppCompatActivity {
         setContentView(R.layout.activity_perfil);
 
         camera = (Button) findViewById(R.id.cameraPerfil);
+
         salvarFoto = (Button) findViewById((R.id.salvarFotoPerfil));
+
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
         Intent intent = getIntent();
         User usuario = (User) intent.getSerializableExtra("usuario");
 
@@ -79,6 +85,7 @@ public class PerfilActivity extends AppCompatActivity {
         });
 
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -98,6 +105,7 @@ public class PerfilActivity extends AppCompatActivity {
             }
         }
     }
+
     public void salvarFotoPerfil(){
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         final JSONObject jsonobj = new JSONObject();
@@ -135,4 +143,13 @@ public class PerfilActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonObjReq);
     }
+
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
+    }
+
+
 }
