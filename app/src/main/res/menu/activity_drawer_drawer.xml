@@ -17,11 +17,15 @@
         <item
             android:id="@+id/nav_pesquisa"
             android:icon="@drawable/ic_search_black_24dp"
-            android:title="Pesquisa por ingreiente" />
+            android:title="Pesquisa por Ingrediente" />
         <item
             android:id="@+id/nav_pesquisaRecipe"
             android:icon="@drawable/ic_search_black_24dp"
-            android:title="Pesquisa por receita" />
+            android:title="Pesquisa por Receita" />
+        <item
+            android:id="@+id/nav_receitas"
+            android:icon="@drawable/ic_search_black_24dp"
+            android:title="Todas as Receitas" />
         <item
             android:id="@+id/nav_cadastro"
             android:icon="@drawable/ic_restaurant_menu_black_24dp"

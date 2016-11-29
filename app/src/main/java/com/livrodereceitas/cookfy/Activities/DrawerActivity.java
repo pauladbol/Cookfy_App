@@ -233,11 +233,13 @@ public class DrawerActivity extends AppCompatActivity
             Intent intentPesq = new Intent(DrawerActivity.this, PesquisaIngredienteActivity.class);
             startActivity(intentPesq);
 
-        }else if (id == R.id.nav_pesquisaRecipe) {
+        } else if (id == R.id.nav_pesquisaRecipe) {
             Intent intentPesqRecipe = new Intent(DrawerActivity.this, PesquisaReceitaActivity.class);
             startActivity(intentPesqRecipe);
 
-        }else if (id == R.id.nav_cadastro) {
+        } else if (id == R.id.nav_receitas) {
+            reqReceitas("receitas");
+        } else if (id == R.id.nav_cadastro) {
             Intent intentCad = new Intent(DrawerActivity.this, CadastroReceitaActivity.class);
             startActivity(intentCad);
         } else if (id == R.id.nav_sair) {
@@ -252,7 +254,7 @@ public class DrawerActivity extends AppCompatActivity
 
     private void reqReceitas(String type){
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        montaUrl(type,settings.getString("id",""));
+        urlReq = montaUrl(type,settings.getString("id",""));
 
         JsonArrayRequest jsonArrayReq = new JsonArrayRequest(Request.Method.GET,
                 urlReq, null, new Response.Listener<JSONArray>() {

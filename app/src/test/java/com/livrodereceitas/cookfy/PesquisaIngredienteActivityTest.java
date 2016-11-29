@@ -1,6 +1,7 @@
 package com.livrodereceitas.cookfy;
 
 import com.livrodereceitas.cookfy.Activities.PesquisaIngredienteActivity;
+import com.livrodereceitas.cookfy.Classes.Ingrediente;
 import com.livrodereceitas.cookfy.Classes.Recipes;
 
 import org.json.JSONArray;
@@ -10,6 +11,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
@@ -30,11 +32,19 @@ public class PesquisaIngredienteActivityTest {
     }
 
     @Test
-    public void montaReceitasPesquisaTest() {
+    public void testMontaReceitasPesquisa() {
 
         JSONArray jsonArray = Mockito.mock(JSONArray.class);
 
         assertEquals(pesquisa.montaReceitasPesquisa(jsonArray),Mockito.anyIterable());
+
+    }
+
+    @Test
+    public void testMontaListaIngredientes() {
+        List<Ingrediente> lista = Mockito.anyList();
+
+        assertEquals(pesquisa.montaUrlIngredientes(lista), Mockito.anyString());
 
     }
 }

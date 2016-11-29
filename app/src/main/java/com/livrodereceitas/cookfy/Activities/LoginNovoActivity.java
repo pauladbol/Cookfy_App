@@ -54,23 +54,9 @@ public class LoginNovoActivity extends AppCompatActivity {
         logar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (!validarUsuario(usuario.getText().toString())) {
-//                    usuario.setError("Usuario Invalido");
-//                    usuario.requestFocus();
-//                } else if (!validarSenha(senha.getText().toString())) {
-//                    senha.setError("Senha Invalida");
-//                    //senha.requestFocus();
 //
-//                } else {
-
-                    //Toast.makeText(LoginNovoActivity.this, "Bem vindo " + usuario.getText().toString() +"!", Toast.LENGTH_LONG).show();
-                    //Intent intentLogar = new Intent(LoginNovoActivity.this, Main2Activity.class);
-                    //startActivity(intentLogar);
-                    //finish();
                     autenticaUsuario();
 
-
-//                }
 
             }
         });

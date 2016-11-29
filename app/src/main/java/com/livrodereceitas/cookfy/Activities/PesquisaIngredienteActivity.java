@@ -102,17 +102,10 @@ public class PesquisaIngredienteActivity extends AppCompatActivity {
         return matcher.matches();
     }
     public void PesquisaIngrediente(){
-        String urlListaIngredientes = REGISTER_URL;
+        String urlListaIngredientes = "";
         if(listaIngredientesPesquisa != null){
-        boolean primeira = true;
-            for(Ingrediente teste: listaIngredientesPesquisa){
-                if (primeira) {
-                    urlListaIngredientes+= "ingredient=" + teste.getNome().replace(" ", "%20");
-                    primeira = false;
-                } else {
-                    urlListaIngredientes += "&ingredient=" + teste.getNome().replace(" ", "%20");
-                }
-            }
+            urlListaIngredientes = montaUrlIngredientes(listaIngredientesPesquisa);
+
             JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
                     urlListaIngredientes, null, new Response.Listener<JSONArray>() {
                 @Override
@@ -177,6 +170,22 @@ public class PesquisaIngredienteActivity extends AppCompatActivity {
         return lista;
     }
 
+
+    public String montaUrlIngredientes(List<Ingrediente> listaIngredientesPesquisa) {
+        String urlIngredientes = REGISTER_URL;
+
+        boolean primeira = true;
+        for(Ingrediente teste: listaIngredientesPesquisa){
+            if (primeira) {
+                urlIngredientes += "ingredient=" + teste.getNome().replace(" ", "%20");
+                primeira = false;
+            } else {
+                urlIngredientes += "&ingredient=" + teste.getNome().replace(" ", "%20");
+            }
+        }
+
+        return urlIngredientes;
+    }
     @Override
     public boolean onSupportNavigateUp(){
         finish();
