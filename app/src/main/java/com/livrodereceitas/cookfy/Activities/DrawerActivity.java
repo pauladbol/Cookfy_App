@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -48,7 +49,7 @@ public class DrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String URL_CATEG = "https://cookfy.herokuapp.com/categories/";
-    private static final String URL_RECIPES = "https://cookfy.herokuapp.com/recipes/";
+    private static final String URL_RECIPES = "https://cookfy.herokuapp.com/recipes";
     private static final String URL_PERFIL = "https://cookfy.herokuapp.com/users/";
     public static final String KEY_USERNAME = "user";
     public static final String PREFS_NAME = "MyPrefsFile";
@@ -301,7 +302,7 @@ public class DrawerActivity extends AppCompatActivity
 
 
         };
-
+        jsonArrayReq.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayReq);
     }
@@ -341,7 +342,7 @@ public class DrawerActivity extends AppCompatActivity
                         receita.setDescription(receitaJSON.getString("description"));
                         receita.setExecutionTime(receitaJSON.getString("prepTime"));
                         receita.setDifficulty(receitaJSON.getString("difficulty"));
-                        receita.setDrawableId(R.drawable.imagem);
+                        //receita.setDrawableId(R.drawable.imagem);
 
                         receitasList.add(receita);
 
@@ -371,7 +372,7 @@ public class DrawerActivity extends AppCompatActivity
 
 
         };
-
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonObjReq);
     }

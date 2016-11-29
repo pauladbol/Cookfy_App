@@ -61,7 +61,7 @@ public class GridViewAdapter extends BaseAdapter {
 
         Recipes receita = getItem(i);
 
-        if (receita.getImagem2().length != 0) {
+        if (receita.getImagem2()!=null && receita.getImagem2().length>0) {
             Bitmap bitNew = BitmapFactory.decodeByteArray(receita.getImagem2(), 0, receita.getImagem2().length);
             picture.setImageBitmap(bitNew);
         } else {
