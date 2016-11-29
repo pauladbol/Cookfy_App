@@ -97,7 +97,9 @@ public class DrawerActivity extends AppCompatActivity
         listareceitas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                reqReceitas("lista");
+                Intent intentPesqReceita = new Intent(DrawerActivity.this, PesquisaReceitaActivity.class);
+                startActivity(intentPesqReceita);
+
             }
         });
 //        User usuario = reqUser();
@@ -394,6 +396,16 @@ public class DrawerActivity extends AppCompatActivity
                     usuarioPerfil.setNome(response.getString("name"));
                     usuarioPerfil.setUsername(response.getString("username"));
                     usuarioPerfil.setEmail(response.getString("email"));
+
+                    String imagemBytes = response.getString("picture");
+                    if (imagemBytes != "null" && imagemBytes != ""){
+                        byte[] imagemRecebida = Base64.decode(imagemBytes, Base64.DEFAULT);
+                        //Bitmap bitNew = BitmapFactory.decodeByteArray(imgRecebida, 0, imgRecebida.length);
+
+                        usuarioPerfil.setImagem(imagemRecebida);
+                    }
+
+
 
                     Intent intentPerfil = new Intent(DrawerActivity.this, PerfilActivity.class);
                     intentPerfil.putExtra("usuario", usuarioPerfil);
