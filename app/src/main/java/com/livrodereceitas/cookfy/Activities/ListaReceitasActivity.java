@@ -104,9 +104,11 @@ public class ListaReceitasActivity extends AppCompatActivity {
                     receitaDetalhe.setDifficulty(response.getString("difficulty"));
                     receitaDetalhe.setExecutionTime(response.getString("prepTime"));
                     String imgBytes = response.getString("picture");
+                    if (imgBytes != "null" && imgBytes != ""){
+                        byte[] imgRecebida = Base64.decode(imgBytes, Base64.DEFAULT);
+                        receitaDetalhe.setImagem2(imgRecebida);
+                    }
 
-                    byte[] imgRecebida = Base64.decode(imgBytes, Base64.DEFAULT);
-                    receitaDetalhe.setImagem2(imgRecebida);
 
                     favorito = response.getBoolean("favority");
 

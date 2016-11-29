@@ -17,7 +17,11 @@
         <item
             android:id="@+id/nav_pesquisa"
             android:icon="@drawable/ic_search_black_24dp"
-            android:title="Pesquisa" />
+            android:title="Pesquisa por ingreiente" />
+        <item
+            android:id="@+id/nav_pesquisaRecipe"
+            android:icon="@drawable/ic_search_black_24dp"
+            android:title="Pesquisa por receita" />
         <item
             android:id="@+id/nav_cadastro"
             android:icon="@drawable/ic_restaurant_menu_black_24dp"

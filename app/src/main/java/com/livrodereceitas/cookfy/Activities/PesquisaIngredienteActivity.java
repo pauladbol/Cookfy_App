@@ -3,6 +3,7 @@ package com.livrodereceitas.cookfy.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -127,7 +128,7 @@ public class PesquisaIngredienteActivity extends AppCompatActivity {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(getApplicationContext(),"Ocorreu um erro! Tente novamente mais tarde.",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),"Ocorreu um erro! Tente novamente mais tarde. " + error,Toast.LENGTH_LONG).show();
                             //Toast.makeText(PesquisaIngredienteActivity.this,error.toString(),Toast.LENGTH_LONG).show();
                         }
                     }){
@@ -158,7 +159,13 @@ public class PesquisaIngredienteActivity extends AppCompatActivity {
                 receita.setDescription(receitaJSON.getString("description"));
                 receita.setExecutionTime(receitaJSON.getString("prepTime"));
                 receita.setDifficulty(receitaJSON.getString("difficulty"));
-                receita.setDrawableId(R.drawable.imagem);
+                String imgBytes = receitaJSON.getString("picture");
+                if ( imgBytes != "" && imgBytes != "null" ){
+                    byte[] imgRecebida = Base64.decode(imgBytes, Base64.DEFAULT);
+                    //Bitmap bitNew = BitmapFactory.decodeByteArray(imgRecebida, 0, imgRecebida.length);
+
+                    receita.setImagem2(imgRecebida);
+                }
 
                 lista.add(receita);
             }

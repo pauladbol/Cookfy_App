@@ -98,7 +98,9 @@ public class DrawerActivity extends AppCompatActivity
         listareceitas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                reqReceitas("lista");
+                Intent intentPesqReceita = new Intent(DrawerActivity.this, PesquisaReceitaActivity.class);
+                startActivity(intentPesqReceita);
+
             }
         });
 //        User usuario = reqUser();
@@ -231,7 +233,11 @@ public class DrawerActivity extends AppCompatActivity
             Intent intentPesq = new Intent(DrawerActivity.this, PesquisaIngredienteActivity.class);
             startActivity(intentPesq);
 
-        } else if (id == R.id.nav_cadastro) {
+        }else if (id == R.id.nav_pesquisaRecipe) {
+            Intent intentPesqRecipe = new Intent(DrawerActivity.this, PesquisaReceitaActivity.class);
+            startActivity(intentPesqRecipe);
+
+        }else if (id == R.id.nav_cadastro) {
             Intent intentCad = new Intent(DrawerActivity.this, CadastroReceitaActivity.class);
             startActivity(intentCad);
         } else if (id == R.id.nav_sair) {
@@ -245,7 +251,8 @@ public class DrawerActivity extends AppCompatActivity
     }
 
     private void reqReceitas(String type){
-        montaUrl(type);
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        montaUrl(type,settings.getString("id",""));
 
         JsonArrayRequest jsonArrayReq = new JsonArrayRequest(Request.Method.GET,
                 urlReq, null, new Response.Listener<JSONArray>() {
@@ -263,14 +270,13 @@ public class DrawerActivity extends AppCompatActivity
                         receita.setExecutionTime(receitaJSON.getString("prepTime"));
                         receita.setDifficulty(receitaJSON.getString("difficulty"));
 
-
-
                         String imgBytes = receitaJSON.getString("picture");
+                        if ( imgBytes != "" && imgBytes != "null" ){
+                            byte[] imgRecebida = Base64.decode(imgBytes, Base64.DEFAULT);
+                            //Bitmap bitNew = BitmapFactory.decodeByteArray(imgRecebida, 0, imgRecebida.length);
 
-                        byte[] imgRecebida = Base64.decode(imgBytes, Base64.DEFAULT);
-                        //Bitmap bitNew = BitmapFactory.decodeByteArray(imgRecebida, 0, imgRecebida.length);
-
-                        receita.setImagem2(imgRecebida);
+                            receita.setImagem2(imgRecebida);
+                            }
                         //receita.setDrawableId(R.drawable.imagem);
 
                         receitasList.add(receita);
@@ -307,15 +313,15 @@ public class DrawerActivity extends AppCompatActivity
         requestQueue.add(jsonArrayReq);
     }
 
-    public String montaUrl(String type) {
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+    public String montaUrl(String type,String id) {
+
         if (type.equals("favoritos")) {
-            urlReq = URL_PERFIL + settings.getString("id","")+"/reacts?react=FAVORITY";
-            Log.i("fav ",urlReq);
+            urlReq = URL_PERFIL + id +"/reacts?react=FAVORITY";
+
             return urlReq;
         } else if (type.equals("minhas")){
-            urlReq = URL_PERFIL + settings.getString("id","") + "/recipes";
-            Log.i("minhas ",urlReq);
+            urlReq = URL_PERFIL + id + "/recipes";
+
             return urlReq;
         } else {
             return urlReq = URL_RECIPES;
@@ -342,6 +348,14 @@ public class DrawerActivity extends AppCompatActivity
                         receita.setDescription(receitaJSON.getString("description"));
                         receita.setExecutionTime(receitaJSON.getString("prepTime"));
                         receita.setDifficulty(receitaJSON.getString("difficulty"));
+                        //receita.setDrawableId(R.drawable.imagem);
+                        String imgBytes = receitaJSON.getString("picture");
+                        if ( imgBytes != "" && imgBytes != "null" ){
+                            byte[] imgRecebida = Base64.decode(imgBytes, Base64.DEFAULT);
+                            //Bitmap bitNew = BitmapFactory.decodeByteArray(imgRecebida, 0, imgRecebida.length);
+
+                            receita.setImagem2(imgRecebida);
+                        }
                         //receita.setDrawableId(R.drawable.imagem);
 
                         receitasList.add(receita);
@@ -395,6 +409,16 @@ public class DrawerActivity extends AppCompatActivity
                     usuarioPerfil.setNome(response.getString("name"));
                     usuarioPerfil.setUsername(response.getString("username"));
                     usuarioPerfil.setEmail(response.getString("email"));
+
+                    String imagemBytes = response.getString("picture");
+                    if (imagemBytes != "null" && imagemBytes != ""){
+                        byte[] imagemRecebida = Base64.decode(imagemBytes, Base64.DEFAULT);
+                        //Bitmap bitNew = BitmapFactory.decodeByteArray(imgRecebida, 0, imgRecebida.length);
+
+                        usuarioPerfil.setImagem(imagemRecebida);
+                    }
+
+
 
                     Intent intentPerfil = new Intent(DrawerActivity.this, PerfilActivity.class);
                     intentPerfil.putExtra("usuario", usuarioPerfil);

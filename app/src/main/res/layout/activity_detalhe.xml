@@ -47,7 +47,7 @@
             android:id="@+id/imagem"
             android:layout_width="match_parent"
             android:layout_height="255dp"
-
+            android:adjustViewBounds="true"
             />
         <LinearLayout
             android:background="@drawable/editborda"

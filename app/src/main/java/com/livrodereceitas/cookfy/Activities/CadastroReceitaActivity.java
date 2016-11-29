@@ -222,7 +222,7 @@ public class CadastroReceitaActivity extends AppCompatActivity {
             ingredienteRecitaNome.requestFocus();}
         else {
 
-            CadastroReceitaActivity.this.ingrediente.setNome(ingredienteReceitaMedida.getText().toString() + ";" + ingredienteRecitaNome.getText().toString());
+            CadastroReceitaActivity.this.ingrediente.setNome(ingredienteRecitaNome.getText().toString() + ";" + ingredienteReceitaMedida.getText().toString());
             listaIngredientesReceita.add(CadastroReceitaActivity.this.ingrediente);
             ingredienteRecitaNome.setText("");
             ingredienteReceitaMedida.setText("");

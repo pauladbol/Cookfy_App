@@ -12,18 +12,19 @@ public class User implements Serializable{
     private String username;
     private String hash;
     private String adapter;
-
+    private byte[] imagem = null;
     public User () {
 
     }
 
-    public User(int id, String nome, String email, String username, String hash, String adapter) {
+    public User(int id, String nome, String email, String username, String hash, String adapter, byte[] imagem) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.username = username;
         this.hash = hash;
         this.adapter = adapter;
+        this.imagem = imagem;
     }
 
     public int getId() {
@@ -68,6 +69,14 @@ public class User implements Serializable{
 
     public String getHash() {
         return hash;
+    }
+
+    public byte[] getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(byte[] imagem) {
+        this.imagem = imagem;
     }
 
     public void setHash(String hash) {

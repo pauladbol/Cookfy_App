@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -33,9 +34,14 @@ public class PesquisaReceitaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pesquisa_receita);
 
         Button pesquisar = (Button) findViewById(R.id.receitaPesquisar);
-        EditText receita = (EditText) findViewById(R.id.receitaNome);
+        final EditText receita = (EditText) findViewById(R.id.receitaNome);
+        pesquisar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pesquisaIngrediente(receita.getText().toString());
+            }
+        });
 
-        pesquisaIngrediente(receita.getText().toString());
     }
     public void pesquisaIngrediente(String receita){
         String url = REGISTER_URL;

@@ -66,10 +66,10 @@ public class  DetalheActivity extends AppCompatActivity {
 
 
 
-        if (receita.getImagem2().length != 0) {
+        if (receita.getImagem2() != null &&receita.getImagem2().length > 0) {
             Bitmap bitNew = BitmapFactory.decodeByteArray(receita.getImagem2(), 0, receita.getImagem2().length);
 
-            foto.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            foto.setScaleType(ImageView.ScaleType.MATRIX);
             foto.setImageBitmap(bitNew);
         } else {
             foto.setImageResource(R.drawable.imagem);
