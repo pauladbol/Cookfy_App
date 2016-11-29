@@ -19,7 +19,7 @@ public class Recipes implements Parcelable {
         private String prepTime;
         private String difficulty;
         private String[] recipeBooks;
-        private byte[] imagem2;
+        private byte[] imagem2 = null;
 
     public Recipes(String id, String nome, int imagem, String ingredientes, String description, byte[] imagem2) {
         this.id = id;

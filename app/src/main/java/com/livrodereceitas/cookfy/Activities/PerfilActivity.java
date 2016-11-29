@@ -71,7 +71,7 @@ public class PerfilActivity extends AppCompatActivity {
         if (usuario.getImagem() != null && usuario.getImagem().length > 0 ) {
             Bitmap bitNew = BitmapFactory.decodeByteArray(usuario.getImagem(), 0, usuario.getImagem().length);
 
-            imagem.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imagem.setScaleType(ImageView.ScaleType.FIT_XY);
             imagem.setImageBitmap(bitNew);
         } else {
             imagem.setImageResource(R.drawable.perfil_icone);
@@ -106,13 +106,13 @@ public class PerfilActivity extends AppCompatActivity {
                 ImageView foto = (ImageView) findViewById(R.id.imagemPerfil);
                 Bitmap bitmap = BitmapFactory.decodeFile(caminhoFoto);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                Bitmap bitmapReduzido = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
+                Bitmap bitmapReduzido = Bitmap.createScaledBitmap(bitmap, 150, 150, true);
                 bitmapReduzido.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 byte[] bitMapData = stream.toByteArray();
                 encodedImage = Base64.encodeToString(bitMapData,Base64.DEFAULT);
                 Log.i("script", encodedImage);
 
-                foto.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                foto.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 foto.setImageBitmap(bitmapReduzido);
             }
         }
