@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="#FFFFFF">
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo_mini"
+        android:layout_marginTop="20dp"/>
+
+
+        <EditText
+            android:layout_marginTop="100dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/editborda"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Procure por reeceita..."
+            android:id="@+id/receitaNome"/>
+    <Button
+        android:layout_marginTop="10dp"
+        android:background="@drawable/botaofundo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pesquisar"
+        android:id="@+id/receitaPesquisar" />
+</LinearLayout>
