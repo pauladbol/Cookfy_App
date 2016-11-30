@@ -233,16 +233,15 @@ public class DrawerActivity extends AppCompatActivity
             Intent intentPesq = new Intent(DrawerActivity.this, PesquisaIngredienteActivity.class);
             startActivity(intentPesq);
 
-        }else if (id == R.id.nav_pesquisaRecipe) {
+        } else if (id == R.id.nav_pesquisaRecipe) {
             Intent intentPesqRecipe = new Intent(DrawerActivity.this, PesquisaReceitaActivity.class);
             startActivity(intentPesqRecipe);
-
-        }else if (id == R.id.nav_cadastro) {
+        } else if (id == R.id.nav_cadastro) {
             Intent intentCad = new Intent(DrawerActivity.this, CadastroReceitaActivity.class);
             startActivity(intentCad);
         } else if (id == R.id.nav_sair) {
             usuarioLogout();
-        } else if (id == R.id.nav_receita){
+        } else if (id == R.id.nav_receitas){
             reqReceitas("todas");
         }
 

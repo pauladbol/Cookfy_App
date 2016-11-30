@@ -23,9 +23,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.MainActivity" />
-        <activity
-            android:name=".Activities.Main2Activity"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.CadastroActivity" />
         <!--
      ATTENTION: This was auto-generated to add Google Play services to your project for

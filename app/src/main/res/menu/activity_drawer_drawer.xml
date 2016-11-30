@@ -23,13 +23,14 @@
             android:icon="@drawable/ic_search_black_24dp"
             android:title="Pesquisa por Receita" />
         <item
+            android:id="@+id/nav_receitas"
+            android:icon="@drawable/ic_local_pizza_black_24dp"
+            android:title="Todas as Receitas" />
+        <item
             android:id="@+id/nav_cadastro"
             android:icon="@drawable/ic_restaurant_menu_black_24dp"
             android:title="Cadastro Receita" />
-        <item
-            android:id="@+id/nav_receita"
-            android:icon="@drawable/ic_local_pizza_black_24dp"
-            android:title="Todas as Receitas" />
+
         <item
             android:id="@+id/nav_sair"
             android:icon="@drawable/ic_clear_black_24dp"
