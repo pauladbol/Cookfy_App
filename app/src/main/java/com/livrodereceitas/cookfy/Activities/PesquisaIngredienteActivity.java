@@ -57,17 +57,17 @@ public class PesquisaIngredienteActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ingrediente = new Ingrediente();
                 final EditText ingrediente = (EditText) findViewById(R.id.ingredienteNome);
-                if (!validarIngrediente(ingrediente.getText().toString())) {
+                /*if (!validarIngrediente(ingrediente.getText().toString())) {
                     ingrediente.setError("O campo ingrediente não pode ser vazio");
                     ingrediente.requestFocus();}
-                else {
+                else {*/
 
                     PesquisaIngredienteActivity.this.ingrediente.setNome(ingrediente.getText().toString());
 //                    PesquisaIngredienteActivity.this.ingrediente.getNome().replace(" ", "%20");
                     listaIngredientesPesquisa.add(PesquisaIngredienteActivity.this.ingrediente);
                     ingrediente.setText("");
                     baseAdapter.notifyDataSetChanged();
-                }
+                //}
             }
         });
 

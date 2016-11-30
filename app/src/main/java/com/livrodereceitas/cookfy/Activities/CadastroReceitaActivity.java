@@ -71,12 +71,15 @@ public class CadastroReceitaActivity extends AppCompatActivity {
     private static final String PREFS_NAME = "MyPrefsFile";
     private static final String KEY_PICTURE = "picture";
     private String[] dificuldade;
+    private String[] categoria;
     private ArrayList<Ingrediente> listaIngredientesReceita = new ArrayList<Ingrediente>();
     private ArrayList<RecipeStep> listaStepsReceita = new ArrayList<>();
     private RecipeStep recipeStep;
     private Ingrediente ingrediente;
     private Spinner spinnerDificuldade;
+    private Spinner spinnerCategoria;
     private String dificuldadeReceita;
+    private Integer categoriaReceita;
     private EditText nomeReceita;
     private EditText ingredienteRecitaNome;
     private EditText ingredienteReceitaMedida;
@@ -94,6 +97,7 @@ public class CadastroReceitaActivity extends AppCompatActivity {
     private ImageView foto;
     private Button galeria;
     private String encodedImage2;
+    private String encodedImage3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,18 +116,33 @@ public class CadastroReceitaActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        categoria = new String[] {"Comida Mexicana", "Comida Italiana", "Comida Caseira", "Comida Tailandesa"};
         dificuldade = new String[]{"Dificuldade", "Difícil", "Média", "Fácil"};
        // dificuldade = new String[]{"Dificuldade", "HARD", "MEDIUM", "EASY"};
         ArrayAdapter<String> adpDificuldade = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, dificuldade);
-
+        ArrayAdapter<String> adpCategoria= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, categoria);
         nomeReceita = (EditText) findViewById(R.id.nomeReceita);
         spinnerDificuldade = (Spinner) findViewById(R.id.dificuldadeReceita);
+        spinnerCategoria = (Spinner) findViewById(R.id.spinnerCategoria);
         tempoForno = (EditText) findViewById(R.id.tempoFornoReceita);
         tempoPreparo = (EditText) findViewById(R.id.tempoPreparoReceita);
 
         adpDificuldade.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adpCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCategoria.setAdapter(adpCategoria);
         spinnerDificuldade.setAdapter(adpDificuldade);
 
+        spinnerCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                categoriaReceita = deParaCategoria(categoria[position]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Toast.makeText(CadastroReceitaActivity.this, "Selections cleared.", Toast.LENGTH_SHORT).show();
+            }
+        });
         spinnerDificuldade.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -186,6 +205,18 @@ public class CadastroReceitaActivity extends AppCompatActivity {
                 carregarGaleria();
             }
         });
+    }
+
+    private Integer deParaCategoria(String categoriaTela) {
+        if (categoriaTela.equals("Comida Mexicana")) {
+            return 1;
+        } else if (categoriaTela.equals("Comida Italiana")) {
+            return 2;
+        } else if (categoriaTela.equals("Comida Caseira")) {
+            return 3;
+        }else {
+            return 4;
+        }
     }
 
     public Boolean apagarIngrediente(AdapterView<?> parent, View view, int position, long id){
@@ -278,8 +309,15 @@ public class CadastroReceitaActivity extends AppCompatActivity {
                     }
                     stream1 = getContentResolver().openInputStream(data.getData());
                     testeGaleria = BitmapFactory.decodeStream(stream1);
-                    int nh = (int) ( testeGaleria.getHeight() * (512.0 / testeGaleria.getWidth()) );
-                    Bitmap scaled = Bitmap.createScaledBitmap(testeGaleria, 512, nh, true);
+                    ByteArrayOutputStream stream2 = new ByteArrayOutputStream();
+                    Bitmap scaled = Bitmap.createScaledBitmap(testeGaleria, 220, 220, true);
+                    scaled.compress(Bitmap.CompressFormat.PNG, 100, stream2);
+                    byte [] scaledByte = stream2.toByteArray();
+                    encodedImage2 = Base64.encodeToString(scaledByte, Base64.DEFAULT);
+                   /* int nh = (int) ( testeGaleria.getHeight() * (512.0 / testeGaleria.getWidth()) );
+                    Bitmap scaled = Bitmap.createScaledBitmap(testeGaleria, 512, nh, true);*/
+                    Log.i("script", encodedImage2);
+                    foto.setScaleType(ImageView.ScaleType.FIT_XY);
                     foto.setImageBitmap(scaled);
 
                 }
@@ -345,7 +383,7 @@ public class CadastroReceitaActivity extends AppCompatActivity {
             jsonobj.put(KEY_COOKTIME, tempoFornoReceita);
             jsonobj.put(KEY_PREPTIME, tempoPreparoReceita);
             jsonobj.put(KEY_CHEF, cheffId);
-            jsonobj.put(KEY_CATEGORY, 1);
+            jsonobj.put(KEY_CATEGORY, categoriaReceita);
             jsonobj.put(KEY_PICTURE, encodedImage2);
 
         } catch (JSONException e) {

@@ -53,6 +53,7 @@
         android:hint="Nome da receita..."
         android:id="@+id/nomeReceita"
         android:textSize="20dp"
+        android:inputType="textAutoComplete"
         />
     <RelativeLayout
         android:layout_marginTop="5dp"
@@ -71,6 +72,7 @@
                 android:textSize="20dp"
                 android:textColor="#000000"/>
             <EditText
+                android:inputType="textAutoComplete"
                 android:background="@drawable/editborda"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
@@ -78,6 +80,7 @@
                 android:textSize="20dp"
                 android:id="@+id/ingredienteReceitaNome"/>
             <EditText
+                android:inputType="text"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/editborda"
                 android:layout_width="300dp"
@@ -124,7 +127,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Passo a Passo Modo de Preparo"
@@ -132,6 +134,7 @@
                 android:textColor="#000000"/>
 
             <EditText
+                android:inputType="textAutoComplete"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:hint="Ex: Misturar os ingredientes"
@@ -182,6 +185,20 @@
         android:background="@drawable/editborda"
         />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Categoria"
+        android:textSize="15dp"/>
+    <Spinner
+
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:id="@+id/spinnerCategoria"
+        android:textAlignment="center"
+        android:background="@drawable/editborda"
+        />
+
     <LinearLayout
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
@@ -207,6 +224,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <EditText
+            android:inputType="number"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:hint="200"
@@ -219,6 +237,7 @@
             android:textSize="20dp"
             android:text="min"/>
         <EditText
+            android:inputType="number"
             android:background="@drawable/editborda"
             android:layout_width="80dp"
             android:layout_height="wrap_content"

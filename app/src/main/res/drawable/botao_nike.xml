@@ -10,5 +10,5 @@
                 android:right="10dp"/>
         </shape>
     </item>
-    <item android:drawable="@drawable/ic_check_circle_black_24dp"/>
+    <item android:drawable="@drawable/ic_check_black_24dp"/>
 </layer-list>

@@ -15,8 +15,17 @@ public class DrawerActivityTest {
     DrawerActivity drawerActivity = new DrawerActivity();
 
     @Test
-    public void montaUrlTest(){
+    public void montaUrlFavorityTest(){
         assertTrue(drawerActivity.montaUrl("favoritos","1").contains("FAVORITY"));
+    }
 
+    @Test
+    public void montaUrlUserTest(){
+        assertTrue(drawerActivity.montaUrl("minhas","1").contains("users"));
+    }
+
+    @Test
+    public void montaUrlRecipeTest(){
+        assertTrue(drawerActivity.montaUrl("sdçflksdf","1").contains("recipes"));
     }
 }

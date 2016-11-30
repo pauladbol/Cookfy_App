@@ -36,6 +36,17 @@
             android:layout_marginRight="16dp"
             android:id="@+id/cameraPerfil"
             />
+        <Button
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:textSize="30sp"
+            android:elevation="6dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/fundo_galeria"
+            android:layout_marginRight="80dp"
+            android:id="@+id/galeria"
+            />
 
         <Button
             android:layout_width="56dp"

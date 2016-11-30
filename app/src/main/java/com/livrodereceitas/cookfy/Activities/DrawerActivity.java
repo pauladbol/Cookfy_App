@@ -242,6 +242,8 @@ public class DrawerActivity extends AppCompatActivity
             startActivity(intentCad);
         } else if (id == R.id.nav_sair) {
             usuarioLogout();
+        } else if (id == R.id.nav_receita){
+            reqReceitas("todas");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -252,7 +254,7 @@ public class DrawerActivity extends AppCompatActivity
 
     private void reqReceitas(String type){
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        montaUrl(type,settings.getString("id",""));
+        urlReq = montaUrl(type,settings.getString("id",""));
 
         JsonArrayRequest jsonArrayReq = new JsonArrayRequest(Request.Method.GET,
                 urlReq, null, new Response.Listener<JSONArray>() {

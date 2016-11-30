@@ -8,7 +8,7 @@
             android:title="Meu Perfil" />
         <item
             android:id="@+id/nav_minhas"
-            android:icon="@drawable/ic_highlight_black_24dp"
+            android:icon="@drawable/ic_import_contacts_black_24dp"
             android:title="Minhas Receitas" />
         <item
             android:id="@+id/nav_favoritos"
@@ -17,15 +17,19 @@
         <item
             android:id="@+id/nav_pesquisa"
             android:icon="@drawable/ic_search_black_24dp"
-            android:title="Pesquisa por ingreiente" />
+            android:title="Pesquisa por Ingrediente" />
         <item
             android:id="@+id/nav_pesquisaRecipe"
             android:icon="@drawable/ic_search_black_24dp"
-            android:title="Pesquisa por receita" />
+            android:title="Pesquisa por Receita" />
         <item
             android:id="@+id/nav_cadastro"
             android:icon="@drawable/ic_restaurant_menu_black_24dp"
             android:title="Cadastro Receita" />
+        <item
+            android:id="@+id/nav_receita"
+            android:icon="@drawable/ic_local_pizza_black_24dp"
+            android:title="Todas as Receitas" />
         <item
             android:id="@+id/nav_sair"
             android:icon="@drawable/ic_clear_black_24dp"

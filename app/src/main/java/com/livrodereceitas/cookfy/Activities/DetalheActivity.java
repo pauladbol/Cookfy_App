@@ -69,14 +69,14 @@ public class  DetalheActivity extends AppCompatActivity {
         if (receita.getImagem2() != null &&receita.getImagem2().length > 0) {
             Bitmap bitNew = BitmapFactory.decodeByteArray(receita.getImagem2(), 0, receita.getImagem2().length);
 
-            foto.setScaleType(ImageView.ScaleType.MATRIX);
+            foto.setScaleType(ImageView.ScaleType.FIT_XY);
             foto.setImageBitmap(bitNew);
         } else {
             foto.setImageResource(R.drawable.imagem);
         }
 
         nomeReceita.setText(receita.getName());
-        descricaoReceita.setText(receita.getDescription());
+        descricaoReceita.setText(receita.getDescription().replace(";", "\n"));
         ingredientes.setText(ingredientesString);
         time.setText(receita.getExecutionTime());
 

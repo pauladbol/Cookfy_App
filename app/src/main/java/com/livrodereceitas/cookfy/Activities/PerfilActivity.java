@@ -32,6 +32,9 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class PerfilActivity extends AppCompatActivity {
     public static final String REGISTER_URL = "https://cookfy.herokuapp.com/users/";
@@ -39,16 +42,22 @@ public class PerfilActivity extends AppCompatActivity {
     private static final String KEY_PICTURE = "picture";
     private static final int CODIGO_CAMERA = 567;
     private Button camera;
+    private  Button galeria;
     private String caminhoFoto;
     private  String encodedImage;
     private Button salvarFoto;
-    byte[] imagem;
+    private byte[] imagem;
+    private Bitmap testeGaleria;
+    private ImageView foto;
+    private File arquivoFoto;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
 
         camera = (Button) findViewById(R.id.cameraPerfil);
+        galeria = (Button)findViewById(R.id.galeria);
 
         salvarFoto = (Button) findViewById((R.id.salvarFotoPerfil));
 
@@ -87,23 +96,32 @@ public class PerfilActivity extends AppCompatActivity {
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                caminhoFoto = getExternalFilesDir(null) +  "/" + System.currentTimeMillis() +".jpg";
-                File arquivoFoto = new File(caminhoFoto);
-                intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(arquivoFoto));
-
-                startActivityForResult(intentCamera, CODIGO_CAMERA);
+                chamarCamera();
+            }
+        });
+        galeria.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                carregarGaleria();
             }
         });
 
     }
+    public void chamarCamera(){
+        Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        caminhoFoto = getExternalFilesDir(null) +  "/" + System.currentTimeMillis() +".jpg";
+        arquivoFoto = new File(caminhoFoto);
+        intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(arquivoFoto));
 
+        startActivityForResult(intentCamera, CODIGO_CAMERA);
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        InputStream stream1 = null;
         if(resultCode == Activity.RESULT_OK) {
             if (requestCode == CODIGO_CAMERA) {
-                ImageView foto = (ImageView) findViewById(R.id.imagemPerfil);
+                foto = (ImageView) findViewById(R.id.imagemPerfil);
                 Bitmap bitmap = BitmapFactory.decodeFile(caminhoFoto);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 Bitmap bitmapReduzido = Bitmap.createScaledBitmap(bitmap, 150, 150, true);
@@ -112,10 +130,49 @@ public class PerfilActivity extends AppCompatActivity {
                 encodedImage = Base64.encodeToString(bitMapData,Base64.DEFAULT);
                 Log.i("script", encodedImage);
 
-                foto.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                foto.setScaleType(ImageView.ScaleType.FIT_XY);
                 foto.setImageBitmap(bitmapReduzido);
+            }else if (requestCode == 1){
+                foto = (ImageView) findViewById(R.id.imagemPerfil);
+                try {
+                    if (testeGaleria != null) {
+                        testeGaleria.recycle();
+                    }
+                    stream1 = getContentResolver().openInputStream(data.getData());
+                    testeGaleria = BitmapFactory.decodeStream(stream1);
+                    ByteArrayOutputStream stream2 = new ByteArrayOutputStream();
+                    Bitmap scaled = Bitmap.createScaledBitmap(testeGaleria, 220, 220, true);
+                    scaled.compress(Bitmap.CompressFormat.PNG, 100, stream2);
+                    byte [] scaledByte = stream2.toByteArray();
+                    encodedImage = Base64.encodeToString(scaledByte, Base64.DEFAULT);
+                   /* int nh = (int) ( testeGaleria.getHeight() * (512.0 / testeGaleria.getWidth()) );
+                    Bitmap scaled = Bitmap.createScaledBitmap(testeGaleria, 512, nh, true);*/
+                    Log.i("script", encodedImage);
+                    foto.setScaleType(ImageView.ScaleType.FIT_XY);
+                    foto.setImageBitmap(scaled);
+
+                }
+                catch(FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                finally {
+                    if (stream1 != null)
+                        try {
+                            stream1.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                }
+
             }
         }
+    }
+
+    public void carregarGaleria(){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        startActivityForResult(intent,1);
     }
 
     public void salvarFotoPerfil(){

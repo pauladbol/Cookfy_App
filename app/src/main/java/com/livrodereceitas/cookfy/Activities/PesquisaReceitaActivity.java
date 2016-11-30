@@ -3,6 +3,7 @@ package com.livrodereceitas.cookfy.Activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -41,6 +42,7 @@ public class PesquisaReceitaActivity extends AppCompatActivity {
                 pesquisaIngrediente(receita.getText().toString());
             }
         });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
     public void pesquisaIngrediente(String receita){
@@ -93,7 +95,13 @@ public class PesquisaReceitaActivity extends AppCompatActivity {
                 receita.setDescription(receitaJSON.getString("description"));
                 receita.setExecutionTime(receitaJSON.getString("prepTime"));
                 receita.setDifficulty(receitaJSON.getString("difficulty"));
-                receita.setDrawableId(R.drawable.imagem);
+                String imgBytes = receitaJSON.getString("picture");
+                if ( imgBytes != "" && imgBytes != "null" ){
+                    byte[] imgRecebida = Base64.decode(imgBytes, Base64.DEFAULT);
+                    //Bitmap bitNew = BitmapFactory.decodeByteArray(imgRecebida, 0, imgRecebida.length);
+
+                    receita.setImagem2(imgRecebida);
+                }
 
                 lista.add(receita);
             }
